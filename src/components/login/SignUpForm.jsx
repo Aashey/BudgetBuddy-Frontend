@@ -10,14 +10,14 @@ import {
   Button,
   Divider,
 } from "antd";
+import LoginLogo from "./Logo";
+import { NavLink } from "react-router-dom";
 
-const LoginForm = () => {
+const SignupForm = () => {
   const { Text, Title, Link } = Typography;
   return (
     <div className="grid w-full grid-flow-row lg:grid-cols-12 gap-x-2 ">
-      <div className="lg:col-span-7">
-        <img src="../public/login3.jpg" alt="LOGIN" className="h-[100vh]" />
-      </div>
+      <LoginLogo />
 
       <div className="lg:col-span-5 flex flex-col justify-center p-10">
         <Title>Get Started</Title>
@@ -59,36 +59,11 @@ const LoginForm = () => {
         </Form>
         <Text className="pt-10">
           {" "}
-          Already have an account ? <Link>Login</Link>
+          Already have an account ? <NavLink to="/login">Login</NavLink>
         </Text>
       </div>
     </div>
-    /* <div className="flex justify-center items-center h-screen">
-      <Row gutter={16}>
-        <Col span={12}>
-          <Space>
-            <img src="../public/login.jpg" alt="" style={{ width: "100%" }} />
-          </Space>
-        </Col>
-        <Col span={12}>
-          <Card className="p-2 items-center">
-            <Title>Login</Title>
-            <Form>
-              <Form.Item name="username" label="Username">
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="Password">
-                <Input.Password />
-              </Form.Item>
-              <Button block type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
-    </div> */
   );
 };
 
-export default LoginForm;
+export default SignupForm;
