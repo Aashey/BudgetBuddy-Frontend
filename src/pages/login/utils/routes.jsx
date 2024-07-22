@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
-import LoginForm from "../../components/login/LoginForm";
-import SignupForm from "../../components/login/SignUpForm";
+import LoginForm from "../../../components/login/LoginForm";
+import SignupForm from "../../../components/login/SignUpForm";
 
 export const LoginRoutes = (
   <Route>

@@ -9,22 +9,29 @@ import {
   Typography,
   Button,
   Divider,
+  Checkbox,
 } from "antd";
 import LoginLogo from "./Logo";
 import { NavLink } from "react-router-dom";
 
 const SignupForm = () => {
+  const [form] = Form.useForm();
   const { Text, Title, Link } = Typography;
   return (
-    <div className="grid w-full grid-flow-row lg:grid-cols-12 gap-x-2 ">
+    <div className="grid w-full grid-flow-row lg:grid-cols-12 gap-x-4 ">
       <LoginLogo />
+      <div className="lg:col-span-1"></div>
 
-      <div className="lg:col-span-5 flex flex-col justify-center p-10">
+      <div className="lg:col-span-4 flex flex-col justify-center p-12">
         <Title>Get Started</Title>
-        <Text className="text-gray-600">Create your account now</Text>
-        <Form className="mt-11 mb-4 w-full" layout="vertical">
+        <Text className="text-gray-600">Create your free account now</Text>
+        <Form form={form} className="mt-11 mb-4 w-full" layout="vertical">
+          {/* <Form.Item shouldUpdate>
+            {() => <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>}
+          </Form.Item> */}
+
           <Form.Item
-            name="username"
+            name="full_name"
             label={
               <Text className="text-gray-600" strong>
                 Full Name
@@ -37,7 +44,7 @@ const SignupForm = () => {
             name="email"
             label={
               <Text className="text-gray-600" strong>
-                Email
+                Email Address
               </Text>
             }
           >
@@ -47,12 +54,19 @@ const SignupForm = () => {
             name="password"
             label={
               <Text className="text-gray-600" strong>
-                Choose password
+                Password
               </Text>
             }
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
+
+          <Form.Item name="terms">
+            <Checkbox className="mr-2">
+              I agree to the terms and conditions.
+            </Checkbox>
+          </Form.Item>
+
           <Button block type="primary" htmlType="submit">
             Sign Up
           </Button>
