@@ -10,7 +10,7 @@ import {
   Button,
   Divider,
 } from "antd";
-import LoginLogo from "./login/Logo";
+import LoginLogo from "./Logo";
 import { NavLink } from "react-router-dom";
 
 const LoginForm = () => {
