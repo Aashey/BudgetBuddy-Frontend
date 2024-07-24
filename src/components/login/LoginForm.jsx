@@ -10,15 +10,33 @@ import {
   Button,
   Divider,
   Checkbox,
+  message,
 } from "antd";
 import LoginLogo from "./Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import FormDebug from "../../helper/FormDebug";
+// import FormDebug from "../../helper/FormDebug";
+import { useLogin } from "../../services/auth";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
   const { Text, Title, Link } = Typography;
+  const navigate = useNavigate();
+
+  const loginMutation = useLogin();
+
+  const onFinish = (values) => {
+    loginMutation.mutate(values, {
+      onSuccess: () => {
+        message.success("Logged in successfully.");
+        navigate("/dashboard");
+      },
+      onError: (error) => {
+        message.error(error.message || "Login Failed.");
+      },
+    });
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-4">
       <LoginLogo />
@@ -27,21 +45,26 @@ const LoginForm = () => {
         <Title>Login</Title>
         <Text className="text-gray-600">Login to track your finances</Text>
 
-        <Form form={form} className="mt-11 mb-4 w-full" layout="vertical">
+        <Form
+          onFinish={onFinish}
+          form={form}
+          className="mt-11 mb-4 w-full"
+          layout="vertical"
+        >
           {/* <Form.Item shouldUpdate>
             {() => <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>}
           </Form.Item> */}
           <Form.Item
-            name="username"
+            name="email"
             label={
               <Text className="text-gray-600" strong>
-                Username
+                Email
               </Text>
             }
           >
             <Input
               prefix={<UserOutlined className="text-gray-400" />}
-              placeholder="Username"
+              placeholder="Email"
               className="w-full"
             />
           </Form.Item>
