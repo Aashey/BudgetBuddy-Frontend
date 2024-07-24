@@ -11,21 +11,44 @@ import {
   Divider,
   Checkbox,
   Modal,
+  message,
 } from "antd";
 import LoginLogo from "./Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import TermsAndConditions from "../../helper/TermsConditions";
+import { useRegister } from "../../pages/login/services/useRegister";
 
 const SignupForm = () => {
   const [form] = Form.useForm();
   const { Text, Title, Link } = Typography;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const registerMutation = useRegister();
+  const navigate = useNavigate();
 
   const openModal = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log(values);
+    const { username, email, password, password_confirmation } = values;
+    registerMutation.mutate(
+      { username, email, password, password_confirmation },
+      {
+        onSuccess: () => {
+          message.success("User Registered successfully.");
+          navigate("/dashboard");
+        },
+        onError: (error) => {
+          message.error(
+            error.response?.data?.message || "Registration Failed."
+          );
+        },
+      }
+    );
   };
   return (
     <div className="grid w-full grid-flow-row lg:grid-cols-12 gap-x-4 ">
@@ -35,20 +58,33 @@ const SignupForm = () => {
       <div className="lg:col-span-4 flex flex-col justify-center p-12">
         <Title>Get Started</Title>
         <Text className="text-gray-600">Create your free account now</Text>
-        <Form form={form} className="mt-11 mb-4 w-full" layout="vertical">
+        <Form
+          onFinish={onFinish}
+          form={form}
+          className="mt-11 mb-4 w-full"
+          layout="vertical"
+        >
           {/* <Form.Item shouldUpdate>
             {() => <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>}
           </Form.Item> */}
 
           <Form.Item
-            name="full_name"
+            name="username"
             label={
               <Text className="text-gray-600" strong>
-                Full Name
+                Username
               </Text>
             }
+            rules={[
+              { required: true, message: "Username is required" },
+              {
+                pattern: /\d/, // Regular expression to check for a number
+                message: "Username must include at least one number",
+              },
+            ]}
+            validateDebounce="1000"
           >
-            <Input placeholder="Full Name" className="w-full" />
+            <Input placeholder="Username" className="w-full" />
           </Form.Item>
           <Form.Item
             name="email"
@@ -57,6 +93,17 @@ const SignupForm = () => {
                 Email Address
               </Text>
             }
+            rules={[
+              {
+                required: true,
+                message: "Email is required",
+              },
+              {
+                type: "email",
+                message: "Please enter a valid email address",
+              },
+            ]}
+            validateDebounce="1000"
           >
             <Input type="email" placeholder="Email" />
           </Form.Item>
@@ -67,8 +114,45 @@ const SignupForm = () => {
                 Password
               </Text>
             }
+            rules={[
+              {
+                required: true,
+                message: "Password is required",
+              },
+              {
+                min: 8,
+                message: "Password must be at least 8 characters long",
+              },
+            ]}
+            validateDebounce="1000"
           >
             <Input.Password placeholder="Password" />
+          </Form.Item>
+          <Form.Item
+            name="password_confirmation"
+            label={
+              <Text className="text-gray-600" strong>
+                Confirm Password
+              </Text>
+            }
+            dependencies={["password"]}
+            rules={[
+              {
+                required: true,
+                message: "Password confirmation is required",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Passwords do not match!"));
+                },
+              }),
+            ]}
+            validateDebounce="1000"
+          >
+            <Input.Password placeholder="Confirm Password" />
           </Form.Item>
 
           <Form.Item name="terms">

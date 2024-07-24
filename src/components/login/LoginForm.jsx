@@ -17,6 +17,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 // import FormDebug from "../../helper/FormDebug";
 import { useLogin } from "../../services/auth";
+import axios from "axios";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
@@ -26,15 +27,20 @@ const LoginForm = () => {
   const loginMutation = useLogin();
 
   const onFinish = (values) => {
-    loginMutation.mutate(values, {
-      onSuccess: () => {
-        message.success("Logged in successfully.");
-        navigate("/dashboard");
-      },
-      onError: (error) => {
-        message.error(error.message || "Login Failed.");
-      },
-    });
+    const { email, password } = values;
+
+    loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          message.success("Logged in successfully.");
+          navigate("/dashboard");
+        },
+        onError: (error) => {
+          message.error(error.response?.data?.message || "Login Failed.");
+        },
+      }
+    );
   };
 
   return (
@@ -61,6 +67,17 @@ const LoginForm = () => {
                 Email
               </Text>
             }
+            rules={[
+              {
+                required: true,
+                message: "Email is required",
+              },
+              {
+                type: "email",
+                message: "Please enter a valid email address",
+              },
+            ]}
+            validateDebounce="1000"
           >
             <Input
               prefix={<UserOutlined className="text-gray-400" />}
@@ -76,6 +93,17 @@ const LoginForm = () => {
                   Password
                 </Text>
               }
+              rules={[
+                {
+                  required: true,
+                  message: "Password is required",
+                },
+                {
+                  min: 8,
+                  message: "Password must be at least 8 characters long",
+                },
+              ]}
+              validateDebounce="1000"
             >
               <Input.Password
                 prefix={<LockOutlined className="text-gray-400" />}
