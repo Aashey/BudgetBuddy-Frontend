@@ -1,18 +1,10 @@
 import { HiPlus } from "react-icons/hi2";
 import { useIncomeCategory } from "../services/useCategory";
-import {
-  Button,
-  Card,
-  Divider,
-  Input,
-  Space,
-  Table,
-  Tooltip,
-  Typography,
-} from "antd";
+import { Button, Input, Space, Table, Tooltip, Typography } from "antd";
 import { IoIosCloudDownload, IoIosEye } from "react-icons/io";
 import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
+import { CiExport } from "react-icons/ci";
 
 const IncomeCategory = () => {
   const { data, error, isLoading } = useIncomeCategory();
@@ -23,12 +15,13 @@ const IncomeCategory = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 200,
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 500,
+      width: 400,
     },
     {
       title: "Description",
@@ -50,7 +43,7 @@ const IncomeCategory = () => {
           </Tooltip>
         </div>
       ),
-      width: 200,
+      width: 250,
       align: "center",
     },
   ];
@@ -65,30 +58,38 @@ const IncomeCategory = () => {
 
   return (
     <>
-      <div className="flex justify-between align-center ">
-        <span>
-          <Typography.Title level={2}>Income Category</Typography.Title>
-          <Typography.Text className="text-gray-700">
-            Manage all your income categories or add a new category.
-          </Typography.Text>
-        </span>
-        <Button
-          className="bg-transparent p-4 rounded-xl"
-          icon={<IoIosCloudDownload size={18} />}
-        >
-          Export
-        </Button>
+      <div className="rounded-lg shadow-md p-4">
+        <div className="flex justify-between align-center ">
+          <span>
+            <Typography.Title level={2}>Income Category</Typography.Title>
+            <Typography.Text className="text-gray-700">
+              Manage all your income categories or
+              <Typography.Link> add a new category.</Typography.Link>
+            </Typography.Text>
+          </span>
+
+          <Button
+            icon={<HiPlus size={20} />}
+            className="p-5 mt-4"
+            type="primary"
+          >
+            Add Income Category
+          </Button>
+        </div>
+
+        <Space className="mt-8 mb-3 flex justify-between">
+          <Input.Search placeholder="Search Income Categories" />
+          <Button
+            className="bg-transparent p-4 rounded-xl"
+            icon={<CiExport size={18} />}
+          >
+            Export
+          </Button>
+        </Space>
       </div>
 
-      <Space className="mt-8 flex justify-between">
-        <Input.Search placeholder="Search Income Categories" />
-        <Button icon={<HiPlus size={20} />} className="p-4" type="primary">
-          Add Income Category
-        </Button>
-      </Space>
-
       <Table
-        className="mt-5"
+        className="mt-8"
         rowKey="id"
         dataSource={data?.data?.data}
         columns={incomeCategoryColumn}

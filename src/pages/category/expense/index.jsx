@@ -1,11 +1,10 @@
 import { useExpenseCategory } from "../services/useCategory";
-import { Button, Card, Space, Input, Tooltip, Table, Typography } from "antd";
+import { Button, Space, Input, Tooltip, Table, Typography } from "antd";
 import { HiPlus } from "react-icons/hi2";
-import CustomLayout from "../../../components/common/sider/Layout";
 import { IoIosCloudDownload, IoIosEye } from "react-icons/io";
-import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
+import { CiExport } from "react-icons/ci";
 
 const ExpenseCategory = () => {
   const { data, error, isLoading } = useExpenseCategory();
@@ -16,11 +15,13 @@ const ExpenseCategory = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 200,
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      width: 400,
     },
     {
       title: "Description",
@@ -42,7 +43,7 @@ const ExpenseCategory = () => {
           </Tooltip>
         </div>
       ),
-      width: 200,
+      width: 250,
       align: "center",
     },
   ];
@@ -57,27 +58,35 @@ const ExpenseCategory = () => {
 
   return (
     <>
-      <div className="flex justify-between align-center">
-        <span>
-          <Typography.Title level={2}>Expense Category</Typography.Title>
-          <Typography.Text className="text-gray-700">
-            Manage all your expense categories or add a new category.
-          </Typography.Text>
-        </span>
-        <Button
-          className="bg-transparent p-4 rounded-xl"
-          icon={<IoIosCloudDownload size={18} />}
-        >
-          Export
-        </Button>
-      </div>
+      <div className="rounded-lg shadow-md p-4">
+        <div className="flex justify-between align-center ">
+          <span>
+            <Typography.Title level={2}>Expense Category</Typography.Title>
+            <Typography.Text className="text-gray-700">
+              Manage all your expense categories or
+              <Typography.Link> add a new category.</Typography.Link>
+            </Typography.Text>
+          </span>
+          <Button
+            icon={<HiPlus size={20} />}
+            className="p-5 mt-4"
+            type="primary"
+          >
+            Add Expense Category
+          </Button>
+        </div>
 
-      <Space className="mt-8 flex justify-between">
-        <Input.Search placeholder="Search Expense Categories" />
-        <Button icon={<HiPlus size={20} />} className="p-4" type="primary">
-          Add Expense Category
-        </Button>
-      </Space>
+        <Space className="mt-8 mb-3 flex justify-between ">
+          <Input.Search placeholder="Search Expense Categories" />
+
+          <Button
+            className="bg-transparent p-4 rounded-xl"
+            icon={<CiExport size={18} />}
+          >
+            Export
+          </Button>
+        </Space>
+      </div>
       <Table
         className="mt-8"
         rowKey="id"

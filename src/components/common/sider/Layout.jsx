@@ -80,7 +80,7 @@ const CustomLayout = () => {
             margin: "0 16px",
           }}
         >
-          <Card className="m-auto mt-20 p-2 w-[90%]">
+          <Card className="m-auto mt-20 p-2 w-[90%] h-[80vh]">
             <Outlet />
           </Card>
         </Content>
