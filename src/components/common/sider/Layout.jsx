@@ -1,4 +1,4 @@
-import { Button, Card, Layout, Menu, message, Typography } from "antd";
+import { Button, Card, Layout, Menu, message, Space, Typography } from "antd";
 import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../../../services/auth";
@@ -80,7 +80,6 @@ const CustomLayout = () => {
             margin: "0 16px",
           }}
         >
-          <Card>BUDGET BUDDY WIP...</Card>
           <Card className="m-auto mt-20 p-2 w-[90%]">
             <Outlet />
           </Card>
