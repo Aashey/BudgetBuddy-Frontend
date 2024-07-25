@@ -1,23 +1,13 @@
 import React from "react";
 import { logout } from "../../services/auth";
-import { Button, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, message, Typography } from "antd";
+import { NavLink, useNavigate } from "react-router-dom";
+import { HiOutlineUserCircle } from "react-icons/hi2";
+import { HiOutlineArrowRightStartOnRectangle } from "react-icons/hi2";
+import CustomLayout from "../../components/common/sider/Layout";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const onLogout = () => {
-    logout();
-    setTimeout(() => {
-      message.success("Logged out successfully.");
-      navigate("/login");
-    }, [500]);
-  };
-  return (
-    <div>
-      Dashboard
-      <Button onClick={onLogout}>Logout</Button>
-    </div>
-  );
+  return <>Dashboard</>;
 };
 
 export default Dashboard;

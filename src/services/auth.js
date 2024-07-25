@@ -1,13 +1,11 @@
-import axios from "axios";
+import apiClient from "./apiClient";
 import { useMutation } from "react-query";
 
-const API_BASE_URL = `https://a287-27-34-77-102.ngrok-free.app/api`;
-
 const loginAPI = async ({ email, password }) => {
-  return await axios.post(`${API_BASE_URL}/login`, { email, password });
+  return await apiClient.post(`/login`, { email, password });
 };
 const onSuccess = (data) => {
-  localStorage.setItem("authToken", data.access_token);
+  localStorage.setItem("authToken", data.data.token);
 };
 const onError = (error) => {
   console.error("Login Error: ", error.response || error.message);

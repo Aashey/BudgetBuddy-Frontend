@@ -1,7 +1,5 @@
-import axios from "axios";
+import apiClient from "../../../services/apiClient";
 import { useMutation } from "react-query";
-
-const API_BASE_URL = `https://a287-27-34-77-102.ngrok-free.app/api`;
 
 const registerUser = async ({
   username,
@@ -15,7 +13,7 @@ const registerUser = async ({
     password,
     password_confirmation,
   });
-  return await axios.post(`${API_BASE_URL}/register`, {
+  return await apiClient.post(`/register`, {
     username,
     email,
     password,
