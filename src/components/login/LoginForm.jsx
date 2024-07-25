@@ -15,9 +15,7 @@ import {
 import LoginLogo from "./Logo";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-// import FormDebug from "../../helper/FormDebug";
 import { useLogin } from "../../services/auth";
-import axios from "axios";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
@@ -57,9 +55,6 @@ const LoginForm = () => {
           className="mt-11 mb-4 w-full"
           layout="vertical"
         >
-          {/* <Form.Item shouldUpdate>
-            {() => <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>}
-          </Form.Item> */}
           <Form.Item
             name="email"
             label={

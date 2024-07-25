@@ -64,10 +64,6 @@ const SignupForm = () => {
           className="mt-11 mb-4 w-full"
           layout="vertical"
         >
-          {/* <Form.Item shouldUpdate>
-            {() => <pre>{JSON.stringify(form.getFieldValue(), null, 2)}</pre>}
-          </Form.Item> */}
-
           <Form.Item
             name="username"
             label={
@@ -167,7 +163,7 @@ const SignupForm = () => {
             Sign Up
           </Button>
         </Form>
-        {/* <Modal
+        <Modal
           title="Terms and Conditions"
           open={isModalOpen}
           onCancel={closeModal}
@@ -176,7 +172,7 @@ const SignupForm = () => {
           width={800}
         >
           <TermsAndConditions />
-        </Modal> */}
+        </Modal>
         <Text className="pt-10">
           Already have an account ? <NavLink to="/login">Login</NavLink>
         </Text>
