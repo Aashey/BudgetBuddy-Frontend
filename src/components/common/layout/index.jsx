@@ -2,6 +2,7 @@ import React from "react";
 import CustomSider from "../sider";
 import { Card, Layout } from "antd";
 import { Outlet } from "react-router-dom";
+import CustomHeader from "../header";
 
 const CustomLayout = () => {
   const { Content } = Layout;
@@ -14,12 +15,8 @@ const CustomLayout = () => {
         }}
       >
         <CustomSider />
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Card className="m-auto mt-20 p-2 w-[90%] h-[80vh]">
+        <Content>
+          <Card className="m-auto p-8 w-[100%] h-[100vh]">
             <Outlet />
           </Card>
         </Content>

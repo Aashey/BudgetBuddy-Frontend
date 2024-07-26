@@ -1,5 +1,13 @@
 import { useExpenseCategory } from "../services/useCategory";
-import { Button, Space, Input, Tooltip, Table, Typography } from "antd";
+import {
+  Button,
+  Space,
+  Input,
+  Tooltip,
+  Table,
+  Typography,
+  Skeleton,
+} from "antd";
 import { HiPlus } from "react-icons/hi2";
 import { IoIosCloudDownload, IoIosEye } from "react-icons/io";
 import { AiFillDelete } from "react-icons/ai";
@@ -33,13 +41,25 @@ const ExpenseCategory = () => {
       render: () => (
         <div className="flex justify-evenly">
           <Tooltip title="View">
-            <Button icon={<IoIosEye size={22} />}></Button>
+            <Button
+              type="none"
+              className="bg-none text-gray-600 hover:text-green-600"
+              icon={<IoIosEye size={22} />}
+            ></Button>
           </Tooltip>
           <Tooltip title="Edit">
-            <Button icon={<BiSolidEdit size={22} />}></Button>
+            <Button
+              type="none"
+              className="bg-none text-gray-600 hover:text-blue-600"
+              icon={<BiSolidEdit size={22} />}
+            ></Button>
           </Tooltip>
           <Tooltip title="Delete">
-            <Button icon={<AiFillDelete size={22} />}></Button>
+            <Button
+              type="none"
+              className="bg-none text-gray-600 hover:text-red-600"
+              icon={<AiFillDelete size={22} />}
+            ></Button>
           </Tooltip>
         </div>
       ),
@@ -49,16 +69,16 @@ const ExpenseCategory = () => {
   ];
 
   if (isLoading) {
-    return <h2>Loading..</h2>;
+    return <Skeleton active />;
   }
 
   if (error) {
-    return <h2>Something went wrong</h2>;
+    return <h2>Unable to get Expense Category</h2>;
   }
 
   return (
     <>
-      <div className="rounded-lg shadow-md p-4">
+      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
         <div className="flex justify-between align-center ">
           <span>
             <Typography.Title level={2}>Expense Category</Typography.Title>
@@ -68,27 +88,21 @@ const ExpenseCategory = () => {
             </Typography.Text>
           </span>
           <Button
-            icon={<HiPlus size={20} />}
-            className="p-5 mt-4"
-            type="primary"
-          >
-            Add Expense Category
-          </Button>
-        </div>
-
-        <Space className="mt-8 mb-3 flex justify-between ">
-          <Input.Search placeholder="Search Expense Categories" />
-
-          <Button
-            className="bg-transparent p-4 rounded-xl"
+            className="bg-transparent text-black p-5 mt-4"
             icon={<CiExport size={18} />}
           >
             Export
           </Button>
-        </Space>
+        </div>
       </div>
+      <Space className="mt-5 mb-3 flex justify-between">
+        <Button icon={<HiPlus size={20} />} type="primary">
+          Add Expense Category
+        </Button>
+        <Input.Search placeholder="Search Expense Categories" />
+      </Space>
       <Table
-        className="mt-8"
+        className="mt-5"
         rowKey="id"
         dataSource={data?.data?.data}
         columns={expenseCategoryColumn}
