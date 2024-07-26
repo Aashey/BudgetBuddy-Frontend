@@ -1,25 +1,13 @@
-import React from "react";
-import {
-  Card,
-  Space,
-  Row,
-  Col,
-  Form,
-  Input,
-  Typography,
-  Button,
-  Divider,
-  Checkbox,
-  message,
-} from "antd";
-import LoginLogo from "./Logo";
-import { NavLink, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, message, Typography } from "antd";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useLogin } from "../../services/auth";
+import LoginLogo from "./Logo";
 
+const { Text, Title, Link } = Typography;
 const LoginForm = () => {
   const [form] = Form.useForm();
-  const { Text, Title, Link } = Typography;
   const navigate = useNavigate();
 
   const loginMutation = useLogin();
