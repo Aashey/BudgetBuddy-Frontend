@@ -6,10 +6,6 @@ import ExpenseCategory from "../expense";
 
 export const CategoryRoutes = (
   <Route>
-    {/* <Route
-      path="/setup/category"
-      element={<ProtectedRoute element={<Category />} />}
-    /> */}
     <Route
       path="/setup/income-category"
       element={<ProtectedRoute element={<IncomeCategory />} />}

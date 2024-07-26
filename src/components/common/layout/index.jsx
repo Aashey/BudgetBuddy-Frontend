@@ -1,8 +1,10 @@
 import React from "react";
 import CustomSider from "../sider";
-import { Content } from "antd/es/layout/layout";
+import { Card, Layout } from "antd";
+import { Outlet } from "react-router-dom";
 
 const CustomLayout = () => {
+  const { Content } = Layout;
   return (
     <>
       <Layout
