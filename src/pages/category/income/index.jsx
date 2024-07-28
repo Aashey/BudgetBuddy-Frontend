@@ -1,5 +1,8 @@
 import { HiPlus } from "react-icons/hi2";
-import { useIncomeCategory } from "../services/useCategory";
+import {
+  useDeleteIncomeCategory,
+  useIncomeCategory,
+} from "../services/useCategory";
 import {
   Button,
   Input,
@@ -8,15 +11,56 @@ import {
   Tooltip,
   Typography,
   Skeleton,
+  message,
 } from "antd";
-import { IoIosCloudDownload, IoIosEye } from "react-icons/io";
+import { IoIosEye } from "react-icons/io";
 import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
+import CategorySetupForm from "../../../components/category/categorySetupForm";
+import { useEffect, useState } from "react";
 
 const IncomeCategory = () => {
-  const { data, error, isLoading } = useIncomeCategory();
-  console.log(data?.data?.data);
+  const { data, error, isLoading, refetch } = useIncomeCategory();
+  const deleteIncomeCategory = useDeleteIncomeCategory();
+  const [filteredData, setFilteredData] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const handleSearch = (e) => {
+    const searchValue = e.target.value?.toLowerCase();
+    if (!searchValue) {
+      setFilteredData(null);
+      return;
+    }
+    const filterData = data?.data?.data.filter((item) =>
+      item.title.toLowerCase().includes(searchValue)
+    );
+    setFilteredData(filterData);
+  };
+
+  const handleDelete = (record) => {
+    const id = record.id;
+    console.log(record.id);
+    deleteIncomeCategory.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          message.success("Income category deleted successfully! ");
+          refetch();
+        },
+        onError: () => {
+          message.error("Failed to delete income category.");
+        },
+      }
+    );
+  };
 
   const incomeCategoryColumn = [
     {
@@ -38,7 +82,7 @@ const IncomeCategory = () => {
     },
     {
       title: "Action",
-      render: () => (
+      render: (record) => (
         <div className="flex justify-evenly">
           <Tooltip title="View">
             <Button
@@ -56,6 +100,7 @@ const IncomeCategory = () => {
           </Tooltip>
           <Tooltip title="Delete">
             <Button
+              onClick={() => handleDelete(record)}
               type="none"
               className="bg-none text-gray-600 hover:text-red-600"
               icon={<AiFillDelete size={22} />}
@@ -89,25 +134,32 @@ const IncomeCategory = () => {
               <Typography.Link> add a new category.</Typography.Link>
             </Typography.Text>
           </span>
-          <Button
-            className="bg-transparent p-5 mt-4 rounded-xl"
-            icon={<CiExport size={18} />}
-          >
+          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
             Export
           </Button>
         </div>
       </div>
       <Space className="mt-5 mb-3 flex justify-between">
-        <Button icon={<HiPlus size={20} />} type="primary">
+        <Button onClick={openDrawer} icon={<HiPlus size={20} />} type="primary">
           Add Income Category
         </Button>
-        <Input.Search placeholder="Search Income Categories" />
+        <Input.Search
+          onChange={handleSearch}
+          placeholder="Search Income Categories"
+        />
       </Space>
       <Table
+        loading={isLoading}
         className="mt-5"
         rowKey="id"
-        dataSource={data?.data?.data}
+        dataSource={filteredData ?? data?.data?.data}
         columns={incomeCategoryColumn}
+      />
+      <CategorySetupForm
+        isDrawerOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        type={"income"}
+        refetch={refetch}
       />
     </>
   );

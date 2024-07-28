@@ -1,19 +1,18 @@
+import { HiPlus } from "react-icons/hi2";
 import {
-  useDeleteExpenseCategory,
-  useDeleteIncomeCategory,
-  useExpenseCategory,
+  useDeleteLoanCategory,
+  useGetLoanCategory,
 } from "../services/useCategory";
 import {
   Button,
-  Space,
   Input,
-  Tooltip,
+  Space,
   Table,
+  Tooltip,
   Typography,
   Skeleton,
   message,
 } from "antd";
-import { HiPlus } from "react-icons/hi2";
 import { IoIosEye } from "react-icons/io";
 import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
@@ -21,9 +20,10 @@ import { CiExport } from "react-icons/ci";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 
-const ExpenseCategory = () => {
-  const { data, error, isLoading, refetch } = useExpenseCategory();
-  const deleteExpenseCategory = useDeleteExpenseCategory();
+const LoanCategory = () => {
+  const { data, error, isLoading, refetch } = useGetLoanCategory();
+  const deleteLoanCategory = useDeleteLoanCategory();
+  const [searchValue, setsearchValue] = useState("");
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -50,21 +50,21 @@ const ExpenseCategory = () => {
     const id = record.id;
     console.log(record.id);
     console.log(record.id);
-    deleteExpenseCategory.mutate(
+    deleteLoanCategory.mutate(
       { id },
       {
         onSuccess: () => {
-          message.success("Expense category deleted successfully! ");
+          message.success("Loan category deleted successfully! ");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete expense category.");
+          message.error("Failed to delete loan category.");
         },
       }
     );
   };
 
-  const expenseCategoryColumn = [
+  const loanCategoryColumn = [
     {
       title: "ID",
       dataIndex: "id",
@@ -120,7 +120,7 @@ const ExpenseCategory = () => {
   }
 
   if (error) {
-    return <h2>Unable to get Expense Category</h2>;
+    return <h2>Unable to get Loan Category</h2>;
   }
 
   return (
@@ -128,9 +128,11 @@ const ExpenseCategory = () => {
       <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
         <div className="flex justify-between align-center ">
           <span>
-            <Typography.Title level={2}>Expense Category</Typography.Title>
-            <Typography.Text className="text-gray-700">
-              Manage all your expense categories or
+            <Typography.Title className="text-white" level={2}>
+              Loan Category
+            </Typography.Title>
+            <Typography.Text>
+              Manage all your loan categories or
               <Typography.Link> add a new category.</Typography.Link>
             </Typography.Text>
           </span>
@@ -141,11 +143,11 @@ const ExpenseCategory = () => {
       </div>
       <Space className="mt-5 mb-3 flex justify-between">
         <Button onClick={openDrawer} icon={<HiPlus size={20} />} type="primary">
-          Add Expense Category
+          Add Loan Category
         </Button>
         <Input.Search
           onChange={handleSearch}
-          placeholder="Search Expense Categories"
+          placeholder="Search Income Categories"
         />
       </Space>
       <Table
@@ -153,15 +155,16 @@ const ExpenseCategory = () => {
         className="mt-5"
         rowKey="id"
         dataSource={filteredData ?? data?.data?.data}
-        columns={expenseCategoryColumn}
+        columns={loanCategoryColumn}
       />
       <CategorySetupForm
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}
-        type={"expense"}
+        type={"loan"}
+        refetch={refetch}
       />
     </>
   );
 };
 
-export default ExpenseCategory;
+export default LoanCategory;

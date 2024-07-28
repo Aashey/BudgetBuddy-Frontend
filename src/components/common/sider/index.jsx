@@ -45,6 +45,11 @@ const CustomSider = () => {
           ),
           icon: <HiMiniArrowTrendingDown />,
         },
+        {
+          key: "/setup/loan-category",
+          label: <NavLink to="/setup/loan-category">Loan Category</NavLink>,
+          icon: <HiMiniArrowTrendingDown />,
+        },
       ],
     },
     {
