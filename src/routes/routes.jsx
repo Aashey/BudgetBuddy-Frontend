@@ -13,8 +13,8 @@ export const routes = createBrowserRouter(
       <Route path="/" element={<CustomLayout />}>
         {DashboardRoutes}
         {CategoryRoutes}
+        <Route path="*" element={<PageNotFound />} />
       </Route>
-      <Route path="*" element={<PageNotFound />} />
     </>
   )
 );

@@ -1,11 +1,10 @@
-import React from "react";
-
 const PageNotFound = () => {
   return (
-    <div>
-      <h2>Something Went Wrong</h2>
-      <h3>We could not find this page.</h3>
-    </div>
+    <>
+      <div className="flex  justify-center align-center">
+        <img src="error.png" alt="404" className="h-100rem" />
+      </div>
+    </>
   );
 };
 

@@ -8,8 +8,9 @@ import {
   HiMiniChartPie,
   HiMiniArrowTrendingUp,
   HiMiniArrowTrendingDown,
-  HiMiniChevronDoubleRight,
 } from "react-icons/hi2";
+import { TbPigMoney, TbTransactionDollar } from "react-icons/tb";
+import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
 
 const CustomSider = () => {
   const { Sider } = Layout;
@@ -49,6 +50,38 @@ const CustomSider = () => {
           key: "/setup/loan-category",
           label: <NavLink to="/setup/loan-category">Loan Category</NavLink>,
           icon: <HiMiniArrowTrendingDown />,
+        },
+      ],
+    },
+    {
+      key: "/transaction",
+      label: "Transaction",
+      icon: <TbTransactionDollar size={22} />,
+      children: [
+        {
+          key: "/transaction",
+          label: <NavLink to="/transaction">Transaction</NavLink>,
+          icon: <TbTransactionDollar size={22} />,
+        },
+        {
+          key: "/transaction/income",
+          label: <NavLink to="/transaction/income">Income</NavLink>,
+          icon: <GiReceiveMoney size={22} />,
+        },
+        {
+          key: "/transaction/expense",
+          label: <NavLink to="/transaction/expense">Expense</NavLink>,
+          icon: <GiPayMoney size={22} />,
+        },
+        {
+          key: "/transaction/saving",
+          label: <NavLink to="/transaction/saving">Saving</NavLink>,
+          icon: <TbPigMoney size={22} />,
+        },
+        {
+          key: "/transaction/loan",
+          label: <NavLink to="/transaction/loan">Loan</NavLink>,
+          icon: <GiTakeMyMoney size={22} />,
         },
       ],
     },

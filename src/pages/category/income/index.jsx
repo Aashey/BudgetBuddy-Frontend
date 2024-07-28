@@ -18,7 +18,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const IncomeCategory = () => {
   const { data, error, isLoading, refetch } = useIncomeCategory();

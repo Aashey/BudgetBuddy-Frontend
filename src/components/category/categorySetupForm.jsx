@@ -25,15 +25,14 @@ const CategorySetupForm = ({
   const updateIncomeCategory = useUpdateIncomeCategory();
   const updateExpenseCategory = useUpdateExpenseCategory();
   const updateLoanCategory = useUpdateLoanCategory();
-  console.log(mode);
+
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
     message.success(
       `${capitalizeInitialChar(type)} category ${action} successfully.`
     );
-    refetch();
-    form.resetFields();
     onClose();
+    refetch();
   };
 
   const handleMutationError = () => {
