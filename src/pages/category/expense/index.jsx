@@ -26,6 +26,8 @@ const ExpenseCategory = () => {
   const deleteExpenseCategory = useDeleteExpenseCategory();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [mode, setMode] = useState("");
+  const [selectedRecord, setSelectedRecord] = useState();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -64,6 +66,21 @@ const ExpenseCategory = () => {
     );
   };
 
+  const handleCreateComponent = () => {
+    openDrawer();
+    setMode("create");
+  };
+  const handleViewComponent = (record) => {
+    openDrawer();
+    setMode("view");
+    setSelectedRecord(record);
+  };
+  const handleEditComponent = (record) => {
+    openDrawer();
+    setMode("edit");
+    setSelectedRecord(record);
+  };
+
   const expenseCategoryColumn = [
     {
       title: "ID",
@@ -88,6 +105,7 @@ const ExpenseCategory = () => {
         <div className="flex justify-evenly">
           <Tooltip title="View">
             <Button
+              onClick={() => handleViewComponent(record)}
               type="none"
               className="bg-none text-gray-600 hover:text-green-600"
               icon={<IoIosEye size={22} />}
@@ -95,6 +113,7 @@ const ExpenseCategory = () => {
           </Tooltip>
           <Tooltip title="Edit">
             <Button
+              onClick={() => handleEditComponent(record)}
               type="none"
               className="bg-none text-gray-600 hover:text-blue-600"
               icon={<BiSolidEdit size={22} />}
@@ -140,7 +159,11 @@ const ExpenseCategory = () => {
         </div>
       </div>
       <Space className="mt-5 mb-3 flex justify-between">
-        <Button onClick={openDrawer} icon={<HiPlus size={20} />} type="primary">
+        <Button
+          onClick={handleCreateComponent}
+          icon={<HiPlus size={20} />}
+          type="primary"
+        >
           Add Expense Category
         </Button>
         <Input.Search
@@ -159,6 +182,9 @@ const ExpenseCategory = () => {
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}
         type={"expense"}
+        refetch={refetch}
+        mode={mode}
+        record={selectedRecord}
       />
     </>
   );

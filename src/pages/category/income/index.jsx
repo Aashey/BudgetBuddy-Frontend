@@ -25,6 +25,8 @@ const IncomeCategory = () => {
   const deleteIncomeCategory = useDeleteIncomeCategory();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [mode, setMode] = useState("");
+  const [selectedRecord, setSelectedRecord] = useState();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -62,6 +64,21 @@ const IncomeCategory = () => {
     );
   };
 
+  const handleCreateComponent = () => {
+    openDrawer();
+    setMode("create");
+  };
+  const handleViewComponent = (record) => {
+    openDrawer();
+    setMode("view");
+    setSelectedRecord(record);
+  };
+  const handleEditComponent = (record) => {
+    openDrawer();
+    setMode("edit");
+    setSelectedRecord(record);
+  };
+
   const incomeCategoryColumn = [
     {
       title: "ID",
@@ -86,6 +103,7 @@ const IncomeCategory = () => {
         <div className="flex justify-evenly">
           <Tooltip title="View">
             <Button
+              onClick={() => handleViewComponent(record)}
               type="none"
               className="bg-none text-gray-600 hover:text-green-600"
               icon={<IoIosEye size={22} />}
@@ -93,6 +111,7 @@ const IncomeCategory = () => {
           </Tooltip>
           <Tooltip title="Edit">
             <Button
+              onClick={() => handleEditComponent(record)}
               type="none"
               className="bg-none text-gray-600 hover:text-blue-600"
               icon={<BiSolidEdit size={22} />}
@@ -140,7 +159,11 @@ const IncomeCategory = () => {
         </div>
       </div>
       <Space className="mt-5 mb-3 flex justify-between">
-        <Button onClick={openDrawer} icon={<HiPlus size={20} />} type="primary">
+        <Button
+          onClick={handleCreateComponent}
+          icon={<HiPlus size={20} />}
+          type="primary"
+        >
           Add Income Category
         </Button>
         <Input.Search
@@ -160,6 +183,8 @@ const IncomeCategory = () => {
         onClose={closeDrawer}
         type={"income"}
         refetch={refetch}
+        mode={mode}
+        record={selectedRecord}
       />
     </>
   );

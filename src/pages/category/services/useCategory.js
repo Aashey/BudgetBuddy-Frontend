@@ -47,6 +47,36 @@ const createLoanCategory = async ({ title, description }) => {
 export const useCreateLoanCategory = () => {
   return useMutation(createLoanCategory);
 };
+const updateIncomeCategory = async ({ title, description, id }) => {
+  return await apiClient.put(`/setup/income-category/${id}`, {
+    title,
+    description,
+  });
+};
+
+export const useUpdateIncomeCategory = () => {
+  return useMutation(updateIncomeCategory);
+};
+const updateExpenseCategory = async ({ title, description, id }) => {
+  return await apiClient.put(`/setup/expense-category/${id}`, {
+    title,
+    description,
+  });
+};
+
+export const useUpdateExpenseCategory = () => {
+  return useMutation(updateExpenseCategory);
+};
+const updateLoanCategory = async ({ title, description, id }) => {
+  return await apiClient.put(`/setup/loan-category/${id}`, {
+    title,
+    description,
+  });
+};
+
+export const useUpdateLoanCategory = () => {
+  return useMutation(updateLoanCategory);
+};
 
 const deleteIncomeCategory = async ({ id }) => {
   return await apiClient.delete(`/setup/income-category/${id}`);
