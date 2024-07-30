@@ -1,6 +1,5 @@
 import {
   useDeleteExpenseCategory,
-  useDeleteIncomeCategory,
   useExpenseCategory,
 } from "../services/useCategory";
 import {
@@ -134,14 +133,6 @@ const ExpenseCategory = () => {
     },
   ];
 
-  if (isLoading) {
-    return <Skeleton active />;
-  }
-
-  if (error) {
-    return <h2>Unable to get Expense Category</h2>;
-  }
-
   return (
     <>
       <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
@@ -175,7 +166,7 @@ const ExpenseCategory = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
-        dataSource={filteredData ?? data?.data?.data}
+        dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={expenseCategoryColumn}
       />
       <CategorySetupForm

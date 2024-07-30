@@ -16,7 +16,7 @@ const CustomLayout = () => {
       >
         <CustomSider />
         <Content>
-          <Card className="m-auto p-8 w-[100%] h-[100vh]">
+          <Card className="m-auto p-1 w-[100%] h-[100vh]">
             <Outlet />
           </Card>
         </Content>

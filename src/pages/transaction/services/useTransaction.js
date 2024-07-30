@@ -6,5 +6,47 @@ const getIncomeTransaction = async () => {
 };
 
 export const useIncomeTransaction = () => {
-  return useQuery("getIncomeCategory", getIncomeTransaction);
+  return useQuery("getIncomeTransaction", getIncomeTransaction, {
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+};
+const createIncomeTransaction = async ({
+  category_id,
+  amount,
+  date_received,
+  notes,
+  is_recurring,
+}) => {
+  return await apiClient.post(`/transaction/income`, {
+    category_id,
+    amount,
+    date_received,
+    notes,
+    is_recurring,
+  });
+};
+
+export const useCreateIncomeTransaction = () => {
+  return useMutation(createIncomeTransaction);
+};
+const updateIncomeTransaction = async ({
+  id,
+  category_id,
+  amount,
+  date_received,
+  notes,
+  is_recurring,
+}) => {
+  return await apiClient.post(`/transaction/income/${id}`, {
+    category_id,
+    amount,
+    date_received,
+    notes,
+    is_recurring,
+  });
+};
+
+export const useUpdateIncomeTransaction = () => {
+  return useMutation(updateIncomeTransaction);
 };

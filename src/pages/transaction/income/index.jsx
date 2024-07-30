@@ -5,7 +5,6 @@ import {
   Space,
   Switch,
   Table,
-  Tag,
   Tooltip,
   Typography,
 } from "antd";
@@ -16,6 +15,8 @@ import { CiExport } from "react-icons/ci";
 import { HiPlus } from "react-icons/hi2";
 import { IoIosEye } from "react-icons/io";
 import { useIncomeTransaction } from "../services/useTransaction";
+import ActionGroup from "../../../components/common/actiongroup";
+import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
 
 const IncomeTransaction = () => {
   const { data, error, isLoading, refetch } = useIncomeTransaction();
@@ -24,7 +25,7 @@ const IncomeTransaction = () => {
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
 
-  console.log(data);
+  console.log("data", data);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -46,22 +47,21 @@ const IncomeTransaction = () => {
   };
 
   const handleDelete = (record) => {
-    const id = record.id;
-    console.log(record.id);
-    deleteIncomeCategory.mutate(
-      { id },
-      {
-        onSuccess: () => {
-          message.success("Income category deleted successfully! ");
-          refetch();
-        },
-        onError: () => {
-          message.error("Failed to delete income category.");
-        },
-      }
-    );
+    // const id = record.id;
+    // console.log(record.id);
+    // deleteIncomeCategory.mutate(
+    //   { id },
+    //   {
+    //     onSuccess: () => {
+    //       message.success("Income category deleted successfully! ");
+    //       refetch();
+    //     },
+    //     onError: () => {
+    //       message.error("Failed to delete income category.");
+    //     },
+    //   }
+    // );
   };
-
   const handleCreateComponent = () => {
     openDrawer();
     setMode("create");
@@ -110,50 +110,17 @@ const IncomeTransaction = () => {
     {
       title: "Action",
       render: (record) => (
-        <div className="flex justify-evenly">
-          <Tooltip title="View">
-            <Button
-              onClick={() => handleViewComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-green-600"
-              icon={<IoIosEye size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <Button
-              onClick={() => handleEditComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-blue-600"
-              icon={<BiSolidEdit size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              onClick={() => handleDelete(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-red-600"
-              icon={<AiFillDelete size={22} />}
-            ></Button>
-          </Tooltip>
-        </div>
+        <ActionGroup
+          record={record}
+          handleEditComponent={handleEditComponent}
+          handleDelete={handleDelete}
+          handleViewComponent={handleViewComponent}
+        />
       ),
-      width: 150,
+      width: 250,
       align: "center",
     },
   ];
-
-  // if (isLoading) {
-  //   return <Skeleton active />;
-  // }
-
-  if (error) {
-    return (
-      <div className="flex justify-center align-middle">
-        Error getting income transaction
-        <img src="error.png" alt="Error" />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -164,8 +131,8 @@ const IncomeTransaction = () => {
               Income Transaction
             </Typography.Title>
             <Typography.Text>
-              Manage all your income categories or
-              <Typography.Link> add a new category.</Typography.Link>
+              Manage all your income transactions or
+              <Typography.Link> add a new transaction.</Typography.Link>
             </Typography.Text>
           </span>
           <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
@@ -179,19 +146,27 @@ const IncomeTransaction = () => {
           icon={<HiPlus size={20} />}
           type="primary"
         >
-          Add Income Category
+          Add Income Transaction
         </Button>
         <Input.Search
           onChange={handleSearch}
-          placeholder="Search Income Categories"
+          placeholder="Search Income Transactions"
         />
       </Space>
       <Table
         loading={isLoading}
         className="mt-5"
         rowKey="id"
-        dataSource={filteredData ?? data?.data?.data}
+        dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeTransactionColumn}
+      />
+      <TransactionSetupForm
+        isDrawerOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        type="income"
+        refetch={refetch}
+        mode={mode}
+        record={selectedRecord}
       />
     </>
   );

@@ -96,8 +96,7 @@ const CustomSider = () => {
     <>
       <Sider
         theme="light"
-        collapsible
-        collapsed={collapsed}
+        collapsed={false}
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="demo-logo-vertical" />

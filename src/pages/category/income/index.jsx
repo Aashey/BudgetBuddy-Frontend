@@ -19,6 +19,7 @@ import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
+import ActionGroup from "../../../components/common/actiongroup";
 
 const IncomeCategory = () => {
   const { data, error, isLoading, refetch } = useIncomeCategory();
@@ -100,50 +101,17 @@ const IncomeCategory = () => {
     {
       title: "Action",
       render: (record) => (
-        <div className="flex justify-evenly">
-          <Tooltip title="View">
-            <Button
-              onClick={() => handleViewComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-green-600"
-              icon={<IoIosEye size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <Button
-              onClick={() => handleEditComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-blue-600"
-              icon={<BiSolidEdit size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              onClick={() => handleDelete(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-red-600"
-              icon={<AiFillDelete size={22} />}
-            ></Button>
-          </Tooltip>
-        </div>
+        <ActionGroup
+          record={record}
+          handleEditComponent={handleEditComponent}
+          handleDelete={handleDelete}
+          handleViewComponent={handleViewComponent}
+        />
       ),
-      width: 250,
+      width: 200,
       align: "center",
     },
   ];
-
-  // if (isLoading) {
-  //   return <Skeleton active />;
-  // }
-
-  if (error) {
-    return (
-      <div className="flex justify-center align-middle">
-        Error getting income category
-        <img src="error.png" alt="Error" />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -180,7 +148,7 @@ const IncomeCategory = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
-        dataSource={filteredData ?? data?.data?.data}
+        dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeCategoryColumn}
       />
       <CategorySetupForm
