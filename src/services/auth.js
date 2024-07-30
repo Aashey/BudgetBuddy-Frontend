@@ -5,6 +5,7 @@ const loginAPI = async ({ email, password }) => {
   return await apiClient.post(`/login`, { email, password });
 };
 const onSuccess = (data) => {
+  console.log(data);
   localStorage.setItem("authToken", data.data.token);
 };
 const onError = (error) => {

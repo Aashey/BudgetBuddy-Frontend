@@ -54,8 +54,8 @@ const CustomSider = () => {
       ],
     },
     {
-      key: "/transaction",
-      label: "Transaction",
+      key: "/transactions",
+      label: "Transactions",
       icon: <TbTransactionDollar size={22} />,
       children: [
         {
@@ -79,8 +79,8 @@ const CustomSider = () => {
           icon: <TbPigMoney size={22} />,
         },
         {
-          key: "/transaction/loan",
-          label: <NavLink to="/transaction/loan">Loan</NavLink>,
+          key: "/transaction/withdraw",
+          label: <NavLink to="/transaction/withdraw">Withdraw</NavLink>,
           icon: <GiTakeMyMoney size={22} />,
         },
       ],

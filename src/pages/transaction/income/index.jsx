@@ -1,32 +1,30 @@
-import { HiPlus } from "react-icons/hi2";
-import {
-  useDeleteIncomeCategory,
-  useIncomeCategory,
-} from "../services/useCategory";
 import {
   Button,
   Input,
+  message,
   Space,
+  Switch,
   Table,
+  Tag,
   Tooltip,
   Typography,
-  Skeleton,
-  message,
 } from "antd";
-import { IoIosEye } from "react-icons/io";
+import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
-import CategorySetupForm from "../../../components/category/categorySetupForm";
-import { useState } from "react";
+import { HiPlus } from "react-icons/hi2";
+import { IoIosEye } from "react-icons/io";
+import { useIncomeTransaction } from "../services/useTransaction";
 
-const IncomeCategory = () => {
-  const { data, error, isLoading, refetch } = useIncomeCategory();
-  const deleteIncomeCategory = useDeleteIncomeCategory();
+const IncomeTransaction = () => {
+  const { data, error, isLoading, refetch } = useIncomeTransaction();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
+
+  console.log(data);
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -79,7 +77,7 @@ const IncomeCategory = () => {
     setSelectedRecord(record);
   };
 
-  const incomeCategoryColumn = [
+  const incomeTransactionColumn = [
     {
       title: "ID",
       dataIndex: "id",
@@ -87,15 +85,27 @@ const IncomeCategory = () => {
       width: 200,
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Category",
+      dataIndex: "category_title",
+      key: "category_title",
       width: 400,
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Notes",
+      dataIndex: "notes",
+      key: "notes",
+    },
+    {
+      title: "Recurring",
+      dataIndex: "is_recurring",
+      key: "is_recurring",
+      align: "center",
+      render: (isRecurring) => <Switch size="small" value={isRecurring} />,
     },
     {
       title: "Action",
@@ -127,7 +137,7 @@ const IncomeCategory = () => {
           </Tooltip>
         </div>
       ),
-      width: 250,
+      width: 150,
       align: "center",
     },
   ];
@@ -139,7 +149,7 @@ const IncomeCategory = () => {
   if (error) {
     return (
       <div className="flex justify-center align-middle">
-        Error getting income category
+        Error getting income transaction
         <img src="error.png" alt="Error" />
       </div>
     );
@@ -151,7 +161,7 @@ const IncomeCategory = () => {
         <div className="flex justify-between align-center ">
           <span>
             <Typography.Title className="text-white" level={2}>
-              Income Category
+              Income Transaction
             </Typography.Title>
             <Typography.Text>
               Manage all your income categories or
@@ -181,18 +191,10 @@ const IncomeCategory = () => {
         className="mt-5"
         rowKey="id"
         dataSource={filteredData ?? data?.data?.data}
-        columns={incomeCategoryColumn}
-      />
-      <CategorySetupForm
-        isDrawerOpen={isDrawerOpen}
-        onClose={closeDrawer}
-        type={"income"}
-        refetch={refetch}
-        mode={mode}
-        record={selectedRecord}
+        columns={incomeTransactionColumn}
       />
     </>
   );
 };
 
-export default IncomeCategory;
+export default IncomeTransaction;
