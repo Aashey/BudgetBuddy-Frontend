@@ -14,17 +14,19 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import {
+  useCreateExpenseTransaction,
   // useCreateExpenseTransaction,
   useCreateIncomeTransaction,
+  useUpdateExpenseTransaction,
   useUpdateIncomeTransaction,
   //   useCreateLoanTransaction,
   //   useUpdateExpenseTransaction,
   //   useUpdateLoanTransaction,
 } from "../../pages/transaction/services/useTransaction";
-import { useIncomeCategory } from "../../pages/category/services/useCategory";
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
 import dayjs from "dayjs";
 import FormDebug from "../../helper/FormDebug";
+import useCategoryData from "../../pages/category/services/useCategoryData";
 
 const TransactionSetupForm = ({
   isDrawerOpen,
@@ -37,25 +39,23 @@ const TransactionSetupForm = ({
   const [form] = Form.useForm();
   const { Text } = Typography;
   const createIncomeTransaction = useCreateIncomeTransaction();
-  // const createExpenseTransaction = useCreateExpenseTransaction();
+  const createExpenseTransaction = useCreateExpenseTransaction();
   // const createLoanTransaction = useCreateLoanTransaction();
   const updateIncomeTransaction = useUpdateIncomeTransaction();
-  // const updateExpenseTransaction = useUpdateExpenseTransaction();
+  const updateExpenseTransaction = useUpdateExpenseTransaction();
   // const updateLoanTransaction = useUpdateLoanTransaction();
-  const {
-    data: incomeCategoryData,
-    error: incomeCategoryError,
-    isLoading: incomeCategoryIsLoading,
-  } = useIncomeCategory();
+
+  const { data, error, isLoading } = useCategoryData(type);
+
   const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
-    const updatedData = incomeCategoryData?.data?.data?.map((data) => ({
+    const updatedData = data?.data?.data?.map((data) => ({
       value: data.id,
       label: data.title,
     }));
     setCategoryData(updatedData);
-  }, [incomeCategoryData]);
+  }, [data]);
 
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
@@ -74,47 +74,55 @@ const TransactionSetupForm = ({
   const OnFinish = (values) => {
     const reformattedValues = {
       ...values,
-      date_received: dayjs(values.date_received).format("YYYY-MM-DD"),
+      category_id: values.category_title,
+      date: dayjs(values.date).format("YYYY-MM-DD"),
       is_recurring:
         values.is_recurring === undefined ? false : values.is_recurring,
     };
     console.log(reformattedValues);
     if (type === "income") {
       if (mode === "create") {
-        createIncomeTransaction.mutate(reformattedValues, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
+        createIncomeTransaction.mutate(
+          { ...reformattedValues, date_received: reformattedValues.date },
+          {
+            onSuccess: handleMutationSuccess,
+            onError: handleMutationError,
+          }
+        );
       } else {
         const updatedValues = {
-          title: values.title,
-          description: values.description,
+          ...reformattedValues,
+          date_received: reformattedValues.date,
           id: record.id,
         };
+
         updateIncomeTransaction.mutate(updatedValues, {
           onSuccess: handleMutationSuccess,
           onError: handleMutationError,
         });
       }
+    } else if (type === "expense") {
+      if (mode === "create") {
+        createExpenseTransaction.mutate(
+          { ...reformattedValues, date_spent: reformattedValues.date },
+          {
+            onSuccess: handleMutationSuccess,
+            onError: handleMutationError,
+          }
+        );
+      } else {
+        const updatedValues = {
+          ...reformattedValues,
+          date_spent: reformattedValues.date,
+          id: record.id,
+        };
+        updateExpenseTransaction.mutate(updatedValues, {
+          onSuccess: handleMutationSuccess,
+          onError: handleMutationError,
+        });
+      }
     }
-    //  else if (type === "expense") {
-    //   if (mode === "create") {
-    //     createExpenseTransaction.mutate(values, {
-    //       onSuccess: handleMutationSuccess,
-    //       onError: handleMutationError,
-    //     });
-    //   } else {
-    //     const updatedValues = {
-    //       title: values.title,
-    //       description: values.description,
-    //       id: record.id,
-    //     };
-    //     updateExpenseTransaction.mutate(updatedValues, {
-    //       onSuccess: handleMutationSuccess,
-    //       onError: handleMutationError,
-    //     });
-    //   }
-    // } else {
+    //  else {
     //   if (mode === "create") {
     //     createLoanTransaction.mutate(values, {
     //       onSuccess: handleMutationSuccess,
@@ -136,7 +144,27 @@ const TransactionSetupForm = ({
 
   useEffect(() => {
     if ((mode == "edit" || mode == "view") && record) {
-      form.setFieldsValue(record);
+      console.log(categoryData);
+      const requiredCategory = categoryData.filter(
+        (data) => data.label === record.category_title
+      );
+
+      const category_id = requiredCategory[0].value;
+
+      console.log(requiredCategory);
+      console.log(category_id);
+      form.setFieldsValue({
+        ...record,
+        category_title: category_id,
+        date:
+          type === "income"
+            ? record.date_received
+              ? dayjs(record.date_received)
+              : null
+            : record.date_spent
+            ? dayjs(record.date_spent)
+            : null,
+      });
     } else {
       form.resetFields();
     }
@@ -162,12 +190,12 @@ const TransactionSetupForm = ({
             <Col span={12}>
               <Form.Item
                 label={<Text strong>Category</Text>}
-                name="category_id"
+                name="category_title"
                 rules={[{ required: true, message: "This field is required." }]}
               >
                 <Select
                   showSearch
-                  loading={incomeCategoryIsLoading}
+                  loading={isLoading}
                   style={{ width: "100%" }}
                   placeholder="Select a category"
                   options={categoryData}
@@ -197,10 +225,7 @@ const TransactionSetupForm = ({
 
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item
-                label={<Text strong>Date</Text>}
-                name={`date_${type === "income" ? "received" : "spent"}`}
-              >
+              <Form.Item label={<Text strong>Date</Text>} name="date">
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
             </Col>
@@ -229,7 +254,7 @@ const TransactionSetupForm = ({
                 type="primary"
                 htmlType="submit"
               >
-                Add
+                {mode === "edit" ? "Update" : "Add"}
               </Button>
             </Form.Item>
           )}

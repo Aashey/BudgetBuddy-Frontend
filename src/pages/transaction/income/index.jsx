@@ -9,12 +9,12 @@ import {
   Typography,
 } from "antd";
 import { useState } from "react";
-import { AiFillDelete } from "react-icons/ai";
-import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
 import { HiPlus } from "react-icons/hi2";
-import { IoIosEye } from "react-icons/io";
-import { useIncomeTransaction } from "../services/useTransaction";
+import {
+  useIncomeTransaction,
+  useDeleteIncomeTransaction,
+} from "../services/useTransaction";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
 
@@ -24,8 +24,7 @@ const IncomeTransaction = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
-
-  console.log("data", data);
+  const deleteIncomeTransaction = useDeleteIncomeTransaction();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -47,20 +46,20 @@ const IncomeTransaction = () => {
   };
 
   const handleDelete = (record) => {
-    // const id = record.id;
-    // console.log(record.id);
-    // deleteIncomeCategory.mutate(
-    //   { id },
-    //   {
-    //     onSuccess: () => {
-    //       message.success("Income category deleted successfully! ");
-    //       refetch();
-    //     },
-    //     onError: () => {
-    //       message.error("Failed to delete income category.");
-    //     },
-    //   }
-    // );
+    const id = record.id;
+    console.log(record.id);
+    deleteIncomeTransaction.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          message.success("Income transaction deleted successfully! ");
+          refetch();
+        },
+        onError: () => {
+          message.error("Failed to delete income transaction.");
+        },
+      }
+    );
   };
   const handleCreateComponent = () => {
     openDrawer();
@@ -82,13 +81,19 @@ const IncomeTransaction = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
+      width: 100,
+    },
+    {
+      title: "Date Received",
+      dataIndex: "date_received",
+      key: "date_received",
       width: 200,
     },
     {
       title: "Category",
       dataIndex: "category_title",
       key: "category_title",
-      width: 400,
+      width: 200,
     },
     {
       title: "Amount",
@@ -106,6 +111,7 @@ const IncomeTransaction = () => {
       key: "is_recurring",
       align: "center",
       render: (isRecurring) => <Switch size="small" value={isRecurring} />,
+      width: 100,
     },
     {
       title: "Action",
