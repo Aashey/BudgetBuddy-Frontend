@@ -1,25 +1,15 @@
-import {
-  Button,
-  Card,
-  Input,
-  Layout,
-  Menu,
-  message,
-  Space,
-  Typography,
-} from "antd";
+import { Layout, Menu, message, Typography } from "antd";
 import { useState } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../../services/auth";
 import {
-  HiMiniWrenchScrewdriver,
   HiOutlineArrowRightOnRectangle,
   HiMiniChartPie,
-  HiMiniArrowTrendingUp,
-  HiMiniArrowTrendingDown,
 } from "react-icons/hi2";
-import { TbPigMoney, TbTransactionDollar } from "react-icons/tb";
-import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
+import { MdOutlineAttachMoney } from "react-icons/md";
+
+import { TbCategoryPlus, TbReportMoney } from "react-icons/tb";
+import { CiLogout } from "react-icons/ci";
 
 const CustomSider = () => {
   const { Sider } = Layout;
@@ -37,12 +27,12 @@ const CustomSider = () => {
     {
       key: "/dashboard",
       label: <NavLink to="/dashboard">Dashboard</NavLink>,
-      icon: <HiMiniChartPie size={20} />,
+      icon: <HiMiniChartPie size={22} />,
     },
     {
       key: "/categories",
       label: "Categories",
-      icon: <HiMiniWrenchScrewdriver />,
+      icon: <TbCategoryPlus size={22} />,
       children: [
         {
           key: "/setup/income-category",
@@ -63,7 +53,7 @@ const CustomSider = () => {
     {
       key: "/transactions",
       label: "Transactions",
-      icon: <TbTransactionDollar size={22} />,
+      icon: <MdOutlineAttachMoney size={22} />,
       children: [
         {
           key: "/transaction",
@@ -88,9 +78,24 @@ const CustomSider = () => {
       ],
     },
     {
+      key: "/reports",
+      label: "Reports",
+      icon: <TbReportMoney size={22} />,
+      children: [
+        {
+          key: "/report/income-report",
+          label: <NavLink to="/report/income-report">Income Report</NavLink>,
+        },
+        {
+          key: "/report/expense-report",
+          label: <NavLink to="/report/expense-report">Expense Report</NavLink>,
+        },
+      ],
+    },
+    {
       key: "/logout",
       label: <Typography.Link onClick={onLogout}>Logout</Typography.Link>,
-      icon: <HiOutlineArrowRightOnRectangle size={20} />,
+      icon: <CiLogout size={22} />,
     },
   ];
   const [collapsed, setCollapsed] = useState(true);
