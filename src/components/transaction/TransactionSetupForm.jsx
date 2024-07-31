@@ -76,7 +76,7 @@ const TransactionSetupForm = ({
       ...values,
       date_received: dayjs(values.date_received).format("YYYY-MM-DD"),
       is_recurring:
-        values.is_recurring === undefined ? null : values.is_recurring,
+        values.is_recurring === undefined ? false : values.is_recurring,
     };
     console.log(reformattedValues);
     if (type === "income") {
