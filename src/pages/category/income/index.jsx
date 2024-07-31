@@ -1,25 +1,14 @@
-import { HiPlus } from "react-icons/hi2";
 import {
   useDeleteIncomeCategory,
   useIncomeCategory,
 } from "../services/useCategory";
-import {
-  Button,
-  Input,
-  Space,
-  Table,
-  Tooltip,
-  Typography,
-  Skeleton,
-  message,
-} from "antd";
-import { IoIosEye } from "react-icons/io";
-import { AiFillDelete } from "react-icons/ai";
-import { BiSolidEdit } from "react-icons/bi";
-import { CiExport } from "react-icons/ci";
+import { Table, message } from "antd";
+
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
+import TitleHeader from "../../../components/common/header";
+import LowerHeader from "../../../components/common/header/LowerHeader";
 
 const IncomeCategory = () => {
   const { data, error, isLoading, refetch } = useIncomeCategory();
@@ -76,7 +65,7 @@ const IncomeCategory = () => {
   };
   const handleEditComponent = (record) => {
     openDrawer();
-    setMode("edit");
+    setMode("update");
     setSelectedRecord(record);
   };
 
@@ -91,7 +80,7 @@ const IncomeCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 400,
+      width: 250,
     },
     {
       title: "Description",
@@ -108,42 +97,32 @@ const IncomeCategory = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 200,
+      width: 250,
       align: "center",
     },
   ];
 
   return (
     <>
-      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
-        <div className="flex justify-between align-center ">
-          <span>
-            <Typography.Title className="text-white" level={2}>
-              Income Category
-            </Typography.Title>
-            <Typography.Text>
-              Manage all your income categories or
-              <Typography.Link> add a new category.</Typography.Link>
-            </Typography.Text>
-          </span>
-          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
-            Export
-          </Button>
-        </div>
-      </div>
-      <Space className="mt-5 mb-3 flex justify-between">
-        <Button
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={20} />}
-          type="primary"
-        >
-          Add Income Category
-        </Button>
-        <Input.Search
-          onChange={handleSearch}
-          placeholder="Search Income Categories"
-        />
-      </Space>
+      <TitleHeader
+        textProp={{
+          type: "income",
+          method: "category",
+          plural_method: "categories",
+        }}
+        handleCreateComponent={handleCreateComponent}
+      />
+
+      <LowerHeader
+        handleSearch={handleSearch}
+        handleCreateComponent={handleCreateComponent}
+        textProp={{
+          type: "income",
+          method: "category",
+          plural_method: "categories",
+        }}
+      />
+
       <Table
         loading={isLoading}
         className="mt-5"
@@ -151,6 +130,7 @@ const IncomeCategory = () => {
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeCategoryColumn}
       />
+
       <CategorySetupForm
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}

@@ -1,4 +1,7 @@
-import { useIncomeCategory, useExpenseCategory } from "./useCategory";
+import {
+  useIncomeCategory,
+  useExpenseCategory,
+} from "../../pages/category/services/useCategory";
 
 const useCategoryData = (type) => {
   const {

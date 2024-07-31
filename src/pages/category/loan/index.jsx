@@ -19,6 +19,9 @@ import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
+import ActionGroup from "../../../components/common/actiongroup";
+import TitleHeader from "../../../components/common/header";
+import LowerHeader from "../../../components/common/header/LowerHeader";
 
 const LoanCategory = () => {
   const { data, error, isLoading, refetch } = useGetLoanCategory();
@@ -91,7 +94,7 @@ const LoanCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 400,
+      width: 250,
     },
     {
       title: "Description",
@@ -101,32 +104,12 @@ const LoanCategory = () => {
     {
       title: "Action",
       render: (record) => (
-        <div className="flex justify-evenly">
-          <Tooltip title="View">
-            <Button
-              onClick={() => handleViewComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-green-600"
-              icon={<IoIosEye size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <Button
-              onClick={() => handleEditComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-blue-600"
-              icon={<BiSolidEdit size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              onClick={() => handleDelete(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-red-600"
-              icon={<AiFillDelete size={22} />}
-            ></Button>
-          </Tooltip>
-        </div>
+        <ActionGroup
+          handleViewComponent={handleViewComponent}
+          handleEditComponent={handleEditComponent}
+          handleDelete={handleDelete}
+          record={record}
+        />
       ),
       width: 250,
       align: "center",
@@ -135,35 +118,23 @@ const LoanCategory = () => {
 
   return (
     <>
-      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
-        <div className="flex justify-between align-center ">
-          <span>
-            <Typography.Title className="text-white" level={2}>
-              Loan Category
-            </Typography.Title>
-            <Typography.Text>
-              Manage all your loan categories or
-              <Typography.Link> add a new category.</Typography.Link>
-            </Typography.Text>
-          </span>
-          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
-            Export
-          </Button>
-        </div>
-      </div>
-      <Space className="mt-5 mb-3 flex justify-between">
-        <Button
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={20} />}
-          type="primary"
-        >
-          Add Loan Category
-        </Button>
-        <Input.Search
-          onChange={handleSearch}
-          placeholder="Search Income Categories"
-        />
-      </Space>
+      <TitleHeader
+        textProp={{
+          type: "loan",
+          method: "category",
+          multi_method: "categories",
+        }}
+        handleCreateComponent={handleCreateComponent}
+      />
+      <LowerHeader
+        handleSearch={handleSearch}
+        handleCreateComponent={handleCreateComponent}
+        textProp={{
+          type: "loan",
+          method: "category",
+          plural_method: "categories",
+        }}
+      />
       <Table
         loading={isLoading}
         className="mt-5"

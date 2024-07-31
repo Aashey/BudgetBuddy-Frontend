@@ -1,22 +1,14 @@
-import {
-  Button,
-  Input,
-  message,
-  Space,
-  Switch,
-  Table,
-  Tooltip,
-  Typography,
-} from "antd";
+import { message, Switch, Table } from "antd";
 import { useState } from "react";
-import { CiExport } from "react-icons/ci";
-import { HiPlus } from "react-icons/hi2";
 import {
   useIncomeTransaction,
   useDeleteIncomeTransaction,
 } from "../services/useTransaction";
+
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
+import TitleHeader from "../../../components/common/header";
+import LowerHeader from "../../../components/common/header/LowerHeader";
 
 const IncomeTransaction = () => {
   const { data, error, isLoading, refetch } = useIncomeTransaction();
@@ -40,7 +32,7 @@ const IncomeTransaction = () => {
       return;
     }
     const filterData = data?.data?.data.filter((item) =>
-      item.title.toLowerCase().includes(searchValue)
+      item.category_title.toLowerCase().includes(searchValue)
     );
     setFilteredData(filterData);
   };
@@ -72,7 +64,7 @@ const IncomeTransaction = () => {
   };
   const handleEditComponent = (record) => {
     openDrawer();
-    setMode("edit");
+    setMode("update");
     setSelectedRecord(record);
   };
 
@@ -99,11 +91,13 @@ const IncomeTransaction = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      width: 200,
     },
     {
       title: "Notes",
       dataIndex: "notes",
       key: "notes",
+      width: 200,
     },
     {
       title: "Recurring",
@@ -130,35 +124,25 @@ const IncomeTransaction = () => {
 
   return (
     <>
-      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
-        <div className="flex justify-between align-center ">
-          <span>
-            <Typography.Title className="text-white" level={2}>
-              Income Transaction
-            </Typography.Title>
-            <Typography.Text>
-              Manage all your income transactions or
-              <Typography.Link> add a new transaction.</Typography.Link>
-            </Typography.Text>
-          </span>
-          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
-            Export
-          </Button>
-        </div>
-      </div>
-      <Space className="mt-5 mb-3 flex justify-between">
-        <Button
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={20} />}
-          type="primary"
-        >
-          Add Income Transaction
-        </Button>
-        <Input.Search
-          onChange={handleSearch}
-          placeholder="Search Income Transactions"
-        />
-      </Space>
+      <TitleHeader
+        textProp={{
+          type: "income",
+          method: "transaction",
+          multi_method: "transactions",
+        }}
+        handleCreateComponent={handleCreateComponent}
+      />
+
+      <LowerHeader
+        handleSearch={handleSearch}
+        handleCreateComponent={handleCreateComponent}
+        textProp={{
+          type: "income",
+          method: "transaction",
+          plural_method: "transactions",
+        }}
+      />
+
       <Table
         loading={isLoading}
         className="mt-5"
@@ -166,6 +150,7 @@ const IncomeTransaction = () => {
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeTransactionColumn}
       />
+
       <TransactionSetupForm
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}

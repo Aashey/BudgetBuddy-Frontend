@@ -8,14 +8,16 @@ import {
 } from "../services/useTransaction";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
+import TitleHeader from "../../../components/common/header";
+import LowerHeader from "../../../components/common/header/LowerHeader";
 
 const ExpenseTransaction = () => {
   const { data, error, isLoading, refetch } = useExpenseTransaction();
-  const [filteredData, setFilteredData] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [mode, setMode] = useState("");
-  const [selectedRecord, setSelectedRecord] = useState();
   const deleteExpenseTransaction = useDeleteExpenseTransaction();
+  const [mode, setMode] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [filteredData, setFilteredData] = useState(null);
+  const [selectedRecord, setSelectedRecord] = useState();
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -31,7 +33,7 @@ const ExpenseTransaction = () => {
       return;
     }
     const filterData = data?.data?.data.filter((item) =>
-      item.title.toLowerCase().includes(searchValue)
+      item.category_title.toLowerCase().includes(searchValue)
     );
     setFilteredData(filterData);
   };
@@ -52,6 +54,7 @@ const ExpenseTransaction = () => {
       }
     );
   };
+
   const handleCreateComponent = () => {
     openDrawer();
     setMode("create");
@@ -63,7 +66,7 @@ const ExpenseTransaction = () => {
   };
   const handleEditComponent = (record) => {
     openDrawer();
-    setMode("edit");
+    setMode("update");
     setSelectedRecord(record);
   };
 
@@ -90,11 +93,13 @@ const ExpenseTransaction = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      width: 200,
     },
     {
       title: "Notes",
       dataIndex: "notes",
       key: "notes",
+      width: 200,
     },
     {
       title: "Recurring",
@@ -121,35 +126,23 @@ const ExpenseTransaction = () => {
 
   return (
     <>
-      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
-        <div className="flex justify-between align-center ">
-          <span>
-            <Typography.Title className="text-white" level={2}>
-              Expense Transaction
-            </Typography.Title>
-            <Typography.Text>
-              Manage all your expense transactions or
-              <Typography.Link> add a new transaction.</Typography.Link>
-            </Typography.Text>
-          </span>
-          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
-            Export
-          </Button>
-        </div>
-      </div>
-      <Space className="mt-5 mb-3 flex justify-between">
-        <Button
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={20} />}
-          type="primary"
-        >
-          Add Expense Transaction
-        </Button>
-        <Input.Search
-          onChange={handleSearch}
-          placeholder="Search Expense Transactions"
-        />
-      </Space>
+      <TitleHeader
+        textProp={{
+          type: "expense",
+          method: "transaction",
+          multi_method: "transactions",
+        }}
+        handleCreateComponent={handleCreateComponent}
+      />
+      <LowerHeader
+        handleSearch={handleSearch}
+        handleCreateComponent={handleCreateComponent}
+        textProp={{
+          type: "expense",
+          method: "transaction",
+          plural_method: "transactions",
+        }}
+      />
       <Table
         loading={isLoading}
         className="mt-5"

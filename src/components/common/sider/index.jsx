@@ -1,4 +1,13 @@
-import { Button, Card, Layout, Menu, message, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Input,
+  Layout,
+  Menu,
+  message,
+  Space,
+  Typography,
+} from "antd";
 import { useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../../services/auth";
@@ -14,6 +23,7 @@ import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
 
 const CustomSider = () => {
   const { Sider } = Layout;
+  const { Title } = Typography;
   const location = useLocation();
   const navigate = useNavigate();
   const onLogout = () => {
@@ -30,26 +40,23 @@ const CustomSider = () => {
       icon: <HiMiniChartPie size={20} />,
     },
     {
-      key: "/setup",
-      label: "Setup",
+      key: "/categories",
+      label: "Categories",
       icon: <HiMiniWrenchScrewdriver />,
       children: [
         {
           key: "/setup/income-category",
           label: <NavLink to="/setup/income-category">Income Category</NavLink>,
-          icon: <HiMiniArrowTrendingUp />,
         },
         {
           key: "/setup/expense-category",
           label: (
             <NavLink to="/setup/expense-category">Expense Category</NavLink>
           ),
-          icon: <HiMiniArrowTrendingDown />,
         },
         {
           key: "/setup/loan-category",
           label: <NavLink to="/setup/loan-category">Loan Category</NavLink>,
-          icon: <HiMiniArrowTrendingDown />,
         },
       ],
     },
@@ -61,27 +68,22 @@ const CustomSider = () => {
         {
           key: "/transaction",
           label: <NavLink to="/transaction">Transaction</NavLink>,
-          icon: <TbTransactionDollar size={22} />,
         },
         {
           key: "/transaction/income",
           label: <NavLink to="/transaction/income">Income</NavLink>,
-          icon: <GiReceiveMoney size={22} />,
         },
         {
           key: "/transaction/expense",
           label: <NavLink to="/transaction/expense">Expense</NavLink>,
-          icon: <GiPayMoney size={22} />,
         },
         {
           key: "/transaction/saving",
           label: <NavLink to="/transaction/saving">Saving</NavLink>,
-          icon: <TbPigMoney size={22} />,
         },
         {
           key: "/transaction/withdraw",
           label: <NavLink to="/transaction/withdraw">Withdraw</NavLink>,
-          icon: <GiTakeMyMoney size={22} />,
         },
       ],
     },
@@ -95,11 +97,25 @@ const CustomSider = () => {
   return (
     <>
       <Sider
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "sticky",
+          top: 0,
+          left: 0,
+        }}
         theme="light"
         collapsed={false}
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="demo-logo-vertical" />
+        <Title
+          style={{ color: "#2d5bbd" }}
+          level={3}
+          className="flex justify-center mt-2 mb-4"
+        >
+          Budget Buddy
+        </Title>
         <Menu
           theme="light"
           selectedKeys={[location.pathname]}

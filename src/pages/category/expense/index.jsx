@@ -9,7 +9,6 @@ import {
   Tooltip,
   Table,
   Typography,
-  Skeleton,
   message,
 } from "antd";
 import { HiPlus } from "react-icons/hi2";
@@ -19,6 +18,9 @@ import { BiSolidEdit } from "react-icons/bi";
 import { CiExport } from "react-icons/ci";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
+import ActionGroup from "../../../components/common/actiongroup";
+import TitleHeader from "../../../components/common/header";
+import LowerHeader from "../../../components/common/header/LowerHeader";
 
 const ExpenseCategory = () => {
   const { data, error, isLoading, refetch } = useExpenseCategory();
@@ -91,7 +93,7 @@ const ExpenseCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 400,
+      width: 250,
     },
     {
       title: "Description",
@@ -101,32 +103,12 @@ const ExpenseCategory = () => {
     {
       title: "Action",
       render: (record) => (
-        <div className="flex justify-evenly">
-          <Tooltip title="View">
-            <Button
-              onClick={() => handleViewComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-green-600"
-              icon={<IoIosEye size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <Button
-              onClick={() => handleEditComponent(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-blue-600"
-              icon={<BiSolidEdit size={22} />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              onClick={() => handleDelete(record)}
-              type="none"
-              className="bg-none text-gray-600 hover:text-red-600"
-              icon={<AiFillDelete size={22} />}
-            ></Button>
-          </Tooltip>
-        </div>
+        <ActionGroup
+          record={record}
+          handleViewComponent={handleViewComponent}
+          handleEditComponent={handleEditComponent}
+          handleDelete={handleDelete}
+        />
       ),
       width: 250,
       align: "center",
@@ -135,33 +117,23 @@ const ExpenseCategory = () => {
 
   return (
     <>
-      <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
-        <div className="flex justify-between align-center ">
-          <span>
-            <Typography.Title level={2}>Expense Category</Typography.Title>
-            <Typography.Text className="text-gray-700">
-              Manage all your expense categories or
-              <Typography.Link> add a new category.</Typography.Link>
-            </Typography.Text>
-          </span>
-          <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
-            Export
-          </Button>
-        </div>
-      </div>
-      <Space className="mt-5 mb-3 flex justify-between">
-        <Button
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={20} />}
-          type="primary"
-        >
-          Add Expense Category
-        </Button>
-        <Input.Search
-          onChange={handleSearch}
-          placeholder="Search Expense Categories"
-        />
-      </Space>
+      <TitleHeader
+        textProp={{
+          type: "expense",
+          method: "category",
+          multi_method: "categories",
+        }}
+        handleCreateComponent={handleCreateComponent}
+      />
+      <LowerHeader
+        handleSearch={handleSearch}
+        handleCreateComponent={handleCreateComponent}
+        textProp={{
+          type: "expense",
+          method: "category",
+          plural_method: "categories",
+        }}
+      />
       <Table
         loading={isLoading}
         className="mt-5"

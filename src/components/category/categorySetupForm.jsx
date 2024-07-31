@@ -1,5 +1,5 @@
 import { Button, Drawer, Form, Input, message } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   useCreateExpenseCategory,
   useCreateIncomeCategory,
@@ -9,6 +9,7 @@ import {
   useUpdateLoanCategory,
 } from "../../pages/category/services/useCategory";
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
+import { customMutation } from "../../services/customMutation";
 
 const CategorySetupForm = ({
   isDrawerOpen,
@@ -41,62 +42,35 @@ const CategorySetupForm = ({
   };
 
   const OnFinish = (values) => {
-    if (type === "income") {
-      if (mode === "create") {
-        createIncomeCategory.mutate(values, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      } else {
-        const updatedValues = {
-          title: values.title,
-          description: values.description,
-          id: record.id,
-        };
-        updateIncomeCategory.mutate(updatedValues, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      }
-    } else if (type === "expense") {
-      if (mode === "create") {
-        createExpenseCategory.mutate(values, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      } else {
-        const updatedValues = {
-          title: values.title,
-          description: values.description,
-          id: record.id,
-        };
-        updateExpenseCategory.mutate(updatedValues, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      }
-    } else {
-      if (mode === "create") {
-        createLoanCategory.mutate(values, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      } else {
-        const updatedValues = {
-          title: values.title,
-          description: values.description,
-          id: record.id,
-        };
-        updateLoanCategory.mutate(updatedValues, {
-          onSuccess: handleMutationSuccess,
-          onError: handleMutationError,
-        });
-      }
-    }
+    const categoryMap = {
+      income: {
+        create: createIncomeCategory,
+        update: updateIncomeCategory,
+      },
+      expense: {
+        create: createExpenseCategory,
+        update: updateExpenseCategory,
+      },
+      loan: {
+        create: createLoanCategory,
+        update: updateLoanCategory,
+      },
+    };
+
+    const currentCategory = categoryMap[type][mode];
+
+    const payload = mode === "create" ? values : { ...values, id: record.id };
+
+    customMutation(
+      currentCategory,
+      payload,
+      handleMutationSuccess,
+      handleMutationError
+    );
   };
 
   useEffect(() => {
-    if ((mode == "edit" || mode == "view") && record) {
+    if ((mode == "update" || mode == "view") && record) {
       form.setFieldsValue(record);
     } else {
       form.resetFields();
