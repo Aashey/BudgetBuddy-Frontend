@@ -1,15 +1,14 @@
-import { Button, Input, message, Space, Switch, Table, Typography } from "antd";
+import { message, Switch, Table } from "antd";
 import { useState } from "react";
-import { CiExport } from "react-icons/ci";
-import { HiPlus } from "react-icons/hi2";
-import {
-  useExpenseTransaction,
-  useDeleteExpenseTransaction,
-} from "../services/useTransaction";
+
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+import {
+  useDeleteExpenseTransaction,
+  useExpenseTransaction,
+} from "./services/useExpenseAPI";
 
 const ExpenseTransaction = () => {
   const { data, error, isLoading, refetch } = useExpenseTransaction();

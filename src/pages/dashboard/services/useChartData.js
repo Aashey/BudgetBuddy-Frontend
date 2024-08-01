@@ -7,6 +7,8 @@ const getChartData = async () => {
 
 export const useGetChartData = () => {
   return useQuery("getChartData", getChartData, {
+    refetchOnWindowFocus: false,
+
     retry: 1,
   });
 };

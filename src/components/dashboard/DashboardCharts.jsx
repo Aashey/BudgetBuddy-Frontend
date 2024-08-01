@@ -85,7 +85,7 @@ const DashboardCharts = ({ incomeData, expenseData }) => {
         className="flex justify-end items-end mb-4"
       />
 
-      <div style={{ maxWidth: "82vw" }}>
+      <div style={{ maxWidth: "90vw" }}>
         <Chart
           options={chartOptions}
           series={income_expense_series}

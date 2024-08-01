@@ -1,14 +1,13 @@
 import { message, Switch, Table } from "antd";
 import { useState } from "react";
-import {
-  useIncomeTransaction,
-  useDeleteIncomeTransaction,
-} from "../services/useTransaction";
-
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+import {
+  useDeleteIncomeTransaction,
+  useIncomeTransaction,
+} from "./services/useIncomeAPI";
 
 const IncomeTransaction = () => {
   const { data, error, isLoading, refetch } = useIncomeTransaction();

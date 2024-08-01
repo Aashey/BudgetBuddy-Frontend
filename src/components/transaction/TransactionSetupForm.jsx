@@ -13,21 +13,27 @@ import {
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";
-import {
-  useCreateExpenseTransaction,
-  // useCreateExpenseTransaction,
-  useCreateIncomeTransaction,
-  useUpdateExpenseTransaction,
-  useUpdateIncomeTransaction,
-  //   useCreateLoanTransaction,
-  //   useUpdateExpenseTransaction,
-  //   useUpdateLoanTransaction,
-} from "../../pages/transaction/services/useTransaction";
+
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
 import dayjs from "dayjs";
-import FormDebug from "../../helper/FormDebug";
 import useCategoryData from "../../hooks/category/useCategoryData";
 import { customMutation } from "../../services/customMutation";
+import {
+  useCreateSavingTransaction,
+  useUpdateSavingTransaction,
+} from "../../pages/transaction/saving/services/useSavingAPI";
+import {
+  useCreateWithdrawTransaction,
+  useUpdateWithdrawTransaction,
+} from "../../pages/transaction/withdraw/services/useWithdrawAPI";
+import {
+  useCreateIncomeTransaction,
+  useUpdateIncomeTransaction,
+} from "../../pages/transaction/income/services/useIncomeAPI";
+import {
+  useCreateExpenseTransaction,
+  useUpdateExpenseTransaction,
+} from "../../pages/transaction/expense/services/useExpenseAPI";
 
 const TransactionSetupForm = ({
   isDrawerOpen,
@@ -41,8 +47,12 @@ const TransactionSetupForm = ({
   const { Text } = Typography;
   const createIncomeTransaction = useCreateIncomeTransaction();
   const createExpenseTransaction = useCreateExpenseTransaction();
+  const createSavingTransaction = useCreateSavingTransaction();
+  const createWithdrawTransaction = useCreateWithdrawTransaction();
   const updateIncomeTransaction = useUpdateIncomeTransaction();
   const updateExpenseTransaction = useUpdateExpenseTransaction();
+  const updateSavingTransaction = useUpdateSavingTransaction();
+  const updateWithdrawTransaction = useUpdateWithdrawTransaction();
 
   const { data, error, isLoading } = useCategoryData(type);
 
@@ -88,6 +98,14 @@ const TransactionSetupForm = ({
         create: createExpenseTransaction,
         update: updateExpenseTransaction,
       },
+      saving: {
+        create: createSavingTransaction,
+        update: updateSavingTransaction,
+      },
+      withdraw: {
+        create: createWithdrawTransaction,
+        update: updateWithdrawTransaction,
+      },
     };
 
     const currentTransaction = transactionMap[type][mode];
@@ -124,8 +142,6 @@ const TransactionSetupForm = ({
 
       const category_id = requiredCategory[0].value;
 
-      console.log(requiredCategory);
-      console.log(category_id);
       form.setFieldsValue({
         ...record,
         category_title: category_id,
