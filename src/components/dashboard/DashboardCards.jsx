@@ -1,5 +1,6 @@
 import { Card, Col, Progress, Row, Typography } from "antd";
 import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
+import { iconSwitcher } from "../../helper/iconSwitcher";
 const DashboardCards = ({ totalData }) => {
   console.log(totalData);
   const { Title, Text } = Typography;
@@ -60,7 +61,6 @@ const DashboardCards = ({ totalData }) => {
                   alignItems: "center",
                 }}
               >
-                <FaArrowDownLong className="mr-1" />
                 {totalData?.percentage_changes?.total_expense && (
                   <>
                     {totalData?.percentage_changes?.total_expense}% since last

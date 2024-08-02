@@ -204,6 +204,8 @@ const TransactionSetupForm = ({
                 rules={[{ required: true, message: "This field is required." }]}
               >
                 <InputNumber
+                  min={1}
+                  max={10000000}
                   addonBefore="Rs."
                   style={{ width: "100%" }}
                   placeholder="Enter amount"
