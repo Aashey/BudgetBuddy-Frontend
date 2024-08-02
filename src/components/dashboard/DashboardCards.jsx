@@ -16,9 +16,11 @@ const DashboardCards = ({ totalData }) => {
                 </Title>
               </Title>
               <Text style={{ color: "white" }}>
-                Rs.{" "}
-                {totalData?.pecentage_changes?.balance && (
-                  <>% since last month</>
+                {totalData?.percentage_changes?.balance && (
+                  <>
+                    {" "}
+                    {totalData?.percentage_changes?.balance}% since last month
+                  </>
                 )}
               </Text>
             </Card>
@@ -31,7 +33,15 @@ const DashboardCards = ({ totalData }) => {
                   Rs. {totalData?.current_month?.total_income}
                 </Title>
               </Title>
-              <Text style={{ color: "white" }}> +6% since last month </Text>
+              <Text style={{ color: "white" }}>
+                {totalData?.percentage_changes?.total_income && (
+                  <>
+                    {" "}
+                    {totalData?.percentage_changes?.total_income}% since last
+                    month
+                  </>
+                )}
+              </Text>
             </Card>
           </Col>
           <Col span={6}>
@@ -51,7 +61,12 @@ const DashboardCards = ({ totalData }) => {
                 }}
               >
                 <FaArrowDownLong className="mr-1" />
-                -6% since last month
+                {totalData?.percentage_changes?.total_expense && (
+                  <>
+                    {totalData?.percentage_changes?.total_expense}% since last
+                    month
+                  </>
+                )}
               </Text>
             </Card>
           </Col>
@@ -63,7 +78,14 @@ const DashboardCards = ({ totalData }) => {
                   Rs. {totalData?.current_month?.total_saving}
                 </Title>
               </Title>
-              <Text style={{ color: "white" }}>Goal met for current month</Text>
+              <Text style={{ color: "white" }}>
+                {totalData?.percentage_changes?.total_saving && (
+                  <>
+                    {totalData?.percentage_changes?.total_saving}% since last
+                    month
+                  </>
+                )}
+              </Text>
             </Card>
           </Col>
         </Row>

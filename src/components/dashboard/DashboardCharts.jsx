@@ -54,7 +54,7 @@ const DashboardCharts = ({ chartProp }) => {
         enabled: false,
       },
       stroke: {
-        curve: "smooth",
+        curve: "straight",
       },
       title: {
         text: "Income vs Expenses",
@@ -97,7 +97,7 @@ const DashboardCharts = ({ chartProp }) => {
         enabled: false,
       },
       stroke: {
-        curve: "smooth",
+        curve: "straight",
       },
       title: {
         text: "Savings vs Withdraws",
