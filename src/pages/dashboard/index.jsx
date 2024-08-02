@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <DashboardCards totalData={totalData?.data?.data?.current_month} />
+      <DashboardCards totalData={totalData?.data?.data} />
       <DashboardCharts
         chartProp={[incomeData, expenseData, savingData, withdrawData]}
       />

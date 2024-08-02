@@ -1,6 +1,7 @@
 import { Card, Col, Progress, Row, Typography } from "antd";
 import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 const DashboardCards = ({ totalData }) => {
+  console.log(totalData);
   const { Title, Text } = Typography;
   return (
     <>
@@ -11,10 +12,15 @@ const DashboardCards = ({ totalData }) => {
               <Title level={5} style={{ color: "white" }}>
                 TOTAL BALANCE
                 <Title style={{ color: "white" }} level={2}>
-                  Rs. {totalData?.balance}
+                  Rs. {totalData?.current_month?.balance}
                 </Title>
               </Title>
-              <Text style={{ color: "white" }}> +6% since last month </Text>
+              <Text style={{ color: "white" }}>
+                Rs.{" "}
+                {totalData?.pecentage_changes?.balance && (
+                  <>% since last month</>
+                )}
+              </Text>
             </Card>
           </Col>
           <Col span={6}>
@@ -22,7 +28,7 @@ const DashboardCards = ({ totalData }) => {
               <Title level={5} style={{ color: "white" }}>
                 TOTAL INCOME
                 <Title style={{ color: "white" }} level={2}>
-                  Rs. {totalData?.total_income}
+                  Rs. {totalData?.current_month?.total_income}
                 </Title>
               </Title>
               <Text style={{ color: "white" }}> +6% since last month </Text>
@@ -33,7 +39,7 @@ const DashboardCards = ({ totalData }) => {
               <Title level={5} style={{ color: "white" }}>
                 TOTAL EXPENSE
                 <Title style={{ color: "white" }} level={2}>
-                  Rs. {totalData?.total_expense}
+                  Rs. {totalData?.current_month?.total_expense}
                 </Title>
               </Title>
               <Text
@@ -54,7 +60,7 @@ const DashboardCards = ({ totalData }) => {
               <Title level={5} style={{ color: "white" }}>
                 TOTAL SAVINGS
                 <Title style={{ color: "white" }} level={2}>
-                  Rs. {totalData?.total_saving}
+                  Rs. {totalData?.current_month?.total_saving}
                 </Title>
               </Title>
               <Text style={{ color: "white" }}>Goal met for current month</Text>
