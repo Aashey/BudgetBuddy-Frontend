@@ -7,7 +7,7 @@ const DashboardCards = ({ totalData }) => {
       <div className="w-full mb-10">
         <Row gutter={16}>
           <Col span={6}>
-            <Card className="bg-purple-600">
+            <Card className="bg-blue-600">
               <Title level={5} style={{ color: "white" }}>
                 TOTAL BALANCE
                 <Title style={{ color: "white" }} level={2}>
@@ -18,7 +18,7 @@ const DashboardCards = ({ totalData }) => {
             </Card>
           </Col>
           <Col span={6}>
-            <Card className="bg-blue-500">
+            <Card className="bg-green-600">
               <Title level={5} style={{ color: "white" }}>
                 TOTAL INCOME
                 <Title style={{ color: "white" }} level={2}>
@@ -50,7 +50,7 @@ const DashboardCards = ({ totalData }) => {
             </Card>
           </Col>
           <Col span={6}>
-            <Card className="bg-green-500">
+            <Card className="bg-amber-600">
               <Title level={5} style={{ color: "white" }}>
                 TOTAL SAVINGS
                 <Title style={{ color: "white" }} level={2}>

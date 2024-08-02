@@ -1,8 +1,11 @@
 import { Card, Col, Radio, Row } from "antd";
 import { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
-const DashboardCharts = ({ incomeData, expenseData }) => {
-  const [radioOption, setRadioOption] = useState("line");
+const DashboardCharts = ({ chartProp }) => {
+  const [incomeExpenseRadioOption, setincomeExpenseRadioOption] =
+    useState("line");
+  const [savingWithdrawRadioOption, setsavingWithdrawRadioOption] =
+    useState("line");
   const radioOptions = [
     {
       label: "Line",
@@ -14,24 +17,37 @@ const DashboardCharts = ({ incomeData, expenseData }) => {
     },
   ];
 
-  const income_expense_series = useMemo(
+  const incomeExpenseSeries = useMemo(
     () => [
       {
         name: "Income",
-        data: incomeData,
+        data: chartProp[0],
       },
       {
         name: "Expenses",
-        data: expenseData,
+        data: chartProp[1],
       },
     ],
-    [incomeData, expenseData]
+    [chartProp]
+  );
+  const savingWithdrawSeries = useMemo(
+    () => [
+      {
+        name: "Saving",
+        data: chartProp[3],
+      },
+      {
+        name: "Withdraw",
+        data: chartProp[4],
+      },
+    ],
+    [chartProp]
   );
 
-  const chartOptions = useMemo(
+  const incomeExpenseChartOptions = useMemo(
     () => ({
       chart: {
-        type: radioOption,
+        type: incomeExpenseRadioOption,
         toolbar: false,
       },
       dataLabels: {
@@ -66,12 +82,61 @@ const DashboardCharts = ({ incomeData, expenseData }) => {
           "December",
         ],
       },
+
+      colors: ["#16A34A", "#EF4444"],
     }),
-    [radioOption]
+    [incomeExpenseRadioOption]
+  );
+  const savingWithdrawChartOptions = useMemo(
+    () => ({
+      chart: {
+        type: savingWithdrawRadioOption,
+        toolbar: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      title: {
+        text: "Savings vs Withdraws",
+        align: "left",
+      },
+      grid: {
+        row: {
+          colors: ["#f3f3f3", "transparent"],
+          opacity: 0.4,
+        },
+      },
+      xaxis: {
+        categories: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ],
+      },
+
+      colors: ["#16A34A", "#EF4444"],
+    }),
+    [savingWithdrawRadioOption]
   );
 
-  const onChangeRadio = ({ target: { value } }) => {
-    setRadioOption(value);
+  const onChangeIncomeExpenseRadio = ({ target: { value } }) => {
+    setincomeExpenseRadioOption(value);
+  };
+
+  const onChangeSavingWithdrawRadio = ({ target: { value } }) => {
+    setsavingWithdrawRadioOption(value);
   };
 
   return (
@@ -79,28 +144,36 @@ const DashboardCharts = ({ incomeData, expenseData }) => {
       <Row gutter={16}>
         <Col span={12}>
           <Card>
-            {/* <Radio.Group
+            <Radio.Group
               options={radioOptions}
-              onChange={onChangeRadio}
-              value={radioOption}
+              onChange={onChangeIncomeExpenseRadio}
+              value={incomeExpenseRadioOption}
               optionType="button"
               buttonStyle="solid"
               className="flex justify-end items-end mb-4"
-            /> */}
+            />
             <Chart
-              options={chartOptions}
-              series={income_expense_series}
-              type="line"
+              options={incomeExpenseChartOptions}
+              series={incomeExpenseSeries}
+              type={incomeExpenseRadioOption}
               height={350}
             />
           </Card>
         </Col>
         <Col span={12}>
           <Card>
+            <Radio.Group
+              options={radioOptions}
+              onChange={onChangeSavingWithdrawRadio}
+              value={savingWithdrawRadioOption}
+              optionType="button"
+              buttonStyle="solid"
+              className="flex justify-end items-end mb-4"
+            />
             <Chart
-              options={chartOptions}
-              series={income_expense_series}
-              type="bar"
+              options={savingWithdrawChartOptions}
+              series={savingWithdrawSeries}
+              type={savingWithdrawRadioOption}
               height={350}
             />
           </Card>
