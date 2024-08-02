@@ -8,7 +8,5 @@ const getTotalData = async () => {
 export const useGetTotalData = () => {
   return useQuery("getTotalData", getTotalData, {
     refetchOnWindowFocus: false,
-
-    retry: 1,
   });
 };

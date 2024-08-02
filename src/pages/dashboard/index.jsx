@@ -10,9 +10,10 @@ const Dashboard = () => {
   const incomeData = chartData?.data?.income_data;
   const expenseData = chartData?.data?.expense_data;
 
+  console.log("Total Data: ", totalData?.data?.data);
   return (
     <>
-      <DashboardCards totalData={totalData?.data?.data} />
+      <DashboardCards totalData={totalData?.data?.data?.current_month} />
       <DashboardCharts incomeData={incomeData} expenseData={expenseData} />
     </>
   );

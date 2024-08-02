@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import { Card, Col, Radio, Row } from "antd";
 import { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 const DashboardCharts = ({ incomeData, expenseData }) => {
@@ -76,23 +76,36 @@ const DashboardCharts = ({ incomeData, expenseData }) => {
 
   return (
     <>
-      <Radio.Group
-        options={radioOptions}
-        onChange={onChangeRadio}
-        value={radioOption}
-        optionType="button"
-        buttonStyle="solid"
-        className="flex justify-end items-end mb-4"
-      />
-
-      <div style={{ maxWidth: "90vw" }}>
-        <Chart
-          options={chartOptions}
-          series={income_expense_series}
-          type={radioOption}
-          height={350}
-        />
-      </div>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Card>
+            {/* <Radio.Group
+              options={radioOptions}
+              onChange={onChangeRadio}
+              value={radioOption}
+              optionType="button"
+              buttonStyle="solid"
+              className="flex justify-end items-end mb-4"
+            /> */}
+            <Chart
+              options={chartOptions}
+              series={income_expense_series}
+              type="line"
+              height={350}
+            />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card>
+            <Chart
+              options={chartOptions}
+              series={income_expense_series}
+              type="bar"
+              height={350}
+            />
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 };
