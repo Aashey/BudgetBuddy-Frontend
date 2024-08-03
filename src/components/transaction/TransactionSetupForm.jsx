@@ -187,7 +187,6 @@ const TransactionSetupForm = ({
           onFinish={OnFinish}
           form={form}
         >
-          <FormDebug form={form} />
           {(type === "income" || type === "expense") && (
             <>
               <Row gutter={16}>
