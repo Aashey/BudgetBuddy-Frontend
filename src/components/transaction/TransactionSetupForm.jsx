@@ -60,20 +60,23 @@ const TransactionSetupForm = ({
   const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
+    if (error) {
+      message.error("Failed to load categories.");
+    }
     const updatedData = data?.data?.data?.map((data) => ({
       value: data.id,
       label: data.title,
     }));
     setCategoryData(updatedData);
-  }, [data]);
+  }, [data, error]);
 
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
     message.success(
       `${capitalizeInitialChar(type)} transaction ${action} successfully.`
     );
-    onClose();
     refetch();
+    onClose();
   };
 
   const handleMutationError = () => {
@@ -111,9 +114,10 @@ const TransactionSetupForm = ({
     const currentTransaction = transactionMap[type][mode];
     const dataKey = dataKeys[type] || null;
 
-    const reformattedDate = values.data
-      ? dayjs(values.date).format("YYYY-MM-DD")
-      : null;
+    const reformattedDate =
+      values.date == (undefined || null)
+        ? null
+        : dayjs(values.date).format("YYYY-MM-DD");
 
     console.log("reformatted date", reformattedDate);
 
@@ -183,7 +187,7 @@ const TransactionSetupForm = ({
           onFinish={OnFinish}
           form={form}
         >
-          {/* <FormDebug form={form} /> */}
+          <FormDebug form={form} />
           {(type === "income" || type === "expense") && (
             <>
               <Row gutter={16}>

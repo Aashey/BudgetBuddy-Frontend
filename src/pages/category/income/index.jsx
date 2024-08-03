@@ -71,10 +71,10 @@ const IncomeCategory = () => {
 
   const incomeCategoryColumn = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      width: 200,
+      title: "S.N.",
+      key: "sn",
+      width: 100,
+      render: (text, record, index) => index + 1,
     },
     {
       title: "Title",

@@ -1,7 +1,12 @@
 import { Card, Col, Radio, Row } from "antd";
 import { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
-const DashboardCharts = ({ chartProp }) => {
+const DashboardCharts = ({
+  incomeData,
+  expenseData,
+  savingData,
+  withdrawData,
+}) => {
   const [incomeExpenseRadioOption, setincomeExpenseRadioOption] =
     useState("line");
   const [savingWithdrawRadioOption, setsavingWithdrawRadioOption] =
@@ -21,27 +26,27 @@ const DashboardCharts = ({ chartProp }) => {
     () => [
       {
         name: "Income",
-        data: chartProp[0],
+        data: incomeData,
       },
       {
         name: "Expenses",
-        data: chartProp[1],
+        data: expenseData,
       },
     ],
-    [chartProp]
+    [incomeData, expenseData]
   );
   const savingWithdrawSeries = useMemo(
     () => [
       {
         name: "Saving",
-        data: chartProp[3],
+        data: savingData,
       },
       {
         name: "Withdraw",
-        data: chartProp[4],
+        data: withdrawData,
       },
     ],
-    [chartProp]
+    [savingData, withdrawData]
   );
 
   const incomeExpenseChartOptions = useMemo(
@@ -126,7 +131,7 @@ const DashboardCharts = ({ chartProp }) => {
         ],
       },
 
-      colors: ["#16A34A", "#EF4444"],
+      colors: ["#D97706", "#0974f6"],
     }),
     [savingWithdrawRadioOption]
   );

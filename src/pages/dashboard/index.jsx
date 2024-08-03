@@ -16,7 +16,10 @@ const Dashboard = () => {
     <>
       <DashboardCards totalData={totalData?.data?.data} />
       <DashboardCharts
-        chartProp={[incomeData, expenseData, savingData, withdrawData]}
+        incomeData={incomeData}
+        expenseData={expenseData}
+        savingData={savingData}
+        withdrawData={withdrawData}
       />
     </>
   );

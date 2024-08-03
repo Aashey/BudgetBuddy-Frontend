@@ -16,11 +16,15 @@ export const useLogin = () => {
   return useMutation(loginAPI, { onSuccess, onError });
 };
 
-export const logout = () => {
-  localStorage.removeItem("authToken");
-};
-
 export const isAuthenticated = () => {
   const token = localStorage.getItem("authToken");
   return Boolean(token);
+};
+
+const logoutAPI = async () => {
+  return await apiClient.post(`/logout`);
+};
+
+export const useLogout = () => {
+  return useMutation(logoutAPI);
 };

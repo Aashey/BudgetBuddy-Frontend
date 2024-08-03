@@ -1,11 +1,8 @@
 import { Layout, Menu, message, Typography } from "antd";
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../../../services/auth";
-import {
-  HiOutlineArrowRightOnRectangle,
-  HiMiniChartPie,
-} from "react-icons/hi2";
+import { useLogout } from "../../../services/auth";
+import { HiMiniChartPie } from "react-icons/hi2";
 import { MdOutlineAttachMoney } from "react-icons/md";
 
 import { TbCategoryPlus, TbReportMoney } from "react-icons/tb";
@@ -14,14 +11,16 @@ import { CiLogout } from "react-icons/ci";
 const CustomSider = () => {
   const { Sider } = Layout;
   const { Title } = Typography;
-  const location = useLocation();
   const navigate = useNavigate();
+  const logout = useLogout();
+  const location = useLocation();
   const onLogout = () => {
-    logout();
+    logout.mutate();
     setTimeout(() => {
-      message.success("Logged out successfully.");
+      localStorage.removeItem("authToken");
+      message.success("Logged out successfully!");
       navigate("/login");
-    }, [500]);
+    }, 500);
   };
   const items = [
     {

@@ -69,10 +69,10 @@ const WithdrawTransaction = () => {
 
   const WithdrawTransactionColumn = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
+      title: "S.N.",
+      key: "sn",
       width: 100,
+      render: (text, record, index) => index + 1,
     },
     {
       title: "Amount",
