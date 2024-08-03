@@ -175,28 +175,41 @@ const TransactionSetupForm = ({
           form={form}
         >
           {/* <FormDebug form={form} /> */}
+          {(type === "income" || type === "expense") && (
+            <>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label={<Text strong>Category</Text>}
+                    name="category_title"
+                    rules={[
+                      { required: true, message: "This field is required." },
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      loading={isLoading}
+                      style={{ width: "100%" }}
+                      placeholder="Select a category"
+                      options={categoryData}
+                      optionFilterProp="label"
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? "")
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? "").toLowerCase())
+                      }
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item label={<Text strong>Date</Text>} name="date">
+                    <DatePicker style={{ width: "100%" }} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </>
+          )}
           <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                label={<Text strong>Category</Text>}
-                name="category_title"
-                rules={[{ required: true, message: "This field is required." }]}
-              >
-                <Select
-                  showSearch
-                  loading={isLoading}
-                  style={{ width: "100%" }}
-                  placeholder="Select a category"
-                  options={categoryData}
-                  optionFilterProp="label"
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                />
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item
                 name="amount"
@@ -212,15 +225,6 @@ const TransactionSetupForm = ({
                 />
               </Form.Item>
             </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item label={<Text strong>Date</Text>} name="date">
-                <DatePicker style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-
             <Col span={12}>
               <Form.Item
                 name="notes"
@@ -231,12 +235,19 @@ const TransactionSetupForm = ({
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item
-            label={<Text strong>Is Recurring</Text>}
-            name="is_recurring"
-          >
-            <Switch size="medium" />
-          </Form.Item>
+
+          {(type === "income" || type === "expense") && (
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label={<Text strong>Is Recurring</Text>}
+                  name="is_recurring"
+                >
+                  <Switch size="medium" />
+                </Form.Item>
+              </Col>
+            </Row>
+          )}
 
           {mode !== "view" && (
             <Form.Item>
