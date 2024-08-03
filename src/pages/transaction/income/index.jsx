@@ -7,7 +7,7 @@ import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteIncomeTransaction,
   useIncomeTransaction,
-} from "./services/useIncomeAPI";
+} from "../services/income/useIncomeTransaction";
 
 const IncomeTransaction = () => {
   const { data, error, isLoading, refetch } = useIncomeTransaction();

@@ -1,7 +1,3 @@
-import {
-  useDeleteIncomeCategory,
-  useIncomeCategory,
-} from "../services/useCategory";
 import { Table, message } from "antd";
 
 import CategorySetupForm from "../../../components/category/categorySetupForm";
@@ -9,6 +5,10 @@ import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+import {
+  useDeleteIncomeCategory,
+  useIncomeCategory,
+} from "../services/income/useIncomeCategory";
 
 const IncomeCategory = () => {
   const { data, error, isLoading, refetch } = useIncomeCategory();

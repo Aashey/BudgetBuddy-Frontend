@@ -19,21 +19,22 @@ import dayjs from "dayjs";
 import useCategoryData from "../../hooks/category/useCategoryData";
 import { customMutation } from "../../services/customMutation";
 import {
-  useCreateSavingTransaction,
-  useUpdateSavingTransaction,
-} from "../../pages/transaction/saving/services/useSavingAPI";
+  useCreateIncomeTransaction,
+  useUpdateIncomeTransaction,
+} from "../../pages/transaction/services/income/useIncomeTransaction";
 import {
   useCreateWithdrawTransaction,
   useUpdateWithdrawTransaction,
-} from "../../pages/transaction/withdraw/services/useWithdrawAPI";
+} from "../../pages/transaction/services/withdraw/useWithdrawTransaction";
 import {
-  useCreateIncomeTransaction,
-  useUpdateIncomeTransaction,
-} from "../../pages/transaction/income/services/useIncomeAPI";
+  useCreateSavingTransaction,
+  useUpdateSavingTransaction,
+} from "../../pages/transaction/services/saving/useSavingTransaction";
 import {
   useCreateExpenseTransaction,
   useUpdateExpenseTransaction,
-} from "../../pages/transaction/expense/services/useExpenseAPI";
+} from "../../pages/transaction/services/expense/useExpenseTransaction";
+import FormDebug from "../../helper/FormDebug";
 
 const TransactionSetupForm = ({
   isDrawerOpen,
@@ -81,13 +82,7 @@ const TransactionSetupForm = ({
   };
 
   const OnFinish = (values) => {
-    const reformattedValues = {
-      ...values,
-      category_id: values.category_title,
-      date: dayjs(values.date).format("YYYY-MM-DD"),
-      is_recurring:
-        values.is_recurring === undefined ? false : values.is_recurring,
-    };
+    console.log(values);
 
     const transactionMap = {
       income: {
@@ -108,23 +103,47 @@ const TransactionSetupForm = ({
       },
     };
 
-    const currentTransaction = transactionMap[type][mode];
+    const dataKeys = {
+      income: "date_received",
+      expense: "date_spent",
+    };
 
-    const dataKey = type === "expense" ? "date_spent" : "date_received";
+    const currentTransaction = transactionMap[type][mode];
+    const dataKey = dataKeys[type] || null;
+
+    const reformattedDate = values.data
+      ? dayjs(values.date).format("YYYY-MM-DD")
+      : null;
+
+    console.log("reformatted date", reformattedDate);
+
+    const reformattedValues = {
+      ...values,
+      is_recurring:
+        values.is_recurring === undefined ? false : values.is_recurring,
+    };
+    delete reformattedValues.date;
+
+    console.log("REformatted values", reformattedValues);
 
     const createPayload = {
-      ...reformattedValues,
-      [dataKey]: reformattedValues.date ?? null,
+      income: {
+        ...reformattedValues,
+        [dataKey]: reformattedDate,
+      },
+      expense: {
+        ...reformattedValues,
+        [dataKey]: reformattedDate,
+      },
+      saving: values,
+      withdraw: values,
     };
 
-    const updatePayload = {
-      ...reformattedValues,
-      [dataKey]: reformattedValues.date ?? null,
-      id: record.id,
-    };
+    const updatePayload = { ...createPayload[type], id: record.id };
+    console.log(updatePayload);
+    const payload = mode === "create" ? createPayload[type] : updatePayload;
 
-    const payload = mode === "create" ? createPayload : updatePayload;
-
+    console.log("Update payload", updatePayload);
     customMutation(
       currentTransaction,
       payload,
@@ -134,25 +153,15 @@ const TransactionSetupForm = ({
   };
 
   useEffect(() => {
-    if ((mode == "update" || mode == "view") && record) {
+    if (mode == "update" || mode == "view") {
       console.log(categoryData);
-      const requiredCategory = categoryData.filter(
-        (data) => data.label === record.category_title
-      );
-
-      const category_id = requiredCategory[0].value;
 
       form.setFieldsValue({
         ...record,
-        category_title: category_id,
         date:
           type === "income"
-            ? record.date_received
-              ? dayjs(record.date_received)
-              : null
-            : record.date_spent
-            ? dayjs(record.date_spent)
-            : null,
+            ? dayjs(record.date_received)
+            : dayjs(record.date_spent),
       });
     } else {
       form.resetFields();
@@ -181,7 +190,7 @@ const TransactionSetupForm = ({
                 <Col span={12}>
                   <Form.Item
                     label={<Text strong>Category</Text>}
-                    name="category_title"
+                    name="category_id"
                     rules={[
                       { required: true, message: "This field is required." },
                     ]}

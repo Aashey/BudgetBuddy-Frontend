@@ -1,26 +1,14 @@
-import {
-  useDeleteExpenseCategory,
-  useExpenseCategory,
-} from "../services/useCategory";
-import {
-  Button,
-  Space,
-  Input,
-  Tooltip,
-  Table,
-  Typography,
-  message,
-} from "antd";
-import { HiPlus } from "react-icons/hi2";
-import { IoIosEye } from "react-icons/io";
-import { AiFillDelete } from "react-icons/ai";
-import { BiSolidEdit } from "react-icons/bi";
-import { CiExport } from "react-icons/ci";
+import { Table, message } from "antd";
+
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+import {
+  useDeleteExpenseCategory,
+  useExpenseCategory,
+} from "../services/expense/useExpenseCategory";
 
 const ExpenseCategory = () => {
   const { data, error, isLoading, refetch } = useExpenseCategory();
@@ -78,7 +66,7 @@ const ExpenseCategory = () => {
   };
   const handleEditComponent = (record) => {
     openDrawer();
-    setMode("edit");
+    setMode("update");
     setSelectedRecord(record);
   };
 

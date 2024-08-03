@@ -8,7 +8,7 @@ import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteExpenseTransaction,
   useExpenseTransaction,
-} from "./services/useExpenseAPI";
+} from "../services/expense/useExpenseTransaction";
 
 const ExpenseTransaction = () => {
   const { data, error, isLoading, refetch } = useExpenseTransaction();

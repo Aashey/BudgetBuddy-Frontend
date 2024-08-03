@@ -1,7 +1,5 @@
-import {
-  useIncomeCategory,
-  useExpenseCategory,
-} from "../../pages/category/services/useCategory";
+import { useExpenseCategory } from "../../pages/category/services/expense/useExpenseCategory";
+import { useIncomeCategory } from "../../pages/category/services/income/useIncomeCategory";
 
 const useCategoryData = (type) => {
   const {

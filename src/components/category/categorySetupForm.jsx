@@ -1,15 +1,20 @@
 import { Button, Drawer, Form, Input, message } from "antd";
 import { useEffect } from "react";
-import {
-  useCreateExpenseCategory,
-  useCreateIncomeCategory,
-  useCreateLoanCategory,
-  useUpdateExpenseCategory,
-  useUpdateIncomeCategory,
-  useUpdateLoanCategory,
-} from "../../pages/category/services/useCategory";
+
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
 import { customMutation } from "../../services/customMutation";
+import {
+  useCreateIncomeCategory,
+  useUpdateIncomeCategory,
+} from "../../pages/category/services/income/useIncomeCategory";
+import {
+  useCreateExpenseCategory,
+  useUpdateExpenseCategory,
+} from "../../pages/category/services/expense/useExpenseCategory";
+import {
+  useCreateLoanCategory,
+  useUpdateLoanCategory,
+} from "../../pages/category/services/loan/useLoanCategory";
 
 const CategorySetupForm = ({
   isDrawerOpen,
@@ -19,6 +24,7 @@ const CategorySetupForm = ({
   mode,
   record = {},
 }) => {
+  console.log("Type", type);
   const [form] = Form.useForm();
   const createIncomeCategory = useCreateIncomeCategory();
   const createExpenseCategory = useCreateExpenseCategory();

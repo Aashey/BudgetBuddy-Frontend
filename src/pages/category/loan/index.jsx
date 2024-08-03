@@ -1,27 +1,14 @@
-import { HiPlus } from "react-icons/hi2";
-import {
-  useDeleteLoanCategory,
-  useGetLoanCategory,
-} from "../services/useCategory";
-import {
-  Button,
-  Input,
-  Space,
-  Table,
-  Tooltip,
-  Typography,
-  Skeleton,
-  message,
-} from "antd";
-import { IoIosEye } from "react-icons/io";
-import { AiFillDelete } from "react-icons/ai";
-import { BiSolidEdit } from "react-icons/bi";
-import { CiExport } from "react-icons/ci";
+import { Table, message } from "antd";
+
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+import {
+  useDeleteLoanCategory,
+  useGetLoanCategory,
+} from "../services/loan/useLoanCategory";
 
 const LoanCategory = () => {
   const { data, error, isLoading, refetch } = useGetLoanCategory();
@@ -79,7 +66,7 @@ const LoanCategory = () => {
   };
   const handleEditComponent = (record) => {
     openDrawer();
-    setMode("edit");
+    setMode("update");
     setSelectedRecord(record);
   };
 

@@ -1,4 +1,4 @@
-import { message, Switch, Table } from "antd";
+import { message, Table } from "antd";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
@@ -7,7 +7,7 @@ import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteSavingTransaction,
   useSavingTransaction,
-} from "./services/useSavingAPI";
+} from "../services/saving/useSavingTransaction";
 
 const SavingTransaction = () => {
   const { data, error, isLoading, refetch } = useSavingTransaction();
@@ -97,7 +97,7 @@ const SavingTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 250,
+      width: 100,
       align: "center",
     },
   ];
