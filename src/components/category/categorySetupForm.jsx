@@ -87,7 +87,7 @@ const CategorySetupForm = ({
     <>
       <Drawer
         title={`${capitalizeInitialChar(type)} Category`}
-        width={700}
+        width="40vw"
         open={isDrawerOpen}
         onClose={onClose}
       >
@@ -98,30 +98,24 @@ const CategorySetupForm = ({
           form={form}
         >
           <div className="p-4">
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="title"
-                  label="Title"
-                  rules={[
-                    { required: true, message: "This field is required." },
-                  ]}
-                >
-                  <Input placeholder="Title" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="description"
-                  label="Description"
-                  rules={[
-                    { required: true, message: "This field is required." },
-                  ]}
-                >
-                  <Input placeholder="Description" />
-                </Form.Item>
-              </Col>
-            </Row>
+            <Form.Item
+              name="title"
+              label="Title"
+              rules={[{ required: true, message: "This field is required." }]}
+            >
+              <Input placeholder="Title" />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label="Description"
+              rules={[{ required: true, message: "This field is required." }]}
+            >
+              <Input.TextArea
+                rows={2}
+                style={{ resize: "none" }}
+                placeholder="Description"
+              />
+            </Form.Item>
 
             {mode !== "view" && (
               <Form.Item>

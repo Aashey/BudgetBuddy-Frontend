@@ -5,7 +5,13 @@ import { capitalizeInitialChar } from "../../../helper/capitalizeInitialChar";
 const LowerHeader = ({ handleCreateComponent, handleSearch, textProp }) => {
   return (
     <Space className="mt-5 mb-3 flex justify-between">
-      <Input.Search addonBefore="Search" onChange={handleSearch} />
+      <Input.Search
+        addonBefore="Search"
+        onChange={handleSearch}
+        placeholder={`${capitalizeInitialChar(textProp.type)} ${
+          textProp.plural_method
+        }`}
+      />
       <Button
         onClick={handleCreateComponent}
         icon={<HiPlus size={20} />}

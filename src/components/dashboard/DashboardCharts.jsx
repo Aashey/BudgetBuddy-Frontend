@@ -165,7 +165,7 @@ const DashboardCharts = ({
             height={350}
           />
         </div>
-        <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
+        {/* <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
           <Radio.Group
             options={radioOptions}
             onChange={onChangeSavingWithdrawRadio}
@@ -180,7 +180,7 @@ const DashboardCharts = ({
             type={savingWithdrawRadioOption}
             height={350}
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

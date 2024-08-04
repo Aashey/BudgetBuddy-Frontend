@@ -296,7 +296,11 @@ const TransactionSetupForm = ({
                     { required: true, message: "This field is required." },
                   ]}
                 >
-                  <Input placeholder="Enter Notes" />
+                  <Input.TextArea
+                    style={{ resize: "none" }}
+                    rows={2}
+                    placeholder="Enter Notes"
+                  />
                 </Form.Item>
               </Col>
             </Row>
