@@ -75,6 +75,12 @@ const WithdrawTransaction = () => {
       render: (text, record, index) => index + 1,
     },
     {
+      title: "Date",
+      dataIndex: "date_saved",
+      key: "date_saved",
+      width: 200,
+    },
+    {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
@@ -97,7 +103,7 @@ const WithdrawTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 100,
+      width: 200,
       align: "center",
     },
   ];
@@ -118,7 +124,7 @@ const WithdrawTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "withdraw",
-          method: "transaction",
+          method: " ",
           plural_method: "transactions",
         }}
       />

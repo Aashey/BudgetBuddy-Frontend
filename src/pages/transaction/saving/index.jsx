@@ -75,6 +75,12 @@ const SavingTransaction = () => {
       render: (text, record, index) => index + 1,
     },
     {
+      title: "Date",
+      dataIndex: "date_saved",
+      key: "date_saved",
+      width: 200,
+    },
+    {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
@@ -86,7 +92,6 @@ const SavingTransaction = () => {
       key: "notes",
       width: 200,
     },
-
     {
       title: "Action",
       render: (record) => (
@@ -97,7 +102,7 @@ const SavingTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 100,
+      width: 200,
       align: "center",
     },
   ];
@@ -118,7 +123,7 @@ const SavingTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "saving",
-          method: "transaction",
+          method: " ",
           plural_method: "transactions",
         }}
       />

@@ -77,7 +77,7 @@ const ExpenseTransaction = () => {
       render: (text, record, index) => index + 1,
     },
     {
-      title: "Date Spent",
+      title: "Date",
       dataIndex: "date_spent",
       key: "date_spent",
       width: 200,
@@ -138,7 +138,7 @@ const ExpenseTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "expense",
-          method: "transaction",
+          method: " ",
           plural_method: "transactions",
         }}
       />
