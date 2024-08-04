@@ -60,6 +60,7 @@ const DashboardCharts = ({
       },
       stroke: {
         curve: "straight",
+        width: 2,
       },
       title: {
         text: "Income vs Expenses",
@@ -68,7 +69,7 @@ const DashboardCharts = ({
       grid: {
         row: {
           colors: ["#f3f3f3", "transparent"],
-          opacity: 0.4,
+          opacity: 0.2,
         },
       },
       xaxis: {
@@ -103,6 +104,7 @@ const DashboardCharts = ({
       },
       stroke: {
         curve: "straight",
+        width: 2,
       },
       title: {
         text: "Savings vs Withdraws",
@@ -111,7 +113,7 @@ const DashboardCharts = ({
       grid: {
         row: {
           colors: ["#f3f3f3", "transparent"],
-          opacity: 0.4,
+          opacity: 0.2,
         },
       },
       xaxis: {
