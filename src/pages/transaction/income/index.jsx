@@ -8,6 +8,7 @@ import {
   useDeleteIncomeTransaction,
   useIncomeTransaction,
 } from "../services/income/useIncomeTransaction";
+import { formatDate } from "../../../helper/formatDate";
 
 const IncomeTransaction = () => {
   const { data, error, isLoading, refetch } = useIncomeTransaction();
@@ -78,6 +79,9 @@ const IncomeTransaction = () => {
       title: "Date",
       dataIndex: "date_received",
       key: "date_received",
+      render: (date) => {
+        return formatDate(date);
+      },
       width: 200,
     },
     {
@@ -137,7 +141,6 @@ const IncomeTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "income",
-          method: " ",
           plural_method: "transactions",
         }}
       />
@@ -146,6 +149,7 @@ const IncomeTransaction = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
+        scroll={{ y: "50vh" }}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeTransactionColumn}
       />

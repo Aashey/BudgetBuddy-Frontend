@@ -148,44 +148,40 @@ const DashboardCharts = ({
 
   return (
     <>
-      <Row gutter={16}>
-        <Col span={12}>
-          <Card>
-            <Radio.Group
-              options={radioOptions}
-              onChange={onChangeIncomeExpenseRadio}
-              value={incomeExpenseRadioOption}
-              optionType="button"
-              buttonStyle="solid"
-              className="flex justify-end items-end mb-4"
-            />
-            <Chart
-              options={incomeExpenseChartOptions}
-              series={incomeExpenseSeries}
-              type={incomeExpenseRadioOption}
-              height={350}
-            />
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card>
-            <Radio.Group
-              options={radioOptions}
-              onChange={onChangeSavingWithdrawRadio}
-              value={savingWithdrawRadioOption}
-              optionType="button"
-              buttonStyle="solid"
-              className="flex justify-end items-end mb-4"
-            />
-            <Chart
-              options={savingWithdrawChartOptions}
-              series={savingWithdrawSeries}
-              type={savingWithdrawRadioOption}
-              height={350}
-            />
-          </Card>
-        </Col>
-      </Row>
+      <div className="grid grid-flow-col gap-6">
+        <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
+          <Radio.Group
+            options={radioOptions}
+            onChange={onChangeIncomeExpenseRadio}
+            value={incomeExpenseRadioOption}
+            optionType="button"
+            buttonStyle="solid"
+            className="flex justify-end items-end mb-4"
+          />
+          <Chart
+            options={incomeExpenseChartOptions}
+            series={incomeExpenseSeries}
+            type={incomeExpenseRadioOption}
+            height={350}
+          />
+        </div>
+        <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
+          <Radio.Group
+            options={radioOptions}
+            onChange={onChangeSavingWithdrawRadio}
+            value={savingWithdrawRadioOption}
+            optionType="button"
+            buttonStyle="solid"
+            className="flex justify-end items-end mb-4"
+          />
+          <Chart
+            options={savingWithdrawChartOptions}
+            series={savingWithdrawSeries}
+            type={savingWithdrawRadioOption}
+            height={350}
+          />
+        </div>
+      </div>
     </>
   );
 };

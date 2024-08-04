@@ -9,6 +9,7 @@ import {
   useDeleteExpenseTransaction,
   useExpenseTransaction,
 } from "../services/expense/useExpenseTransaction";
+import { formatDate } from "../../../helper/formatDate";
 
 const ExpenseTransaction = () => {
   const { data, error, isLoading, refetch } = useExpenseTransaction();
@@ -80,6 +81,9 @@ const ExpenseTransaction = () => {
       title: "Date",
       dataIndex: "date_spent",
       key: "date_spent",
+      render: (date) => {
+        return formatDate(date);
+      },
       width: 200,
     },
     {
@@ -138,7 +142,6 @@ const ExpenseTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "expense",
-          method: " ",
           plural_method: "transactions",
         }}
       />
@@ -146,6 +149,7 @@ const ExpenseTransaction = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
+        scroll={{ y: "50vh" }}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={ExpenseTransactionColumn}
       />

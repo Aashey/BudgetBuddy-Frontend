@@ -8,6 +8,7 @@ import {
   useDeleteWithdrawTransaction,
   useWithdrawTransaction,
 } from "../services/withdraw/useWithdrawTransaction";
+import { formatDate } from "../../../helper/formatDate";
 
 const WithdrawTransaction = () => {
   const { data, error, isLoading, refetch } = useWithdrawTransaction();
@@ -78,6 +79,9 @@ const WithdrawTransaction = () => {
       title: "Date",
       dataIndex: "date_saved",
       key: "date_saved",
+      render: (date) => {
+        return formatDate(date);
+      },
       width: 200,
     },
     {
@@ -103,7 +107,7 @@ const WithdrawTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 200,
+      width: 150,
       align: "center",
     },
   ];
@@ -124,7 +128,6 @@ const WithdrawTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "withdraw",
-          method: " ",
           plural_method: "transactions",
         }}
       />
@@ -133,6 +136,7 @@ const WithdrawTransaction = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
+        scroll={{ y: "50vh" }}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={WithdrawTransactionColumn}
       />

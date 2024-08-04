@@ -8,6 +8,7 @@ import {
   useDeleteSavingTransaction,
   useSavingTransaction,
 } from "../services/saving/useSavingTransaction";
+import { formatDate } from "../../../helper/formatDate";
 
 const SavingTransaction = () => {
   const { data, error, isLoading, refetch } = useSavingTransaction();
@@ -78,6 +79,9 @@ const SavingTransaction = () => {
       title: "Date",
       dataIndex: "date_saved",
       key: "date_saved",
+      render: (date) => {
+        return formatDate(date);
+      },
       width: 200,
     },
     {
@@ -102,7 +106,7 @@ const SavingTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 200,
+      width: 150,
       align: "center",
     },
   ];
@@ -123,7 +127,6 @@ const SavingTransaction = () => {
         handleCreateComponent={handleCreateComponent}
         textProp={{
           type: "saving",
-          method: " ",
           plural_method: "transactions",
         }}
       />
@@ -132,6 +135,7 @@ const SavingTransaction = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
+        scroll={{ y: "50vh" }}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={SavingTransactionColumn}
       />

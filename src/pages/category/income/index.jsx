@@ -127,6 +127,7 @@ const IncomeCategory = () => {
         loading={isLoading}
         className="mt-5"
         rowKey="id"
+        scroll={{ y: "50vh" }}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={incomeCategoryColumn}
       />

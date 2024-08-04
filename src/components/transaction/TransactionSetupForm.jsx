@@ -13,6 +13,7 @@ import {
   Typography,
 } from "antd";
 import { useEffect, useState } from "react";
+import { GrClearOption } from "react-icons/gr";
 
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
 import dayjs from "dayjs";
@@ -35,6 +36,7 @@ import {
   useUpdateExpenseTransaction,
 } from "../../pages/transaction/services/expense/useExpenseTransaction";
 import FormDebug from "../../helper/FormDebug";
+import { useGetTotalData } from "../../pages/dashboard/services/useTotalData";
 
 const TransactionSetupForm = ({
   isDrawerOpen,
@@ -46,6 +48,7 @@ const TransactionSetupForm = ({
 }) => {
   const [form] = Form.useForm();
   const { Text } = Typography;
+  const { data: totalData, refetch: refetchTotalData } = useGetTotalData();
   const createIncomeTransaction = useCreateIncomeTransaction();
   const createExpenseTransaction = useCreateExpenseTransaction();
   const createSavingTransaction = useCreateSavingTransaction();
@@ -76,6 +79,7 @@ const TransactionSetupForm = ({
       `${capitalizeInitialChar(type)} transaction ${action} successfully.`
     );
     refetch();
+    refetchTotalData();
     onClose();
   };
 
@@ -158,8 +162,6 @@ const TransactionSetupForm = ({
 
   useEffect(() => {
     if (mode == "update" || mode == "view") {
-      console.log(categoryData);
-
       form.setFieldsValue({
         ...record,
         date:
@@ -170,108 +172,160 @@ const TransactionSetupForm = ({
     } else {
       form.resetFields();
     }
-  }, [mode, record, form]);
+  }, [record, form]);
 
   return (
     <>
       <Drawer
         title={`${capitalizeInitialChar(type)} Transaction`}
-        width={700}
+        width="40vw"
         open={isDrawerOpen}
         onClose={onClose}
       >
         <Form
           disabled={mode === "view"}
           layout="vertical"
-          className="p-6"
           onFinish={OnFinish}
           form={form}
         >
-          {(type === "income" || type === "expense") && (
-            <>
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label={<Text strong>Category</Text>}
-                    name="category_id"
-                    rules={[
-                      { required: true, message: "This field is required." },
-                    ]}
-                  >
-                    <Select
-                      showSearch
-                      loading={isLoading}
-                      style={{ width: "100%" }}
-                      placeholder="Select a category"
-                      options={categoryData}
-                      optionFilterProp="label"
-                      filterSort={(optionA, optionB) =>
-                        (optionA?.label ?? "")
-                          .toLowerCase()
-                          .localeCompare((optionB?.label ?? "").toLowerCase())
-                      }
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item label={<Text strong>Date</Text>} name="date">
-                    <DatePicker style={{ width: "100%" }} />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </>
-          )}
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="amount"
-                label={<Text strong>Amount</Text>}
-                rules={[{ required: true, message: "This field is required." }]}
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4 p-4 rounded-xl bg-[#ededfa]">
+              <Text>
+                {type === "withdraw" ? (
+                  <>
+                    Total Saving:{" "}
+                    <span className="font-bold">
+                      {totalData?.data?.data?.current_month?.total_saving}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Total Balance:{" "}
+                    <span className="font-bold">
+                      {totalData?.data?.data?.current_month?.balance}
+                    </span>
+                  </>
+                )}
+              </Text>
+              <Button
+                onClick={() => form.resetFields()}
+                type="none"
+                className="bg-gray-600  hover:bg-gray-800 text-white"
+                icon={<GrClearOption />}
               >
-                <InputNumber
-                  min={1}
-                  max={10000000}
-                  addonBefore="Rs."
-                  style={{ width: "100%" }}
-                  placeholder="Enter amount"
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="notes"
-                label={<Text strong>Notes</Text>}
-                rules={[{ required: true, message: "This field is required." }]}
-              >
-                <Input placeholder="Enter Notes" />
-              </Form.Item>
-            </Col>
-          </Row>
+                Clear
+              </Button>
+            </div>
 
-          {(type === "income" || type === "expense") && (
+            {(type === "income" || type === "expense") && (
+              <>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item
+                      label={<Text strong>Category</Text>}
+                      name="category_id"
+                      rules={[
+                        { required: true, message: "This field is required." },
+                      ]}
+                    >
+                      <Select
+                        showSearch
+                        loading={isLoading}
+                        style={{ width: "100%" }}
+                        placeholder="Select a category"
+                        options={categoryData}
+                        optionFilterProp="label"
+                        filterSort={(optionA, optionB) =>
+                          (optionA?.label ?? "")
+                            .toLowerCase()
+                            .localeCompare((optionB?.label ?? "").toLowerCase())
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    {mode === "update" ? (
+                      <>
+                        <Form.Item
+                          label={<Text strong>Date</Text>}
+                          name="date"
+                          rules={[
+                            {
+                              required: true,
+                              message: "This field is required.",
+                            },
+                          ]}
+                        >
+                          <DatePicker style={{ width: "100%" }} />
+                        </Form.Item>
+                      </>
+                    ) : (
+                      <>
+                        <Form.Item label={<Text strong>Date</Text>} name="date">
+                          <DatePicker style={{ width: "100%" }} />
+                        </Form.Item>
+                      </>
+                    )}
+                  </Col>
+                </Row>
+              </>
+            )}
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  label={<Text strong>Is Recurring</Text>}
-                  name="is_recurring"
+                  name="amount"
+                  label={<Text strong>Amount</Text>}
+                  rules={[
+                    { required: true, message: "This field is required." },
+                  ]}
                 >
-                  <Switch size="medium" />
+                  <InputNumber
+                    min={1}
+                    max={10000000}
+                    addonBefore="Rs."
+                    style={{ width: "100%" }}
+                    placeholder="Enter amount"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="notes"
+                  label={<Text strong>Notes</Text>}
+                  rules={[
+                    { required: true, message: "This field is required." },
+                  ]}
+                >
+                  <Input placeholder="Enter Notes" />
                 </Form.Item>
               </Col>
             </Row>
-          )}
 
-          {mode !== "view" && (
-            <Form.Item>
-              <Button
-                className="w-[12rem] m-auto"
-                type="primary"
-                htmlType="submit"
-              >
-                {mode === "update" ? "Update" : "Add"}
-              </Button>
-            </Form.Item>
-          )}
+            {(type === "income" || type === "expense") && (
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label={<Text strong>Is Recurring</Text>}
+                    name="is_recurring"
+                  >
+                    <Switch size="small" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            )}
+
+            {mode !== "view" && (
+              <Form.Item>
+                <Button
+                  className="w-[12rem] m-auto"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  {mode === "update" ? "Update" : "Add"}
+                </Button>
+              </Form.Item>
+            )}
+          </div>
         </Form>
       </Drawer>
     </>
