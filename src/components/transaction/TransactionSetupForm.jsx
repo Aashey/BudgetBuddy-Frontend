@@ -172,7 +172,7 @@ const TransactionSetupForm = ({
     } else {
       form.resetFields();
     }
-  }, [record, form]);
+  }, [mode, record, form]);
 
   return (
     <>
