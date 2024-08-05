@@ -77,7 +77,7 @@ const SavingTransaction = () => {
     {
       title: "S.N.",
       key: "sn",
-      width: 100,
+      width: 80,
       render: (text, record, index) => {
         const { current, pageSize } = tablePagination;
         return (current - 1) * pageSize + index + 1;
@@ -90,13 +90,13 @@ const SavingTransaction = () => {
       render: (date) => {
         return formatDate(date);
       },
-      width: 200,
+      width: 150,
     },
     {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      width: 200,
+      width: 150,
     },
     {
       title: "Notes",

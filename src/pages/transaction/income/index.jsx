@@ -77,7 +77,7 @@ const IncomeTransaction = () => {
     {
       title: "S.N.",
       key: "sn",
-      width: 100,
+      width: 80,
       render: (text, record, index) => {
         const { current, pageSize } = tablePagination;
         return (current - 1) * pageSize + index + 1;
@@ -90,7 +90,7 @@ const IncomeTransaction = () => {
       render: (date) => {
         return formatDate(date);
       },
-      width: 200,
+      width: 150,
     },
     {
       title: "Category",
@@ -102,13 +102,13 @@ const IncomeTransaction = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      width: 200,
+      width: 150,
     },
     {
       title: "Notes",
       dataIndex: "notes",
       key: "notes",
-      width: 200,
+      width: 150,
     },
     {
       title: "Recurring",
@@ -128,7 +128,7 @@ const IncomeTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 250,
+      width: 150,
       align: "center",
     },
   ];

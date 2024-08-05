@@ -79,7 +79,7 @@ const ExpenseTransaction = () => {
     {
       title: "S.N.",
       key: "sn",
-      width: 100,
+      width: 80,
       render: (text, record, index) => {
         const { current, pageSize } = tablePagination;
         return (current - 1) * pageSize + index + 1;
@@ -92,7 +92,7 @@ const ExpenseTransaction = () => {
       render: (date) => {
         return formatDate(date);
       },
-      width: 200,
+      width: 150,
     },
     {
       title: "Category",
@@ -104,13 +104,13 @@ const ExpenseTransaction = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      width: 200,
+      width: 150,
     },
     {
       title: "Notes",
       dataIndex: "notes",
       key: "notes",
-      width: 200,
+      width: 150,
     },
     {
       title: "Recurring",
@@ -130,7 +130,7 @@ const ExpenseTransaction = () => {
           handleViewComponent={handleViewComponent}
         />
       ),
-      width: 250,
+      width: 150,
       align: "center",
     },
   ];
