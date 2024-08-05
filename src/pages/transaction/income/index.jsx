@@ -139,6 +139,7 @@ const IncomeTransaction = () => {
       pageSize: pagination.pageSize,
     });
   };
+
   return (
     <>
       <TitleHeader
