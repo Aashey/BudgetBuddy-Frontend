@@ -70,12 +70,20 @@ const ExpenseTransaction = () => {
     setSelectedRecord(record);
   };
 
+  const [tablePagination, setTablePagination] = useState({
+    current: 1,
+    pageSize: 10,
+  });
+
   const ExpenseTransactionColumn = [
     {
       title: "S.N.",
       key: "sn",
       width: 100,
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => {
+        const { current, pageSize } = tablePagination;
+        return (current - 1) * pageSize + index + 1;
+      },
     },
     {
       title: "Date",
@@ -127,6 +135,13 @@ const ExpenseTransaction = () => {
     },
   ];
 
+  const handleTableChange = (pagination) => {
+    setTablePagination({
+      current: pagination.current,
+      pageSize: pagination.pageSize,
+    });
+  };
+
   return (
     <>
       <TitleHeader
@@ -150,6 +165,11 @@ const ExpenseTransaction = () => {
         className="mt-5"
         rowKey="id"
         scroll={{ y: "50vh" }}
+        pagination={{
+          current: tablePagination.current,
+          pageSize: tablePagination.pageSize,
+        }}
+        onChange={handleTableChange}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={ExpenseTransactionColumn}
       />
