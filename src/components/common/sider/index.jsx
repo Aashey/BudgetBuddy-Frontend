@@ -1,4 +1,4 @@
-import { Layout, Menu, message, Typography } from "antd";
+import { Button, Layout, Menu, message, Typography } from "antd";
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLogout } from "../../../services/auth";
@@ -109,17 +109,18 @@ const CustomSider = () => {
           left: 0,
         }}
         theme="light"
-        collapsed={false}
+        collapsible
+        collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="demo-logo-vertical" />
-        <Title
+        {/* <Title
           style={{ color: "#2d5bbd" }}
           level={3}
           className="flex justify-center mt-2 mb-4"
         >
           Budget Buddy
-        </Title>
+        </Title> */}
         <Menu
           theme="light"
           selectedKeys={[location.pathname]}

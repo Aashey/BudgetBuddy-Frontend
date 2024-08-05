@@ -89,12 +89,13 @@ const LoanCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 250,
+      width: 300,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      width: 500,
     },
     {
       title: "Action",
@@ -106,7 +107,7 @@ const LoanCategory = () => {
           record={record}
         />
       ),
-      width: 250,
+      width: 150,
       align: "center",
     },
   ];
@@ -139,13 +140,14 @@ const LoanCategory = () => {
       />
       <Table
         loading={isLoading}
-        className="mt-5"
+        className="custom-table ant-table-cell mt-5"
         rowKey="id"
-        scroll={{ y: "50vh" }}
+        scroll={{ y: "45vh" }}
         pagination={{
           current: tablePagination.current,
           pageSize: tablePagination.pageSize,
         }}
+        onChange={handleTableChange}
         dataSource={error ? [] : filteredData ?? data?.data?.data}
         columns={loanCategoryColumn}
       />

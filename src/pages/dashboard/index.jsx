@@ -17,9 +17,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="bg-[#EDEDFA] rounded-xl p-4 mb-4">
+      <div className="custom-font bg-[#EDEDFA] rounded-xl px-4 py-2 mb-2">
         <Title level={3}>Hey, User</Title>
-        <Text className="text-gray-700">{formatDate(Date())}</Text>
+        <Text className="custom-font text-gray-700">{formatDate(Date())}</Text>
 
         <DashboardCards totalData={totalData?.data?.data} />
       </div>

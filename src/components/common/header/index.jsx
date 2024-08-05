@@ -7,11 +7,11 @@ const TitleHeader = ({ textProp, handleCreateComponent }) => {
     <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
       <div className="flex justify-between align-center ">
         <span>
-          <Typography.Title className="text-white" level={2}>
+          <Typography.Title className="text-white" level={3}>
             {capitalizeInitialChar(textProp.type)}{" "}
             {capitalizeInitialChar(textProp.method)}
           </Typography.Title>
-          <Typography.Text>
+          <Typography.Text className="custom-font">
             Manage all your {textProp.type} {textProp.plural_method} or
             <Typography.Link onClick={handleCreateComponent}>
               {" "}
@@ -19,7 +19,10 @@ const TitleHeader = ({ textProp, handleCreateComponent }) => {
             </Typography.Link>
           </Typography.Text>
         </span>
-        <Button className="bg-white p-5 mt-4" icon={<CiExport size={18} />}>
+        <Button
+          className="custom-font bg-white p-2 mt-4"
+          icon={<CiExport size={16} />}
+        >
           Export
         </Button>
       </div>

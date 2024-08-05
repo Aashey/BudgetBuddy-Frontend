@@ -149,7 +149,7 @@ const DashboardCharts = ({
   return (
     <>
       <div className="grid grid-flow-col gap-6">
-        <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
+        <Card className="w-full grid-cols-6 bg-white p-0 shadow-md rounded-2xl">
           <Radio.Group
             options={radioOptions}
             onChange={onChangeIncomeExpenseRadio}
@@ -162,10 +162,10 @@ const DashboardCharts = ({
             options={incomeExpenseChartOptions}
             series={incomeExpenseSeries}
             type={incomeExpenseRadioOption}
-            height={350}
+            height={300}
           />
-        </div>
-        {/* <div className="w-full grid-cols-6 bg-white p-4 shadow-md rounded-2xl">
+        </Card>
+        <Card className="w-full grid-cols-6 bg-white p-0 shadow-md rounded-2xl">
           <Radio.Group
             options={radioOptions}
             onChange={onChangeSavingWithdrawRadio}
@@ -178,9 +178,9 @@ const DashboardCharts = ({
             options={savingWithdrawChartOptions}
             series={savingWithdrawSeries}
             type={savingWithdrawRadioOption}
-            height={350}
+            height={300}
           />
-        </div> */}
+        </Card>
       </div>
     </>
   );
