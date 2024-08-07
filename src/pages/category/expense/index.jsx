@@ -1,4 +1,4 @@
-import { Table, message } from "antd";
+import { Switch, Table, message } from "antd";
 
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
@@ -95,7 +95,14 @@ const ExpenseCategory = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: 500,
+      width: 400,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (isActive) => <Switch size="small" value={isActive} />,
+      width: 300,
     },
     {
       title: "Action",
@@ -105,9 +112,10 @@ const ExpenseCategory = () => {
           handleViewComponent={handleViewComponent}
           handleEditComponent={handleEditComponent}
           handleDelete={handleDelete}
+          method="category"
         />
       ),
-      width: 150,
+      width: 100,
       align: "center",
     },
   ];

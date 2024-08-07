@@ -1,4 +1,4 @@
-import { Button, Col, Drawer, Form, Input, message, Row } from "antd";
+import { Button, Col, Drawer, Form, Input, message, Row, Switch } from "antd";
 import { useEffect } from "react";
 
 import { capitalizeInitialChar } from "../../helper/capitalizeInitialChar";
@@ -15,6 +15,7 @@ import {
   useCreateLoanCategory,
   useUpdateLoanCategory,
 } from "../../pages/category/services/loan/useLoanCategory";
+import FormDebug from "../../helper/FormDebug";
 
 const CategorySetupForm = ({
   isDrawerOpen,
@@ -24,7 +25,6 @@ const CategorySetupForm = ({
   mode,
   record = {},
 }) => {
-  console.log("Type", type);
   const [form] = Form.useForm();
   const createIncomeCategory = useCreateIncomeCategory();
   const createExpenseCategory = useCreateExpenseCategory();
@@ -48,6 +48,7 @@ const CategorySetupForm = ({
   };
 
   const OnFinish = (values) => {
+    console.log("Values", values);
     const categoryMap = {
       income: {
         create: createIncomeCategory,
@@ -97,30 +98,48 @@ const CategorySetupForm = ({
           onFinish={OnFinish}
           form={form}
         >
+          {/* <FormDebug form={form} /> */}
           <div className="p-4">
-            <Form.Item
-              name="title"
-              label="Title"
-              rules={[{ required: true, message: "This field is required." }]}
-            >
-              <Input placeholder="Title" />
-            </Form.Item>
-            <Form.Item
-              name="description"
-              label="Description"
-              rules={[{ required: true, message: "This field is required." }]}
-            >
-              <Input.TextArea
-                rows={2}
-                style={{ resize: "none" }}
-                placeholder="Description"
-              />
-            </Form.Item>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="title"
+                  label="Title"
+                  rules={[
+                    { required: true, message: "This field is required." },
+                  ]}
+                >
+                  {mode == "update" ? (
+                    <Input placeholder="Title" disabled />
+                  ) : (
+                    <Input placeholder="Title" />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="description"
+                  label="Description"
+                  rules={[
+                    { required: true, message: "This field is required." },
+                  ]}
+                >
+                  <Input placeholder="Description" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Active" name="status">
+                  <Switch size="small" />
+                </Form.Item>
+              </Col>
+            </Row>
 
             {mode !== "view" && (
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Add
+                  {mode === "update" ? "Update" : "Add"}
                 </Button>
               </Form.Item>
             )}

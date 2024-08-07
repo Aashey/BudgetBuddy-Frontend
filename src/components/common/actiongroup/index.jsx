@@ -9,6 +9,7 @@ const ActionGroup = ({
   handleViewComponent,
   handleEditComponent,
   handleDelete,
+  method,
 }) => {
   return (
     // 1st action
@@ -65,16 +66,20 @@ const ActionGroup = ({
         </Button>
       </Tooltip>
 
-      <Tooltip title="Delete">
-        <Popconfirm
-          title="Are you sure you want to delete ?"
-          onConfirm={() => handleDelete(record)}
-        >
-          <Button type="none" className="text-gray-800 hover:text-red-600">
-            <AiFillDelete size={18} />
-          </Button>
-        </Popconfirm>
-      </Tooltip>
+      {method !== "category" && (
+        <>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Are you sure you want to delete ?"
+              onConfirm={() => handleDelete(record)}
+            >
+              <Button type="none" className="text-gray-800 hover:text-red-600">
+                <AiFillDelete size={18} />
+              </Button>
+            </Popconfirm>
+          </Tooltip>
+        </>
+      )}
     </div>
   );
 };

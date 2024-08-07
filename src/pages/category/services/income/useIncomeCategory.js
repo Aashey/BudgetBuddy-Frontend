@@ -12,18 +12,23 @@ export const useIncomeCategory = () => {
   });
 };
 
-const createIncomeCategory = async ({ title, description }) => {
-  return await apiClient.post(`/setup/income-category`, { title, description });
+const createIncomeCategory = async ({ title, description, status }) => {
+  return await apiClient.post(`/setup/income-category`, {
+    title,
+    description,
+    status,
+  });
 };
 
 export const useCreateIncomeCategory = () => {
   return useMutation(createIncomeCategory);
 };
 
-const updateIncomeCategory = async ({ title, description, id }) => {
+const updateIncomeCategory = async ({ title, description, status, id }) => {
   return await apiClient.put(`/setup/income-category/${id}`, {
     title,
     description,
+    status,
   });
 };
 

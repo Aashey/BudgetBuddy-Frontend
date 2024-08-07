@@ -58,12 +58,12 @@ const TransactionSetupForm = ({
   const updateSavingTransaction = useUpdateSavingTransaction();
   const updateWithdrawTransaction = useUpdateWithdrawTransaction();
 
-  const { data, error, isLoading } = useCategoryData(type);
+  const { data, error, isLoading } = useCategoryData("category", type);
 
   const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
-    if (error) {
+    if (error && (type === "income" || type === "expense")) {
       message.error("Failed to load categories.");
     }
     const updatedData = data?.data?.data?.map((data) => ({
@@ -89,8 +89,6 @@ const TransactionSetupForm = ({
   };
 
   const OnFinish = (values) => {
-    console.log(values);
-
     const transactionMap = {
       income: {
         create: createIncomeTransaction,
@@ -123,16 +121,12 @@ const TransactionSetupForm = ({
         ? null
         : dayjs(values.date).format("YYYY-MM-DD");
 
-    console.log("reformatted date", reformattedDate);
-
     const reformattedValues = {
       ...values,
       is_recurring:
         values.is_recurring === undefined ? false : values.is_recurring,
     };
     delete reformattedValues.date;
-
-    console.log("REformatted values", reformattedValues);
 
     const createPayload = {
       income: {
@@ -148,10 +142,8 @@ const TransactionSetupForm = ({
     };
 
     const updatePayload = { ...createPayload[type], id: record.id };
-    console.log(updatePayload);
     const payload = mode === "create" ? createPayload[type] : updatePayload;
 
-    console.log("Update payload", updatePayload);
     customMutation(
       currentTransaction,
       payload,
@@ -289,18 +281,8 @@ const TransactionSetupForm = ({
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item
-                  name="notes"
-                  label={<Text strong>Notes</Text>}
-                  rules={[
-                    { required: true, message: "This field is required." },
-                  ]}
-                >
-                  <Input.TextArea
-                    style={{ resize: "none" }}
-                    rows={2}
-                    placeholder="Enter Notes"
-                  />
+                <Form.Item name="notes" label={<Text strong>Notes</Text>}>
+                  <Input placeholder="Enter Notes" />
                 </Form.Item>
               </Col>
             </Row>

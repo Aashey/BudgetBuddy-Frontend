@@ -12,18 +12,23 @@ export const useGetLoanCategory = () => {
   });
 };
 
-const createLoanCategory = async ({ title, description }) => {
-  return await apiClient.post(`/setup/loan-category`, { title, description });
+const createLoanCategory = async ({ title, description, status }) => {
+  return await apiClient.post(`/setup/loan-category`, {
+    title,
+    description,
+    status,
+  });
 };
 
 export const useCreateLoanCategory = () => {
   return useMutation(createLoanCategory);
 };
 
-const updateLoanCategory = async ({ title, description, id }) => {
+const updateLoanCategory = async ({ title, description, status, id }) => {
   return await apiClient.put(`/setup/loan-category/${id}`, {
     title,
     description,
+    status,
   });
 };
 

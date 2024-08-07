@@ -12,10 +12,11 @@ export const useExpenseCategory = () => {
   });
 };
 
-const createExpenseCategory = async ({ title, description }) => {
+const createExpenseCategory = async ({ title, description, status }) => {
   return await apiClient.post(`/setup/expense-category`, {
     title,
     description,
+    status,
   });
 };
 
@@ -23,10 +24,11 @@ export const useCreateExpenseCategory = () => {
   return useMutation(createExpenseCategory);
 };
 
-const updateExpenseCategory = async ({ title, description, id }) => {
+const updateExpenseCategory = async ({ title, description, status, id }) => {
   return await apiClient.put(`/setup/expense-category/${id}`, {
     title,
     description,
+    status,
   });
 };
 

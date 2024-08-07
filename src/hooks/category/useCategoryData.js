@@ -1,22 +1,22 @@
-import { useExpenseCategory } from "../../pages/category/services/expense/useExpenseCategory";
-import { useIncomeCategory } from "../../pages/category/services/income/useIncomeCategory";
+import { useGetDropdown } from "../../services/getDropdown";
 
-const useCategoryData = (type) => {
-  const {
-    data: incomeData,
-    error: incomeError,
-    isLoading: incomeIsLoading,
-  } = useIncomeCategory();
+const useCategoryData = (method, type) => {
+  let data, error, isLoading;
+  if (type === "income" || type === "expense") {
+    const {
+      data: dropdownData,
+      error: dropdownError,
+      isLoading: dropdownIsLoading,
+    } = useGetDropdown(method, `${type}-${method}`);
 
-  const {
-    data: expenseData,
-    error: expenseError,
-    isLoading: expenseIsLoading,
-  } = useExpenseCategory();
-
-  const data = type === "income" ? incomeData : expenseData;
-  const error = type === "income" ? incomeError : expenseError;
-  const isLoading = type === "income" ? incomeIsLoading : expenseIsLoading;
+    data = dropdownData;
+    error = dropdownError;
+    isLoading = dropdownIsLoading;
+  } else {
+    data = null;
+    error = null;
+    isLoading = null;
+  }
 
   return { data, error, isLoading };
 };

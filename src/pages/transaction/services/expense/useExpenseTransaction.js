@@ -15,14 +15,14 @@ export const useExpenseTransaction = () => {
 const createExpenseTransaction = async ({
   category_id,
   amount,
-  date_received,
+  date_spent,
   notes,
   is_recurring,
 }) => {
   return await apiClient.post(`/transaction/expense`, {
     category_id,
     amount,
-    date_received,
+    date_spent,
     notes,
     is_recurring,
   });

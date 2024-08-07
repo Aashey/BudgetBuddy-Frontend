@@ -4,9 +4,14 @@ import IncomeTransaction from "../income";
 import SavingTransaction from "../saving";
 import WithdrawTransaction from "../withdraw";
 import { ProtectedRoute } from "../../../routes/protectedRoutes";
+import TransactionHistory from "..";
 
 export const TransactionRoutes = (
   <Route>
+    <Route
+      path="/transaction"
+      element={<ProtectedRoute element={<TransactionHistory />} />}
+    />
     <Route
       path="/transaction/income"
       element={<ProtectedRoute element={<IncomeTransaction />} />}
