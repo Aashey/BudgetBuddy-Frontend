@@ -85,8 +85,8 @@ const SavingTransaction = () => {
     },
     {
       title: "Date",
-      dataIndex: "date_saved",
-      key: "date_saved",
+      dataIndex: "date",
+      key: "date",
       render: (date) => {
         return formatDate(date);
       },
