@@ -7,10 +7,10 @@ const DashboardTransaction = () => {
   const { data, error, isLoading } = useGetTransaction();
 
   const transactionColor = {
-    income: "blue",
-    expense: "red",
-    saving: "yellow",
-    withdraw: "green",
+    Income: "blue",
+    Expense: "red",
+    Saving: "yellow",
+    Withdraw: "green",
   };
 
   const TransactionHistoryColumn = [
@@ -30,17 +30,22 @@ const DashboardTransaction = () => {
       render: (date) => {
         return formatDate(date);
       },
-      width: 150,
+      width: 100,
     },
     {
       title: "Transaction",
       dataIndex: "transaction_type",
       key: "transaction_type",
       align: "center",
-      width: 200,
+      width: 300,
       render: (transaction) => (
         <>
-          <Tag color={transactionColor[transaction]}>{transaction}</Tag>
+          <Tag
+            className="w-[80px] text-center"
+            color={transactionColor[transaction]}
+          >
+            {transaction}
+          </Tag>
         </>
       ),
     },
@@ -72,7 +77,7 @@ const DashboardTransaction = () => {
         scroll={{ y: "45vh" }}
         pagination={false}
         onChange={handleTableChange}
-        dataSource={error ? [] : data?.data}
+        dataSource={error ? [] : data?.data.slice(0, 5)}
         columns={TransactionHistoryColumn}
       />
     </div>

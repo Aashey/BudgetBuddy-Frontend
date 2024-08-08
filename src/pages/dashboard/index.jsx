@@ -20,25 +20,26 @@ const Dashboard = () => {
   return (
     <>
       <div className="custom-font bg-[#EDEDFA] rounded-xl px-4 py-2 mb-2">
-        <Title level={3}>Hey, User</Title>
-        <Text className="custom-font text-gray-700">{formatDate(Date())}</Text>
+        {/* <Title level={3}>Hey, User</Title> */}
+        {/* <Text className="custom-font text-gray-700">{formatDate(Date())}</Text> */}
 
         <DashboardCards totalData={totalData?.data?.data} />
       </div>
 
-      <div className="custom-font mt-4 bg-[#EDEDFA] p-4 rounded-xl">
+      <Card className="mt-4 sha rounded-2xl">
         <DashboardCharts
           incomeData={incomeData}
           expenseData={expenseData}
           savingData={savingData}
           withdrawData={withdrawData}
+          totalData={totalData?.data?.data}
         />
-      </div>
+      </Card>
 
-      <div className="custom-font mt-4 bg-[#EDEDFA] p-4 rounded-xl">
+      <Card className="mt-4 rounded-2xl">
         <Title level={5}>Recent Transactions</Title>
         <DashboardTransaction />
-      </div>
+      </Card>
     </>
   );
 };

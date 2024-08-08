@@ -1,4 +1,5 @@
 import { Card, Col, Radio, Row } from "antd";
+import Title from "antd/es/typography/Title";
 import { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 const DashboardCharts = ({
@@ -6,11 +7,14 @@ const DashboardCharts = ({
   expenseData,
   savingData,
   withdrawData,
+  totalData,
 }) => {
   const [incomeExpenseRadioOption, setincomeExpenseRadioOption] =
     useState("line");
-  const [savingWithdrawRadioOption, setsavingWithdrawRadioOption] =
-    useState("line");
+
+  const incomeTotal = totalData?.current_month?.total_income || 0;
+  const expenseTotal = totalData?.current_month?.total_expense || 0;
+
   const radioOptions = [
     {
       label: "Line",
@@ -35,19 +39,6 @@ const DashboardCharts = ({
     ],
     [incomeData, expenseData]
   );
-  const savingWithdrawSeries = useMemo(
-    () => [
-      {
-        name: "Saving",
-        data: savingData,
-      },
-      {
-        name: "Withdraw",
-        data: withdrawData,
-      },
-    ],
-    [savingData, withdrawData]
-  );
 
   const incomeExpenseChartOptions = useMemo(
     () => ({
@@ -59,12 +50,7 @@ const DashboardCharts = ({
         enabled: false,
       },
       stroke: {
-        curve: "straight",
         width: 2,
-      },
-      title: {
-        text: "Income vs Expenses",
-        align: "left",
       },
       grid: {
         row: {
@@ -93,71 +79,59 @@ const DashboardCharts = ({
     }),
     [incomeExpenseRadioOption]
   );
-  const savingWithdrawChartOptions = useMemo(
+  const totalIncomeExpenseOptions = useMemo(
     () => ({
       chart: {
-        type: savingWithdrawRadioOption,
+        type: "donut",
         toolbar: false,
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
-      stroke: {
-        curve: "straight",
-        width: 2,
+      legend: {
+        position: "bottom",
       },
-      title: {
-        text: "Savings vs Withdraws",
-        align: "left",
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"],
-          opacity: 0.2,
+      plotOptions: {
+        pie: {
+          donut: {
+            size: "70%",
+          },
         },
       },
-      xaxis: {
-        categories: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ],
-      },
-
-      colors: ["#D97706", "#0974f6"],
+      colors: ["#4CAF50", "#F44336"],
+      labels: ["Total Income", "Total Expense"],
     }),
-    [savingWithdrawRadioOption]
+    [incomeTotal, expenseTotal]
+  );
+
+  console.log("Total income: ", incomeTotal);
+  console.log("Total expense: ", expenseTotal);
+
+  const totalIncomeExpenseSeries = useMemo(
+    () => [Number(incomeTotal), Number(expenseTotal)],
+    [incomeTotal, expenseTotal]
   );
 
   const onChangeIncomeExpenseRadio = ({ target: { value } }) => {
     setincomeExpenseRadioOption(value);
   };
 
-  const onChangeSavingWithdrawRadio = ({ target: { value } }) => {
-    setsavingWithdrawRadioOption(value);
-  };
-
   return (
     <>
-      <div className="grid grid-flow-col gap-6">
-        <Card className="w-full grid-cols-6 bg-white p-0 shadow-md rounded-2xl">
-          <Radio.Group
-            options={radioOptions}
-            onChange={onChangeIncomeExpenseRadio}
-            value={incomeExpenseRadioOption}
-            optionType="button"
-            buttonStyle="solid"
-            className="flex justify-end items-end mb-4"
-          />
+      <div className="flex flex-wrap justify-evenly w-full">
+        <Card className="w-[35rem] h-[25rem] p-0 bg-white  ">
+          <div className="flex justify-between flex-wrap">
+            <Title level={5}>Income vs Expense</Title>
+
+            <Radio.Group
+              options={radioOptions}
+              onChange={onChangeIncomeExpenseRadio}
+              value={incomeExpenseRadioOption}
+              optionType="button"
+              buttonStyle="solid"
+              className="flex justify-end items-end mb-4"
+            />
+          </div>
           <Chart
             options={incomeExpenseChartOptions}
             series={incomeExpenseSeries}
@@ -165,19 +139,12 @@ const DashboardCharts = ({
             height={300}
           />
         </Card>
-        <Card className="w-full grid-cols-6 bg-white p-0 shadow-md rounded-2xl">
-          <Radio.Group
-            options={radioOptions}
-            onChange={onChangeSavingWithdrawRadio}
-            value={savingWithdrawRadioOption}
-            optionType="button"
-            buttonStyle="solid"
-            className="flex justify-end items-end mb-4"
-          />
+        <Card className="w-[35rem] h-[25rem] p-0 bg-white">
+          <Title level={5}>Total Income vs Total Expense</Title>
           <Chart
-            options={savingWithdrawChartOptions}
-            series={savingWithdrawSeries}
-            type={savingWithdrawRadioOption}
+            options={totalIncomeExpenseOptions}
+            series={totalIncomeExpenseSeries}
+            type="donut"
             height={300}
           />
         </Card>

@@ -91,7 +91,7 @@ const DashboardCards = ({ totalData }) => {
         </Row> */}
       {/* </div> */}
       <div className="grid mt-2 grid-flow-col gap-6 mb-2 grid-flow-col-dense">
-        <div className="grid-cols-3 bg-white shadow-md p-4 rounded-xl">
+        <div className="grid-cols-3 bg-white shadow-md p-2 rounded-xl">
           <Title level={5} style={{ color: "#2563EB" }}>
             TOTAL BALANCE
             <Title level={4}>Rs. {totalData?.current_month?.balance}</Title>
@@ -103,7 +103,7 @@ const DashboardCards = ({ totalData }) => {
           </Text>
         </div>
 
-        <div className=" grid-cols-3 bg-white shadow-md p-4 rounded-xl">
+        <div className=" grid-cols-3 bg-white shadow-md p-2 rounded-xl">
           <Title level={5} style={{ color: "#16A34A" }}>
             TOTAL INCOME
             <Title level={4}>
@@ -119,7 +119,7 @@ const DashboardCards = ({ totalData }) => {
             )}
           </Text>
         </div>
-        <div className="grid-cols-3 bg-white shadow-md p-4 rounded-xl">
+        <div className="grid-cols-3 bg-white shadow-md p-2 rounded-xl">
           <Title level={5} style={{ color: "#EF4444" }}>
             TOTAL EXPENSE
             <Title level={4}>
@@ -141,7 +141,7 @@ const DashboardCards = ({ totalData }) => {
             )}
           </Text>
         </div>
-        <div className="grid-cols-3 bg-white shadow-md p-4 rounded-xl">
+        <div className="grid-cols-3 bg-white shadow-md p-2 rounded-xl">
           <Title level={5} style={{ color: "#D97706" }}>
             TOTAL SAVINGS
             <Title level={4}>
