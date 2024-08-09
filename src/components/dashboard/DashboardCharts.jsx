@@ -140,7 +140,7 @@ const DashboardCharts = ({
               />
             </div>
           }
-          className="w-[73%] h-[25rem] p-0 bg-white"
+          className="w-[73%] h-[25rem] p-0 bg-white shadow-md border-gray-200"
         >
           <Chart
             options={incomeExpenseChartOptions}
@@ -151,7 +151,7 @@ const DashboardCharts = ({
         </Card>
         <Card
           title={<Title level={5}>August Summary</Title>}
-          className="w-[25%] h-[25rem] p-0 bg-white"
+          className="w-[25%] h-[25rem] p-0 bg-white shadow-md border-gray-200"
         >
           <Chart
             options={totalIncomeExpenseOptions}

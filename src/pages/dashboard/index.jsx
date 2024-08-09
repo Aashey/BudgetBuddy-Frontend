@@ -19,14 +19,16 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="custom-font bg-[#EDEDFA] rounded-xl px-4 py-2 mb-2">
-        {/* <Title level={3}>Hey, User</Title> */}
-        {/* <Text className="custom-font text-gray-700">{formatDate(Date())}</Text> */}
-
+      <div className="custom-font rounded-xl mb-4 border-red-500">
+        <div className="bg-[#ededfa] px-4 py-2 rounded-2xl">
+        <div className="flex justify-between"> 
+        <Title level={3}>Hey, User</Title>
+        <Text className="custom-font text-gray-700">{formatDate(Date())}</Text>
+        </div>
         <DashboardCards totalData={totalData?.data?.data} />
+        </div>
       </div>
 
-      <Card className="mt-4 sha rounded-2xl p-0">
         <DashboardCharts
           incomeData={incomeData}
           expenseData={expenseData}
@@ -34,10 +36,8 @@ const Dashboard = () => {
           withdrawData={withdrawData}
           totalData={totalData?.data?.data}
         />
-      </Card>
 
-      <Card className="mt-4 rounded-2xl">
-        <Title level={5}>Recent Transactions</Title>
+      <Card title={<Title level={5}>Recent Transactions</Title>} className="mt-4 rounded-2xl border-gray-300 shadow-md">
         <DashboardTransaction />
       </Card>
     </>

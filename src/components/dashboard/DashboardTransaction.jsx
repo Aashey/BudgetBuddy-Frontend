@@ -72,9 +72,9 @@ const DashboardTransaction = () => {
     <div>
       <Table
         loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
+        className="custom-table ant-table-cell"
         rowKey="id"
-        scroll={{ y: "45vh" }}
+        // scroll={{ y: "45vh" }}
         pagination={false}
         onChange={handleTableChange}
         dataSource={error ? [] : data?.data.slice(0, 5)}
