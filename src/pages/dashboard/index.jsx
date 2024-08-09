@@ -26,7 +26,7 @@ const Dashboard = () => {
         <DashboardCards totalData={totalData?.data?.data} />
       </div>
 
-      <Card className="mt-4 sha rounded-2xl">
+      <Card className="mt-4 sha rounded-2xl p-0">
         <DashboardCharts
           incomeData={incomeData}
           expenseData={expenseData}
