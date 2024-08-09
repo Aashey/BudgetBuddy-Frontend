@@ -50,12 +50,20 @@ const DashboardCharts = ({
         enabled: false,
       },
       stroke: {
+        curve: "straight",
         width: 2,
       },
+      markers: {
+        size: 5,
+    },
       grid: {
+        show: true, 
+        borderColor: 'rgba(0,0,0,0.2)', 
+        borderWidth: 0.5, 
+        strokeDashArray: 0,
         row: {
-          colors: ["#f3f3f3", "transparent"],
-          opacity: 0.2,
+          colors: ['transparent', 'transparent'],
+       
         },
       },
       xaxis: {
@@ -74,15 +82,14 @@ const DashboardCharts = ({
           "December",
         ],
       },
-
-      colors: ["#16A34A", "#EF4444"],
+      colors: ["#12CBC4", "#ED4C67"],
     }),
     [incomeExpenseRadioOption]
   );
   const totalIncomeExpenseOptions = useMemo(
     () => ({
       chart: {
-        type: "donut",
+        type: "pie",
         toolbar: false,
       },
       dataLabels: {
@@ -98,8 +105,8 @@ const DashboardCharts = ({
           },
         },
       },
-      colors: ["#4CAF50", "#F44336"],
-      labels: ["Total Income", "Total Expense"],
+      colors: ["#12CBC4", "#ED4C67"],
+      labels: ["Income", "Expense"],
     }),
     [incomeTotal, expenseTotal]
   );
@@ -133,7 +140,7 @@ const DashboardCharts = ({
               />
             </div>
           }
-          className="w-[73%] h-[25rem] p-0 bg-white  "
+          className="w-[73%] h-[25rem] p-0 bg-white"
         >
           <Chart
             options={incomeExpenseChartOptions}
@@ -149,9 +156,9 @@ const DashboardCharts = ({
           <Chart
             options={totalIncomeExpenseOptions}
             series={totalIncomeExpenseSeries}
-            type="donut"
+            type="pie"
             height={300}
-            className="w-full"
+            className="w-full mt-4"
           />
         </Card>
       </div>
