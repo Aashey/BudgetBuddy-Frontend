@@ -151,14 +151,14 @@ const DashboardCharts = ({
         </Card>
         <Card
           title={<Title level={5}>August Summary</Title>}
-          className="w-[25%] h-[25rem] p-0 bg-white shadow-md border-gray-200"
+          className="w-[26%] h-[25rem] p-0 bg-white shadow-md border-gray-200"
         >
           <Chart
             options={totalIncomeExpenseOptions}
             series={totalIncomeExpenseSeries}
             type="pie"
             height={300}
-            className="w-full mt-4"
+            className="w-full"
           />
         </Card>
       </div>

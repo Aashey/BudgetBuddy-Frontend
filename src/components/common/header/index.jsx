@@ -4,7 +4,7 @@ import { capitalizeInitialChar } from "../../../helper/capitalizeInitialChar";
 
 const TitleHeader = ({ textProp, handleCreateComponent }) => {
   return (
-    <div className="bg-[#ededfa] text-white rounded-2xl shadow-sm p-4">
+    <div className="bg-[#D3D3D3] text-white rounded-2xl shadow-sm p-4">
       <div className="flex justify-between align-center ">
         <span>
           <Typography.Title className="text-white" level={3}>
