@@ -2,6 +2,7 @@ import { Card, Col, Divider, Radio, Row } from "antd";
 import Title from "antd/es/typography/Title";
 import { useMemo, useState } from "react";
 import Chart from "react-apexcharts";
+import { formatDate_WithMonth } from "../../helper/formatDate";
 const DashboardCharts = ({
   incomeData,
   expenseData,
@@ -55,15 +56,14 @@ const DashboardCharts = ({
       },
       markers: {
         size: 5,
-    },
+      },
       grid: {
-        show: true, 
-        borderColor: 'rgba(0,0,0,0.2)', 
-        borderWidth: 0.5, 
+        show: true,
+        borderColor: "rgba(0,0,0,0.2)",
+        borderWidth: 0.5,
         strokeDashArray: 0,
         row: {
-          colors: ['transparent', 'transparent'],
-       
+          colors: ["transparent", "transparent"],
         },
       },
       xaxis: {
@@ -150,7 +150,9 @@ const DashboardCharts = ({
           />
         </Card>
         <Card
-          title={<Title level={5}>August Summary</Title>}
+          title={
+            <Title level={5}>{formatDate_WithMonth(Date())}'s Summary</Title>
+          }
           className="w-[26%] h-[25rem] p-0 bg-white shadow-md border-gray-200"
         >
           <Chart

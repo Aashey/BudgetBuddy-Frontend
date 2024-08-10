@@ -1,31 +1,30 @@
-import { Button, Input, Space } from "antd";
+import { Button, Input, Space, Tooltip } from "antd";
 import { HiPlus } from "react-icons/hi2";
 import { capitalizeInitialChar } from "../../../helper/capitalizeInitialChar";
-
+import { CiSearch } from "react-icons/ci";
+import { FaRegFileExcel } from "react-icons/fa";
 const LowerHeader = ({ handleCreateComponent, handleSearch, textProp }) => {
   return (
-    <Space className="mt-5 mb-3 flex justify-between">
-      <Button
-        className="custom-font p-2"
-        onClick={handleCreateComponent}
-        icon={<HiPlus size={16} />}
-        type="primary"
-      >
-        Add {capitalizeInitialChar(textProp.type)}{" "}
-      </Button>
+    <Space className="mb-4 flex justify-between">
       {(textProp.type === "income" ||
         textProp.type === "expense" ||
         textProp.type === "loan") && (
         <>
-          <Input.Search
-            addonBefore="Search"
+          <Input
+            prefix={<CiSearch size={14} />}
             onChange={handleSearch}
-            placeholder={`${capitalizeInitialChar(textProp.type)} ${
-              textProp.plural_method
-            }`}
+            placeholder="Search"
           />
         </>
       )}
+      <Tooltip title="Export to excel">
+        <Button
+          className="custom-font bg-white"
+          icon={<FaRegFileExcel size={16} />}
+        >
+          Excel
+        </Button>
+      </Tooltip>
     </Space>
   );
 };

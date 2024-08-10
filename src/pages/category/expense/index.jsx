@@ -79,7 +79,7 @@ const ExpenseCategory = () => {
     {
       title: "S.N.",
       key: "sn",
-      width: 100,
+      width: 50,
       render: (text, record, index) => {
         const { current, pageSize } = tablePagination;
         return (current - 1) * pageSize + index + 1;
@@ -89,20 +89,20 @@ const ExpenseCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 300,
+      width: 200,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: 400,
+      width: 300,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (isActive) => <Switch size="small" value={isActive} />,
-      width: 300,
+      width: 100,
     },
     {
       title: "Action",
@@ -137,28 +137,30 @@ const ExpenseCategory = () => {
         }}
         handleCreateComponent={handleCreateComponent}
       />
-      <LowerHeader
-        handleSearch={handleSearch}
-        handleCreateComponent={handleCreateComponent}
-        textProp={{
-          type: "expense",
-          method: "category",
-          plural_method: "categories",
-        }}
-      />
-      <Table
-        loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
-        rowKey="id"
-        scroll={{ y: "45vh" }}
-        pagination={{
-          current: tablePagination.current,
-          pageSize: tablePagination.pageSize,
-        }}
-        onChange={handleTableChange}
-        dataSource={error ? [] : filteredData ?? data?.data?.data}
-        columns={expenseCategoryColumn}
-      />
+      <div className="p-4">
+        <LowerHeader
+          handleSearch={handleSearch}
+          handleCreateComponent={handleCreateComponent}
+          textProp={{
+            type: "expense",
+            method: "category",
+            plural_method: "categories",
+          }}
+        />
+        <Table
+          loading={isLoading}
+          className="custom-table ant-table-cell mt-5"
+          rowKey="id"
+          scroll={{ y: "45vh" }}
+          pagination={{
+            current: tablePagination.current,
+            pageSize: tablePagination.pageSize,
+          }}
+          onChange={handleTableChange}
+          dataSource={error ? [] : filteredData ?? data?.data?.data}
+          columns={expenseCategoryColumn}
+        />
+      </div>
       <CategorySetupForm
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}

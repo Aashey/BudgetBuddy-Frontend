@@ -1,4 +1,4 @@
-import { Switch, Table, message } from "antd";
+import { Divider, Switch, Table, message } from "antd";
 
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
@@ -77,7 +77,7 @@ const IncomeCategory = () => {
     {
       title: "S.N.",
       key: "sn",
-      width: 100,
+      width: 50,
       render: (text, record, index) => {
         const { current, pageSize } = tablePagination;
         return (current - 1) * pageSize + index + 1;
@@ -87,20 +87,20 @@ const IncomeCategory = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: 300,
+      width: 200,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: 400,
+      width: 300,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (isActive) => <Switch size="small" value={isActive} />,
-      width: 300,
+      width: 100,
     },
     {
       title: "Action",
@@ -136,29 +136,30 @@ const IncomeCategory = () => {
         handleCreateComponent={handleCreateComponent}
       />
 
-      <LowerHeader
-        handleSearch={handleSearch}
-        handleCreateComponent={handleCreateComponent}
-        textProp={{
-          type: "income",
-          method: "category",
-          plural_method: "categories",
-        }}
-      />
-
-      <Table
-        loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
-        rowKey="id"
-        scroll={{ y: "45vh" }}
-        pagination={{
-          current: tablePagination.current,
-          pageSize: tablePagination.pageSize,
-        }}
-        onChange={handleTableChange}
-        dataSource={error ? [] : filteredData ?? data?.data?.data}
-        columns={incomeCategoryColumn}
-      />
+      <div className="p-4">
+        <LowerHeader
+          handleSearch={handleSearch}
+          handleCreateComponent={handleCreateComponent}
+          textProp={{
+            type: "income",
+            method: "category",
+            plural_method: "categories",
+          }}
+        />
+        <Table
+          loading={isLoading}
+          className="custom-table ant-table-cell rounded-md "
+          rowKey="id"
+          scroll={{ y: "45vh" }}
+          pagination={{
+            current: tablePagination.current,
+            pageSize: tablePagination.pageSize,
+          }}
+          onChange={handleTableChange}
+          dataSource={error ? [] : filteredData ?? data?.data?.data}
+          columns={incomeCategoryColumn}
+        />
+      </div>
 
       <CategorySetupForm
         isDrawerOpen={isDrawerOpen}

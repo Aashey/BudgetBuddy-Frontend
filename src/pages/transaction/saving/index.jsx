@@ -137,28 +137,29 @@ const SavingTransaction = () => {
         handleCreateComponent={handleCreateComponent}
       />
 
-      <LowerHeader
-        handleSearch={handleSearch}
-        handleCreateComponent={handleCreateComponent}
-        textProp={{
-          type: "saving",
-          plural_method: "transactions",
-        }}
-      />
-
-      <Table
-        loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
-        rowKey="id"
-        scroll={{ y: "45vh" }}
-        pagination={{
-          current: tablePagination.current,
-          pageSize: tablePagination.pageSize,
-        }}
-        onChange={handleTableChange}
-        dataSource={error ? [] : filteredData ?? data?.data?.data}
-        columns={SavingTransactionColumn}
-      />
+      <div className="p-4">
+        <LowerHeader
+          handleSearch={handleSearch}
+          handleCreateComponent={handleCreateComponent}
+          textProp={{
+            type: "saving",
+            plural_method: "transactions",
+          }}
+        />
+        <Table
+          loading={isLoading}
+          className="custom-table ant-table-cell mt-5"
+          rowKey="id"
+          scroll={{ y: "45vh" }}
+          pagination={{
+            current: tablePagination.current,
+            pageSize: tablePagination.pageSize,
+          }}
+          onChange={handleTableChange}
+          dataSource={error ? [] : filteredData ?? data?.data?.data}
+          columns={SavingTransactionColumn}
+        />
+      </div>
 
       <TransactionSetupForm
         isDrawerOpen={isDrawerOpen}

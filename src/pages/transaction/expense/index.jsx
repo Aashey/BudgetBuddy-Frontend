@@ -152,27 +152,29 @@ const ExpenseTransaction = () => {
         }}
         handleCreateComponent={handleCreateComponent}
       />
-      <LowerHeader
-        handleSearch={handleSearch}
-        handleCreateComponent={handleCreateComponent}
-        textProp={{
-          type: "expense",
-          plural_method: "transactions",
-        }}
-      />
-      <Table
-        loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
-        rowKey="id"
-        scroll={{ y: "45vh" }}
-        pagination={{
-          current: tablePagination.current,
-          pageSize: tablePagination.pageSize,
-        }}
-        onChange={handleTableChange}
-        dataSource={error ? [] : filteredData ?? data?.data?.data}
-        columns={ExpenseTransactionColumn}
-      />
+      <div className="p-4">
+        <LowerHeader
+          handleSearch={handleSearch}
+          handleCreateComponent={handleCreateComponent}
+          textProp={{
+            type: "expense",
+            plural_method: "transactions",
+          }}
+        />
+        <Table
+          loading={isLoading}
+          className="custom-table ant-table-cell mt-5"
+          rowKey="id"
+          scroll={{ y: "45vh" }}
+          pagination={{
+            current: tablePagination.current,
+            pageSize: tablePagination.pageSize,
+          }}
+          onChange={handleTableChange}
+          dataSource={error ? [] : filteredData ?? data?.data?.data}
+          columns={ExpenseTransactionColumn}
+        />
+      </div>
       <TransactionSetupForm
         isDrawerOpen={isDrawerOpen}
         onClose={closeDrawer}

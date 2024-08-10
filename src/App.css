@@ -7,12 +7,14 @@
 .custom-table .ant-table-cell {
     font-size: 0.85rem;
     padding: 12px;
+    padding: 0px 6px;
   }
 
 .custom-table .ant-table-thead > tr > th {
-    padding: 2px 4px; 
+    padding: 0px 6px; 
     font-size: 0.85rem; 
     line-height: 3; 
+    background-color: #ededfa;
   }
 
   .custom-table .ant-table-tbody > tr > td {
@@ -20,5 +22,5 @@
   }
   
   .custom-table .ant-table-cell {
-    line-height: 3; 
+    line-height: 2; 
   }

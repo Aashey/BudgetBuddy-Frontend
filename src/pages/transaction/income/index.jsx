@@ -151,28 +151,29 @@ const IncomeTransaction = () => {
         handleCreateComponent={handleCreateComponent}
       />
 
-      <LowerHeader
-        handleSearch={handleSearch}
-        handleCreateComponent={handleCreateComponent}
-        textProp={{
-          type: "income",
-          plural_method: "transactions",
-        }}
-      />
-
-      <Table
-        loading={isLoading}
-        className="custom-table ant-table-cell mt-5"
-        rowKey="id"
-        scroll={{ y: "45vh" }}
-        pagination={{
-          current: tablePagination.current,
-          pageSize: tablePagination.pageSize,
-        }}
-        onChange={handleTableChange}
-        dataSource={error ? [] : filteredData ?? data?.data?.data}
-        columns={incomeTransactionColumn}
-      />
+      <div className="p-4">
+        <LowerHeader
+          handleSearch={handleSearch}
+          handleCreateComponent={handleCreateComponent}
+          textProp={{
+            type: "income",
+            plural_method: "transactions",
+          }}
+        />
+        <Table
+          loading={isLoading}
+          className="custom-table ant-table-cell mt-5"
+          rowKey="id"
+          scroll={{ y: "45vh" }}
+          pagination={{
+            current: tablePagination.current,
+            pageSize: tablePagination.pageSize,
+          }}
+          onChange={handleTableChange}
+          dataSource={error ? [] : filteredData ?? data?.data?.data}
+          columns={incomeTransactionColumn}
+        />
+      </div>
 
       <TransactionSetupForm
         isDrawerOpen={isDrawerOpen}

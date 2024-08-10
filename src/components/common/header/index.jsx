@@ -1,10 +1,11 @@
-import { Button, Typography } from "antd";
+import { Button, Divider, Typography } from "antd";
 import { CiExport } from "react-icons/ci";
 import { capitalizeInitialChar } from "../../../helper/capitalizeInitialChar";
+import { HiPlus } from "react-icons/hi2";
 
 const TitleHeader = ({ textProp, handleCreateComponent }) => {
   return (
-    <div className="bg-[#D3D3D3] text-white rounded-2xl shadow-sm p-4">
+    <div className="header p-4 bg-[#EDEDFA]">
       <div className="flex justify-between align-center ">
         <span>
           <Typography.Title className="text-white" level={3}>
@@ -19,11 +20,14 @@ const TitleHeader = ({ textProp, handleCreateComponent }) => {
             </Typography.Link>
           </Typography.Text>
         </span>
+
         <Button
-          className="custom-font bg-white p-2 mt-4"
-          icon={<CiExport size={16} />}
+          className="custom-font p-2 mt-5"
+          onClick={handleCreateComponent}
+          icon={<HiPlus size={16} />}
+          type="primary"
         >
-          Export
+          Add {capitalizeInitialChar(textProp.type)}{" "}
         </Button>
       </div>
     </div>
