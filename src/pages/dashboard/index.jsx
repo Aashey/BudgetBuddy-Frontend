@@ -2,20 +2,16 @@ import DashboardCards from "../../components/dashboard/DashboardCards";
 import DashboardCharts from "../../components/dashboard/DashboardCharts";
 import DashboardTransaction from "../../components/dashboard/DashboardTransaction";
 import { formatDate } from "../../helper/formatDate";
-import { useGetChartData } from "./services/useChartData";
 import { useGetTotalData } from "./services/useTotalData";
 import { Card, Divider, Table, Tag, Typography } from "antd";
 
 const Dashboard = () => {
-  const { data: chartData } = useGetChartData();
   const { data: totalData } = useGetTotalData();
 
   const { Title, Text } = Typography;
-
-  const incomeData = chartData?.data?.income_data;
-  const expenseData = chartData?.data?.expense_data;
-  const savingData = chartData?.data?.saving_data;
-  const withdrawData = chartData?.data?.withdraw_data;
+console.log(totalData);
+  const incomeData = totalData?.data?.data?.charts_data?.income_data;
+  const expenseData = totalData?.data?.data?.charts_data?.expense_data;
 
   return (
     <>
@@ -30,16 +26,14 @@ const Dashboard = () => {
               </div>
             </Text>
           </div>
-          <DashboardCards totalData={totalData?.data?.data} />
+          <DashboardCards totalData={totalData?.data?.data?.financial_data} />
         </div>
       </div>
       <div className="px-4">
         <DashboardCharts
           incomeData={incomeData}
           expenseData={expenseData}
-          savingData={savingData}
-          withdrawData={withdrawData}
-          totalData={totalData?.data?.data}
+          totalData={totalData?.data?.data?.financial_data}
         />
 
         <Card
