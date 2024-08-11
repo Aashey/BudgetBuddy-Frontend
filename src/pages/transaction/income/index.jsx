@@ -44,11 +44,11 @@ const IncomeTransaction = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Income transaction deleted successfully! ");
+          message.success("Transaction deleted successfully!");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete income transaction.");
+          message.error("Failed to delete transaction!");
         },
       }
     );

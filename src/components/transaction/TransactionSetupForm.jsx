@@ -64,7 +64,7 @@ const TransactionSetupForm = ({
 
   useEffect(() => {
     if (error && (type === "income" || type === "expense")) {
-      message.error("Failed to load categories.");
+      message.error("Failed to load categories!");
     }
     const updatedData = data?.data?.data?.map((data) => ({
       value: data.id,
@@ -76,7 +76,7 @@ const TransactionSetupForm = ({
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
     message.success(
-      `${capitalizeInitialChar(type)} transaction ${action} successfully.`
+      `Transaction ${action} successfully!`
     );
     refetch();
     refetchTotalData();
@@ -85,7 +85,7 @@ const TransactionSetupForm = ({
 
   const handleMutationError = () => {
     const action = mode === "create" ? "add" : "update";
-    message.error(`Failed to ${action} ${type} transaction.`);
+    message.error(`Failed to ${action} transaction!`);
   };
 
   const OnFinish = (values) => {

@@ -45,11 +45,11 @@ const LoanCategory = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Loan category deleted successfully! ");
+          message.success("Category deleted successfully!");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete loan category.");
+          message.error("Failed to delete category!");
         },
       }
     );

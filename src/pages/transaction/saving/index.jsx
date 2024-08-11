@@ -44,11 +44,11 @@ const SavingTransaction = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Saving transaction deleted successfully! ");
+          message.success("Transaction deleted successfully!");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete saving transaction.");
+          message.error("Failed to delete transaction!");
         },
       }
     );

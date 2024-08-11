@@ -36,7 +36,7 @@ const CategorySetupForm = ({
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
     message.success(
-      `${capitalizeInitialChar(type)} category ${action} successfully.`
+      `Category ${action} successfully!`
     );
     onClose();
     refetch();
@@ -44,7 +44,7 @@ const CategorySetupForm = ({
 
   const handleMutationError = () => {
     const action = mode === "create" ? "add" : "update";
-    message.error(`Failed to ${action} ${type} category.`);
+    message.error(`Failed to ${action} category!`);
   };
 
   const OnFinish = (values) => {

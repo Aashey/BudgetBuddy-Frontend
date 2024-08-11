@@ -45,11 +45,11 @@ const ExpenseTransaction = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Expense transaction deleted successfully! ");
+          message.success("Transaction deleted successfully!");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete Expense transaction.");
+          message.error("Failed to delete transaction!");
         },
       }
     );

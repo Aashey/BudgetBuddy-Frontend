@@ -45,11 +45,11 @@ const ExpenseCategory = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Expense category deleted successfully! ");
+          message.success("Category deleted successfully! ");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete expense category.");
+          message.error("Failed to delete category!");
         },
       }
     );

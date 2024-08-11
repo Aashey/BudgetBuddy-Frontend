@@ -44,11 +44,11 @@ const WithdrawTransaction = () => {
       { id },
       {
         onSuccess: () => {
-          message.success("Withdraw transaction deleted successfully! ");
+          message.success("Transaction deleted successfully! ");
           refetch();
         },
         onError: () => {
-          message.error("Failed to delete withdraw transaction.");
+          message.error("Failed to delete transaction!");
         },
       }
     );
