@@ -35,8 +35,9 @@ import {
   useCreateExpenseTransaction,
   useUpdateExpenseTransaction,
 } from "../../pages/transaction/services/expense/useExpenseTransaction";
-import FormDebug from "../../helper/FormDebug";
+// import FormDebug from "../../helper/FormDebug";
 import { useGetTotalData } from "../../pages/dashboard/services/useTotalData";
+import { disableAfterToday_AndPrevMonth } from "../../helper/disableDates";
 
 const TransactionSetupForm = ({
   isDrawerOpen,
@@ -75,9 +76,7 @@ const TransactionSetupForm = ({
 
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
-    message.success(
-      `Transaction ${action} successfully!`
-    );
+    message.success(`Transaction ${action} successfully!`);
     refetch();
     refetchTotalData();
     onClose();
@@ -248,13 +247,19 @@ const TransactionSetupForm = ({
                             },
                           ]}
                         >
-                          <DatePicker style={{ width: "100%" }} />
+                          <DatePicker
+                            disabledDate={disableAfterToday_AndPrevMonth}
+                            style={{ width: "100%" }}
+                          />
                         </Form.Item>
                       </>
                     ) : (
                       <>
                         <Form.Item label={<Text strong>Date</Text>} name="date">
-                          <DatePicker style={{ width: "100%" }} />
+                          <DatePicker
+                            disabledDate={disableAfterToday_AndPrevMonth}
+                            style={{ width: "100%" }}
+                          />
                         </Form.Item>
                       </>
                     )}

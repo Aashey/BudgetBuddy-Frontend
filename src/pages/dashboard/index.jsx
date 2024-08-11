@@ -3,13 +3,13 @@ import DashboardCharts from "../../components/dashboard/DashboardCharts";
 import DashboardTransaction from "../../components/dashboard/DashboardTransaction";
 import { formatDate } from "../../helper/formatDate";
 import { useGetTotalData } from "./services/useTotalData";
-import { Card, Divider, Table, Tag, Typography } from "antd";
+import { Card, Typography } from "antd";
 
 const Dashboard = () => {
   const { data: totalData } = useGetTotalData();
 
   const { Title, Text } = Typography;
-console.log(totalData);
+  console.log(totalData);
   const incomeData = totalData?.data?.data?.charts_data?.income_data;
   const expenseData = totalData?.data?.data?.charts_data?.expense_data;
 
