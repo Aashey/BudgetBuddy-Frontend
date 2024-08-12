@@ -6,6 +6,7 @@ import { CategoryRoutes } from "../pages/category/utils/routes";
 import CustomLayout from "../components/common/layout";
 import PageNotFound from "../components/common/404";
 import { TransactionRoutes } from "../pages/transaction/utils/routes";
+import { UserProfileRoutes } from "../pages/profile/utils/routes";
 
 export const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ export const routes = createBrowserRouter(
         {DashboardRoutes}
         {CategoryRoutes}
         {TransactionRoutes}
+        {UserProfileRoutes}
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </>
