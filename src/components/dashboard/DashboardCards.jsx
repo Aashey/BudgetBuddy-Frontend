@@ -23,8 +23,8 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
             {totalData?.percentage_changes?.balance && (
               <>
                 {" "}
-                {totalData?.percentage_changes?.balance < 0 ? " " : " +"}% since
-                last month
+                {totalData?.percentage_changes?.balance < 0 ? "" : "+"}
+                {totalData?.percentage_changes?.balance}% since last month{" "}
               </>
             )}
           </Text>
@@ -45,8 +45,8 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
             {totalData?.percentage_changes?.total_income && (
               <>
                 {" "}
-                {totalData?.percentage_changes?.total_income < 0 ? " " : " +"}%
-                since last month
+                {totalData?.percentage_changes?.total_income < 0 ? "" : "+"}
+                {totalData?.percentage_changes?.total_income}% since last month
               </>
             )}
           </Text>
@@ -72,8 +72,8 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
           >
             {totalData?.percentage_changes?.total_expense && (
               <>
-                {totalData?.percentage_changes?.total_expense < 0 ? " " : " +"}%
-                since last month
+                {totalData?.percentage_changes?.total_expense < 0 ? "" : "+"}
+                {totalData?.percentage_changes?.total_expense}% since last month
               </>
             )}
           </Text>
