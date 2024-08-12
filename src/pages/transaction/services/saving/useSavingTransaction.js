@@ -39,3 +39,24 @@ const deleteSavingTransaction = async ({ id }) => {
 export const useDeleteSavingTransaction = () => {
   return useMutation(deleteSavingTransaction);
 };
+
+const getSavingGoal = async () => {
+  return await apiClient.get(`/transaction/saving-goal`);
+};
+
+export const useGetSavingGoal = () => {
+  return useQuery("getSavingGoal", getSavingGoal, {
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+};
+
+const createSavingGoal = async ({ target_amount }) => {
+  return await apiClient.post(`/transaction/saving-goal`, {
+    target_amount,
+  });
+};
+
+export const useCreateSavingGoal = () => {
+  return useMutation(createSavingGoal);
+};

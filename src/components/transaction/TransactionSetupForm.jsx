@@ -186,14 +186,20 @@ const TransactionSetupForm = ({
                   <>
                     Total Saving:{" "}
                     <span className="font-bold">
-                      {totalData?.data?.data?.current_month?.total_saving}
+                      {
+                        totalData?.data?.data?.financial_data?.current_month
+                          ?.total_saving
+                      }
                     </span>
                   </>
                 ) : (
                   <>
                     Total Balance:{" "}
                     <span className="font-bold">
-                      {totalData?.data?.data?.current_month?.balance}
+                      {
+                        totalData?.data?.data?.financial_data?.current_month
+                          ?.balance
+                      }
                     </span>
                   </>
                 )}
@@ -222,7 +228,7 @@ const TransactionSetupForm = ({
                       <Select
                         showSearch
                         loading={isLoading}
-                        style={{ width: "100%" }}
+                        style={{ width: "100%", color: "black" }}
                         placeholder="Select a category"
                         options={categoryData}
                         optionFilterProp="label"
@@ -235,34 +241,21 @@ const TransactionSetupForm = ({
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    {mode === "update" ? (
-                      <>
-                        <Form.Item
-                          label={<Text strong>Date</Text>}
-                          name="date"
-                          rules={[
-                            {
-                              required: true,
-                              message: "This field is required.",
-                            },
-                          ]}
-                        >
-                          <DatePicker
-                            disabledDate={disableAfterToday_AndPrevMonth}
-                            style={{ width: "100%" }}
-                          />
-                        </Form.Item>
-                      </>
-                    ) : (
-                      <>
-                        <Form.Item label={<Text strong>Date</Text>} name="date">
-                          <DatePicker
-                            disabledDate={disableAfterToday_AndPrevMonth}
-                            style={{ width: "100%" }}
-                          />
-                        </Form.Item>
-                      </>
-                    )}
+                    <Form.Item
+                      label={<Text strong>Date</Text>}
+                      name="date"
+                      rules={[
+                        {
+                          required: mode === "update",
+                          message: "This field is required.",
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        style={{ width: "100%", color: "black" }}
+                        disabledDate={disableAfterToday_AndPrevMonth}
+                      />
+                    </Form.Item>
                   </Col>
                 </Row>
               </>
@@ -280,14 +273,17 @@ const TransactionSetupForm = ({
                     min={1}
                     max={10000000}
                     addonBefore="Rs."
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", color: "black" }}
                     placeholder="Enter amount"
                   />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item name="notes" label={<Text strong>Notes</Text>}>
-                  <Input placeholder="Enter Notes" />
+                  <Input
+                    style={{ width: "100%", color: "black" }}
+                    placeholder="Enter Notes"
+                  />
                 </Form.Item>
               </Col>
             </Row>

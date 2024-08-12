@@ -133,7 +133,7 @@ const LoanCategory = () => {
         textProp={{
           type: "loan",
           method: "category",
-          multi_method: "categories",
+          plural_method: "categories",
         }}
         handleCreateComponent={handleCreateComponent}
       />
@@ -151,7 +151,6 @@ const LoanCategory = () => {
           loading={isLoading}
           className="custom-table ant-table-cell mt-5"
           rowKey="id"
-          scroll={{ y: "45vh" }}
           pagination={{
             current: tablePagination.current,
             pageSize: tablePagination.pageSize,

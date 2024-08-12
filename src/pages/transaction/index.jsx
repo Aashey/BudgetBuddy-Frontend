@@ -27,10 +27,10 @@ const TransactionHistory = () => {
   });
 
   const transactionColor = {
-    Income: "blue",
-    Expense: "red",
-    Saving: "yellow",
-    Withdraw: "green",
+    Income: "#16A34A",
+    Expense: "#EF4444",
+    Saving: "#D97706",
+    Withdraw: "#087CAF",
   };
 
   const TransactionHistoryColumn = [
@@ -62,7 +62,11 @@ const TransactionHistory = () => {
         <>
           <Tag
             className="w-[80px] text-center"
-            color={transactionColor[transaction]}
+            style={{
+              backgroundColor: `${transactionColor[transaction]}`,
+              color: "White",
+              border: "none",
+            }}
           >
             {transaction}
           </Tag>
@@ -93,7 +97,7 @@ const TransactionHistory = () => {
               Transaction History
             </Typography.Title>
             <Typography.Text className="custom-font">
-              View all your transactions here.
+              View all your transactions here
             </Typography.Text>
           </span>
         </div>
@@ -111,7 +115,6 @@ const TransactionHistory = () => {
           loading={isLoading}
           className="custom-table ant-table-cell"
           rowKey="id"
-          scroll={{ y: "47vh" }}
           pagination={{
             current: tablePagination.current,
             pageSize: tablePagination.pageSize,

@@ -129,7 +129,7 @@ const DashboardCharts = ({
         <Card
           title={
             <div className="flex justify-between flex-wrap">
-              <Title level={5}>This Year's Summary</Title>
+              <Title level={5}>Income vs Expense</Title>
               <Radio.Group
                 options={radioOptions}
                 onChange={onChangeIncomeExpenseRadio}

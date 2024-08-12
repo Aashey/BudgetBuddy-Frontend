@@ -35,9 +35,7 @@ const CategorySetupForm = ({
 
   const handleMutationSuccess = () => {
     const action = mode === "create" ? "added" : "updated";
-    message.success(
-      `Category ${action} successfully!`
-    );
+    message.success(`Category ${action} successfully!`);
     onClose();
     refetch();
   };
@@ -110,9 +108,13 @@ const CategorySetupForm = ({
                   ]}
                 >
                   {mode == "update" ? (
-                    <Input placeholder="Title" disabled />
+                    <Input
+                      style={{ color: "black" }}
+                      placeholder="Title"
+                      disabled
+                    />
                   ) : (
-                    <Input placeholder="Title" />
+                    <Input style={{ color: "black" }} placeholder="Title" />
                   )}
                 </Form.Item>
               </Col>
@@ -124,7 +126,7 @@ const CategorySetupForm = ({
                     { required: true, message: "This field is required." },
                   ]}
                 >
-                  <Input placeholder="Description" />
+                  <Input style={{ color: "black" }} placeholder="Description" />
                 </Form.Item>
               </Col>
             </Row>

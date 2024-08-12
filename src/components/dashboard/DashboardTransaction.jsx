@@ -7,10 +7,10 @@ const DashboardTransaction = () => {
   const { data, error, isLoading } = useGetTransaction();
 
   const transactionColor = {
-    Income: "blue",
-    Expense: "red",
-    Saving: "yellow",
-    Withdraw: "green",
+    Income: "#16A34A",
+    Expense: "#EF4444",
+    Saving: "#D97706",
+    Withdraw: "#087CAF",
   };
 
   const TransactionHistoryColumn = [
@@ -42,7 +42,11 @@ const DashboardTransaction = () => {
         <>
           <Tag
             className="w-[80px] text-center"
-            color={transactionColor[transaction]}
+            style={{
+              backgroundColor: `${transactionColor[transaction]}`,
+              color: "White",
+              border: "none",
+            }}
           >
             {transaction}
           </Tag>

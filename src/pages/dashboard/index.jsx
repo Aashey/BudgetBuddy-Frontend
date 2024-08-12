@@ -2,6 +2,7 @@ import DashboardCards from "../../components/dashboard/DashboardCards";
 import DashboardCharts from "../../components/dashboard/DashboardCharts";
 import DashboardTransaction from "../../components/dashboard/DashboardTransaction";
 import { formatDate } from "../../helper/formatDate";
+import { percentageConversion } from "../../helper/percentageConversion";
 import { useGetTotalData } from "./services/useTotalData";
 import { Card, Typography } from "antd";
 
@@ -9,7 +10,12 @@ const Dashboard = () => {
   const { data: totalData } = useGetTotalData();
 
   const { Title, Text } = Typography;
-  console.log(totalData);
+  const goalPercentage = percentageConversion(
+    totalData?.data?.data?.financial_data?.current_month_goal,
+    totalData?.data?.data?.financial_data?.current_month?.total_saving
+  );
+  console.log("Total Data:", totalData);
+
   const incomeData = totalData?.data?.data?.charts_data?.income_data;
   const expenseData = totalData?.data?.data?.charts_data?.expense_data;
 
@@ -26,7 +32,10 @@ const Dashboard = () => {
               </div>
             </Text>
           </div>
-          <DashboardCards totalData={totalData?.data?.data?.financial_data} />
+          <DashboardCards
+            goalPercentage={goalPercentage}
+            totalData={totalData?.data?.data?.financial_data}
+          />
         </div>
       </div>
       <div className="px-4">

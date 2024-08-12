@@ -3,7 +3,12 @@ import { CiExport } from "react-icons/ci";
 import { capitalizeInitialChar } from "../../../helper/capitalizeInitialChar";
 import { HiPlus } from "react-icons/hi2";
 
-const TitleHeader = ({ textProp, handleCreateComponent }) => {
+const TitleHeader = ({
+  textProp,
+  handleCreateComponent,
+  goalData,
+  openModal,
+}) => {
   return (
     <div className="header p-4 bg-[#EDEDFA]">
       <div className="flex justify-between align-center ">
@@ -13,22 +18,30 @@ const TitleHeader = ({ textProp, handleCreateComponent }) => {
             {capitalizeInitialChar(textProp.method)}
           </Typography.Title>
           <Typography.Text className="custom-font">
-            Manage all your {textProp.type} {textProp.plural_method} or
-            <Typography.Link onClick={handleCreateComponent}>
-              {" "}
-              add a new {textProp.method}.
-            </Typography.Link>
+            Manage all your {textProp.type} {textProp.plural_method} here
+            {textProp.type === "saving" && (
+              <>
+                {" "}
+                or
+                <Typography.Link onClick={openModal}>
+                  {" "}
+                  {!goalData ? "add a saving goal" : "view your saving goal"}
+                </Typography.Link>
+              </>
+            )}
           </Typography.Text>
         </span>
 
-        <Button
-          className="custom-font p-2 mt-5"
-          onClick={handleCreateComponent}
-          icon={<HiPlus size={16} />}
-          type="primary"
-        >
-          Add {capitalizeInitialChar(textProp.type)}{" "}
-        </Button>
+        <span className="flex justify-between">
+          <Button
+            className="custom-font p-2 mt-5"
+            onClick={handleCreateComponent}
+            icon={<HiPlus size={16} />}
+            type="primary"
+          >
+            Add {capitalizeInitialChar(textProp.type)}{" "}
+          </Button>
+        </span>
       </div>
     </div>
   );
