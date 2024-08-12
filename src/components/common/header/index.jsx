@@ -9,6 +9,8 @@ const TitleHeader = ({
   goalData,
   openModal,
 }) => {
+  console.log(goalData);
+
   return (
     <div className="header p-4 bg-[#EDEDFA]">
       <div className="flex justify-between align-center ">
@@ -19,13 +21,15 @@ const TitleHeader = ({
           </Typography.Title>
           <Typography.Text className="custom-font">
             Manage all your {textProp.type} {textProp.plural_method} here
-            {textProp.type === "saving" && (
+            {textProp.type === "saving" && goalData && (
               <>
                 {" "}
                 or
                 <Typography.Link onClick={openModal}>
                   {" "}
-                  {!goalData ? "add a saving goal" : "view your saving goal"}
+                  {goalData.length === 0
+                    ? "add a saving goal"
+                    : "view your saving goal"}
                 </Typography.Link>
               </>
             )}

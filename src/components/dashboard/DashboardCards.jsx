@@ -89,7 +89,9 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
               />
             </Title>
           </Title>
-          <Progress percent={goalPercentage} />
+          {totalData?.current_month_goal > 0 && (
+            <Progress percent={goalPercentage} />
+          )}
           <Text
             style={{
               color: "gray",
@@ -99,19 +101,28 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
             }}
           >
             <span>
-              {totalData?.current_month?.total_saving <
-              totalData?.current_month_goal ? (
+              {totalData?.current_month_goal > 0 ? (
                 <>
-                  <CountUp
-                    duration={0.8}
-                    end={totalData?.current_month?.total_saving}
-                  />{" "}
-                  /{" "}
-                  <CountUp duration={0.8} end={totalData?.current_month_goal} />{" "}
-                  Reached
+                  {totalData?.current_month?.total_saving <
+                  totalData?.current_month_goal ? (
+                    <>
+                      <CountUp
+                        duration={0.8}
+                        end={totalData?.current_month?.total_saving}
+                      />{" "}
+                      /{" "}
+                      <CountUp
+                        duration={0.8}
+                        end={totalData?.current_month_goal}
+                      />{" "}
+                      Reached
+                    </>
+                  ) : (
+                    "Saving Goal Reached."
+                  )}
                 </>
               ) : (
-                "Saving Goal Reached."
+                "Saving target not yet set."
               )}
             </span>
           </Text>

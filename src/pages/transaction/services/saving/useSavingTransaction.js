@@ -60,3 +60,11 @@ const createSavingGoal = async ({ target_amount }) => {
 export const useCreateSavingGoal = () => {
   return useMutation(createSavingGoal);
 };
+
+const deleteSavingGoal = async (id) => {
+  return await apiClient.delete(`/transaction/saving-goal/${id}`);
+};
+
+export const useDeleteSavingGoal = () => {
+  return useMutation(deleteSavingGoal);
+};

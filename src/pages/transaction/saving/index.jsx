@@ -1,11 +1,23 @@
-import { Button, Divider, Form, Input, message, Modal, Table } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  message,
+  Modal,
+  Row,
+  Table,
+} from "antd";
 import { useEffect, useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
 import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
+
 import {
   useCreateSavingGoal,
+  useDeleteSavingGoal,
   useDeleteSavingTransaction,
   useGetSavingGoal,
   useSavingTransaction,
@@ -13,6 +25,8 @@ import {
 import { formatDate } from "../../../helper/formatDate";
 import { Typography } from "antd";
 import Inputs from "../../../components/common/ui/input/CustomInput";
+
+import { MdDeleteForever } from "react-icons/md";
 
 const SavingTransaction = () => {
   const [form] = Form.useForm();
@@ -23,6 +37,8 @@ const SavingTransaction = () => {
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
   const deleteSavingTransaction = useDeleteSavingTransaction();
+  const createSavingGoal = useCreateSavingGoal();
+  const deleteSavingGoal = useDeleteSavingGoal();
   const {
     data: goalData,
     error: goalError,
@@ -32,6 +48,7 @@ const SavingTransaction = () => {
 
   const { Title, Text } = Typography;
 
+  console.log("Goal Data", goalData);
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -146,16 +163,31 @@ const SavingTransaction = () => {
     });
   };
 
-  const saveGoalData = (values) => {
-    console.log(values);
-    useCreateSavingGoal.mutate(values);
+  const saveGoalData = () => {
+    createSavingGoal.mutate(
+      { target_amount: form.getFieldsValue().target_amount },
+      {
+        onSuccess: () => {
+          message.success("Saving goal added Successfully!");
+          refetch();
+          setIsModalOpen(false);
+        },
+        onError: () => {
+          message.error("Failed to add saving goal!");
+        },
+      }
+    );
   };
 
-  console.log("Goal", goalData?.data?.data[0]);
-
   useEffect(() => {
-    form.setFieldValue(goalData?.data?.data[0].target_amount);
-  }, [goalData]);
+    if (goalData?.data?.data.length != 0) {
+      form.setFieldsValue({
+        target_amount: goalData?.data?.data[0].target_amount,
+      });
+    } else {
+      form.resetFields();
+    }
+  }, [goalData, form, refetch]);
 
   return (
     <>
@@ -175,38 +207,61 @@ const SavingTransaction = () => {
         open={isModalOpen}
         onClose={closeModal}
         onCancel={closeModal}
-        footer={false}
+        footer={
+          <>
+            {goalData?.data?.data.length > 0 ? (
+              <>
+                <Button
+                  icon={<MdDeleteForever size={20} />}
+                  type="none"
+                  onClick={() => {
+                    deleteSavingGoal.mutate(goalData?.data?.data[0].id, {
+                      onSuccess: () => {
+                        message.success("Saving goal deleted successfully!");
+                        setIsModalOpen(false);
+                        refetch();
+                      },
+                      onError: () => {
+                        message.error("Failed to delete saving goal.");
+                        setIsModalOpen(false);
+                      },
+                    });
+                  }}
+                  className="bg-red-600 text-white hover:bg-red-800"
+                >
+                  Delete Goal
+                </Button>
+              </>
+            ) : (
+              <Form.Item>
+                <Button onClick={saveGoalData} type="primary">
+                  Add Goal
+                </Button>
+              </Form.Item>
+            )}
+          </>
+        }
       >
         <Form
           form={form}
-          disabled={!!goalData?.data?.data}
-          initialValues={{
-            target_amount: goalData?.data?.data[0].target_amount,
-          }}
+          disabled={goalData?.data?.data.length > 0}
           layout="vertical"
           onFinish={saveGoalData}
         >
           <Divider />
-          <Inputs
-            InputProps={{
-              name: "target_amount",
-              label: "Target",
-              rules: [{ required: true, message: "This field is required  " }],
-            }}
-            form={form}
-          />
-
-          {!goalData?.data?.data ? (
-            <>
-              <Form.Item>
-                <Button htmlType="submit" type="primary">
-                  Add Goal
-                </Button>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item
+                name="target_amount"
+                label="Target"
+                rules={[
+                  { required: true, message: "This field is required  " },
+                ]}
+              >
+                <Input style={{ color: "black" }} />
               </Form.Item>
-            </>
-          ) : (
-            ""
-          )}
+            </Col>
+          </Row>
         </Form>
       </Modal>
 
