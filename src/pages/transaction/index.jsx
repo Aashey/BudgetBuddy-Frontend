@@ -111,7 +111,6 @@ const TransactionHistory = () => {
           loading={isLoading}
           className="custom-table ant-table-cell"
           rowKey="id"
-          scroll={{ y: "47vh" }}
           pagination={{
             current: tablePagination.current,
             pageSize: tablePagination.pageSize,

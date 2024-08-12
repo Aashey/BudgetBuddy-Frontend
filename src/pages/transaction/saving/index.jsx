@@ -150,7 +150,6 @@ const SavingTransaction = () => {
           loading={isLoading}
           className="custom-table ant-table-cell mt-5"
           rowKey="id"
-          scroll={{ y: "45vh" }}
           pagination={{
             current: tablePagination.current,
             pageSize: tablePagination.pageSize,

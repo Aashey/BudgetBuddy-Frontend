@@ -150,7 +150,6 @@ const IncomeCategory = () => {
           loading={isLoading}
           className="custom-table ant-table-cell rounded-md "
           rowKey="id"
-          scroll={{ y: "45vh" }}
           pagination={{
             current: tablePagination.current,
             pageSize: tablePagination.pageSize,

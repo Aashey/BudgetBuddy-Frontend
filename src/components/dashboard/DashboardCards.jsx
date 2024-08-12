@@ -98,7 +98,7 @@ const DashboardCards = ({ totalData }) => {
           </Title>
           <Text style={{ color: "gray" }}>
             {totalData?.percentage_changes?.balance && (
-              <> {totalData?.percentage_changes?.balance}% since last month</>
+              <> {(totalData?.percentage_changes?.balance)<0 ? "" : "+"}{totalData?.percentage_changes?.balance}% since last month </>
             )}
           </Text>
         </div>
@@ -114,6 +114,7 @@ const DashboardCards = ({ totalData }) => {
             {totalData?.percentage_changes?.total_income && (
               <>
                 {" "}
+                {(totalData?.percentage_changes?.total_income)<0 ? "" : "+"}
                 {totalData?.percentage_changes?.total_income}% since last month
               </>
             )}
@@ -136,6 +137,7 @@ const DashboardCards = ({ totalData }) => {
           >
             {totalData?.percentage_changes?.total_expense && (
               <>
+              {(totalData?.percentage_changes?.total_expense)<0 ? "" : "+"}
                 {totalData?.percentage_changes?.total_expense}% since last month
               </>
             )}
@@ -151,6 +153,7 @@ const DashboardCards = ({ totalData }) => {
           <Text style={{ color: "gray" }}>
             {totalData?.percentage_changes?.total_saving && (
               <>
+                {(totalData?.percentage_changes?.total_saving)<0 ? "" : "+"}
                 {totalData?.percentage_changes?.total_saving}% since last month
               </>
             )}
