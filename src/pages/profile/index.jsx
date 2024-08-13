@@ -43,9 +43,9 @@ const UserProfile = () => {
   };
   return (
     <>
-      <div className="mx-auto  p-6  shadow-md w-[60vw] h-[80vh]">
+      <div className="p-8 height-[100vh]">
         <Form onFinish={updateUserProfile} form={form} layout="vertical">
-          <div className="flex flex-col  items-center mb-4">
+          <div className="flex flex-col items-center mb-4">
             <Avatar
               className="text-9xl bg-black size-16"
               icon={<FaUser size={40} />}
@@ -65,7 +65,7 @@ const UserProfile = () => {
             </Col>
           </Row>
           <Row gutter={24}>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 name="first_name"
                 label={<Text strong>First Name</Text>}
@@ -73,7 +73,7 @@ const UserProfile = () => {
                 <Input placeholder="Your First Name" />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 name="middle_name"
                 label={<Text strong>Middle Name</Text>}
@@ -81,14 +81,15 @@ const UserProfile = () => {
                 <Input placeholder="Your Middle Name" />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            </Row>
+            <Row gutter={24}>
+
+            <Col span={12}>
               <Form.Item name="last_name" label={<Text strong>Last Name</Text>}>
                 <Input placeholder="Your Last Name" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 name="phone_number"
                 label={<Text strong>Phone Number</Text>}
@@ -100,7 +101,10 @@ const UserProfile = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+              </Row>
+          <Row gutter={24}>
+            
+            <Col span={12}>
               <Form.Item name="dob" label={<Text strong>Date of Birth</Text>}>
                 {/* <DatePicker
                   disabledDate={disableAfterToday}
@@ -108,19 +112,17 @@ const UserProfile = () => {
                 /> */}
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item name="address" label={<Text strong>Address</Text>}>
                 <Input placeholder="Your Address" />
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Col span={8}>
-              <Button htmlType="submit" type="primary" className="w-full">
+          <div className="flex justify-start mt-4">
+              <Button style={{width:200}} htmlType="submit" type="primary" className="w-full">
                 Update Profile
               </Button>
-            </Col>
-          </Row>
+          </div>
         </Form>
       </div>
     </>

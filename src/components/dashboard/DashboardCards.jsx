@@ -103,8 +103,7 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
             <span>
               {totalData?.current_month_goal > 0 ? (
                 <>
-                  {Number(totalData?.current_month?.total_saving) >=
-                  Number(totalData?.current_month_goal) ? (
+                  {Number(totalData?.current_month?.total_saving) >= Number(totalData?.current_month_goal) ? (
                     "Saving Goal Reached."
                   ) : (
                     <>
