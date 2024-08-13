@@ -43,8 +43,8 @@ const UserProfile = () => {
   };
   return (
     <>
-      <Card
-        title={
+      <div className="mx-auto  p-6  shadow-md w-[60vw] h-[80vh]">
+        <Form onFinish={updateUserProfile} form={form} layout="vertical">
           <div className="flex flex-col  items-center mb-4">
             <Avatar
               className="text-9xl bg-black size-16"
@@ -52,10 +52,6 @@ const UserProfile = () => {
             />
             <Title>User Profile</Title>
           </div>
-        }
-        className="mx-auto  p-4 rounded-2xl shadow-md w-[50vw] h-[80vh]"
-      >
-        <Form onFinish={updateUserProfile} form={form} layout="vertical">
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item label={<Text strong>Username</Text>} name={"username"}>
@@ -126,7 +122,7 @@ const UserProfile = () => {
             </Col>
           </Row>
         </Form>
-      </Card>
+      </div>
     </>
   );
 };
