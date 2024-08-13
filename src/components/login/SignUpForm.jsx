@@ -51,17 +51,17 @@ const SignupForm = () => {
     );
   };
   return (
-    <div className="grid w-full grid-flow-row lg:grid-cols-12 gap-x-4 ">
+    <div className="grid width-[100vh] grid-flow-row lg:grid-cols-12 gap-x-4">
       <LoginLogo />
       <div className="lg:col-span-1"></div>
 
-      <div className="lg:col-span-4 flex flex-col justify-center p-12">
+      <div className="lg:col-span-4 flex flex-col justify-center p-8">
         <Title>Get Started</Title>
         <Text className="text-gray-600">Create your free account now</Text>
         <Form
           onFinish={onFinish}
           form={form}
-          className="mt-11 mb-4 w-full"
+          className="mt-4 w-full"
           layout="vertical"
         >
           <Form.Item
@@ -173,7 +173,7 @@ const SignupForm = () => {
         >
           <TermsAndConditions />
         </Modal>
-        <Text className="pt-10">
+        <Text className="mt-4">
           Already have an account ? <NavLink to="/login">Login</NavLink>
         </Text>
       </div>

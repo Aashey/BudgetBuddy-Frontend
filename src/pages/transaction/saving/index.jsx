@@ -207,7 +207,7 @@ const SavingTransaction = () => {
   useEffect(() => {
     if (buttonMode === "View") {
       form.setFieldsValue({
-        target_amount: goalData?.data?.data[0].target_amount,
+        target_amount: goalData?.data?.data[0].target_amount,x
       });
     } else {
       form.resetFields();
@@ -241,7 +241,7 @@ const SavingTransaction = () => {
                 name="target_amount"
                 label="Target"
                 rules={[
-                  { required: true, message: "This field is required  " },
+                  { required: true, message: "This field is required!" },
                 ]}
               >
                 <Input

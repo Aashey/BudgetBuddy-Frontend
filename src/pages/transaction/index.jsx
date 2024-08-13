@@ -111,7 +111,7 @@ const TransactionHistory = () => {
     setFilterType(data);
   };
 
-  const handleFilter = () => {
+  const  handleFilter = () => {
     if (filterType === "period") {
       setQueryParam(`from_date=${dateRange[0]}&to_date=${dateRange[1]}`);
     } else if (filterType === "this_week") {
@@ -119,8 +119,8 @@ const TransactionHistory = () => {
     } else {
       setQueryParam(`filter=${filterType}`);
     }
-    refetch();
-  };
+    refetch();              
+  }; 
 
   return (
     <>
