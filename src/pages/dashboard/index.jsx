@@ -27,7 +27,7 @@ const Dashboard = () => {
             <Title level={3}>Dashboard</Title>
             <Text className="custom-font text-black">
               <div className="flex flex-col">
-                <span>Manoj</span>
+                <span>{totalData?.data?.data?.username}</span>
                 <span>{formatDate(Date())}</span>
               </div>
             </Text>
