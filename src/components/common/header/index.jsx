@@ -21,22 +21,23 @@ const TitleHeader = ({
           </Typography.Title>
           <Typography.Text className="custom-font">
             Manage all your {textProp.type} {textProp.plural_method} here
-            {textProp.type === "saving" && goalData && (
-              <>
-                {" "}
-                or
-                <Typography.Link onClick={openModal}>
-                  {" "}
-                  {goalData.length === 0
-                    ? "add a saving goal"
-                    : "view your saving goal"}
-                </Typography.Link>
-              </>
-            )}
+            
           </Typography.Text>
         </span>
 
         <span className="flex justify-between">
+        {textProp.type === "saving" && goalData && (
+              <>
+                {" "}
+                
+                <Button  className="bg-yellow-600 text-white p-2 mt-5 mr-2 hover:bg-yellow-400" onClick={openModal}>
+                  {" "}
+                  {goalData.length === 0
+                    ? "add a saving goal"
+                    : "view your saving goal"}
+                </Button>
+              </>
+            )}
           <Button
             className="custom-font p-2 mt-5"
             onClick={handleCreateComponent}

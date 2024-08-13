@@ -103,22 +103,22 @@ const DashboardCards = ({ totalData, goalPercentage }) => {
             <span>
               {totalData?.current_month_goal > 0 ? (
                 <>
-                  {totalData?.current_month?.total_saving <
-                  totalData?.current_month_goal ? (
+                  {Number(totalData?.current_month?.total_saving) >=
+                  Number(totalData?.current_month_goal) ? (
+                    "Saving Goal Reached."
+                  ) : (
                     <>
                       <CountUp
                         duration={0.8}
-                        end={totalData?.current_month?.total_saving}
+                        end={Number(totalData?.current_month?.total_saving)}
                       />{" "}
                       /{" "}
                       <CountUp
                         duration={0.8}
-                        end={totalData?.current_month_goal}
+                        end={Number(totalData?.current_month_goal)}
                       />{" "}
                       Reached
                     </>
-                  ) : (
-                    "Saving Goal Reached."
                   )}
                 </>
               ) : (

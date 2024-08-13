@@ -1,4 +1,4 @@
-import { Divider, Switch, Table, message } from "antd";
+import { Button, Divider, Switch, Table, message } from "antd";
 
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import {
   useDeleteIncomeCategory,
   useIncomeCategory,
 } from "../services/income/useIncomeCategory";
+import Test from "../../../components/common/header/test";
 
 const IncomeCategory = () => {
   const { data, error, isLoading, refetch } = useIncomeCategory();
@@ -135,6 +136,9 @@ const IncomeCategory = () => {
         }}
         handleCreateComponent={handleCreateComponent}
       />
+      {/* <Test handleCreateComponent={handleCreateComponent}>
+        <Button>Hello</Button>
+        </Test> */}
 
       <div className="p-4">
         <LowerHeader
