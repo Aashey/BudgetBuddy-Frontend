@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 
 import {
@@ -30,7 +30,11 @@ import { MdDeleteForever } from "react-icons/md";
 
 const SavingTransaction = () => {
   const [form] = Form.useForm();
-  const { data, error, isLoading, refetch } = useSavingTransaction();
+  const [queryParam, setQueryParam] = useState("");
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
+  const { data, error, isLoading, refetch } = useSavingTransaction(queryParam);
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -163,14 +167,19 @@ const SavingTransaction = () => {
     });
   };
 
+  const [buttonMode, setButtonMode] = useState(
+    goalData?.data?.data.length > 0 ? "View" : "Add"
+  );
+
   const saveGoalData = () => {
     createSavingGoal.mutate(
       { target_amount: form.getFieldsValue().target_amount },
       {
         onSuccess: () => {
           message.success("Saving goal added Successfully!");
-          refetch();
           setIsModalOpen(false);
+          setButtonMode("View");
+          refetch();
         },
         onError: () => {
           message.error("Failed to add saving goal!");
@@ -179,78 +188,55 @@ const SavingTransaction = () => {
     );
   };
 
+  const deleteGoalData = () => {
+    console.log("TEst");
+    deleteSavingGoal.mutate(goalData?.data?.data[0].id, {
+      onSuccess: () => {
+        message.success("Saving goal deleted successfully!");
+        setIsModalOpen(false);
+        setButtonMode("Add");
+        refetch();
+      },
+      onError: () => {
+        message.error("Failed to delete saving goal.");
+        setIsModalOpen(false);
+      },
+    });
+  };
+
   useEffect(() => {
-    if (goalData?.data?.data.length != 0) {
+    if (buttonMode === "View") {
       form.setFieldsValue({
         target_amount: goalData?.data?.data[0].target_amount,
       });
     } else {
       form.resetFields();
     }
-  }, [goalData, form, refetch]);
+  }, [buttonMode, refetch, goalData]);
 
   return (
     <>
       <TitleHeader
+        type="saving"
         goalData={goalData?.data?.data}
         openModal={openModal}
-        textProp={{
-          type: "saving",
-          method: "transaction",
-          plural_method: "transactions",
-        }}
+        buttonMode={buttonMode}
         handleCreateComponent={handleCreateComponent}
-      />
+      >
+        SAVING TRANSACTION
+      </TitleHeader>
 
       <Modal
         title="Saving Goal"
         open={isModalOpen}
         onClose={closeModal}
         onCancel={closeModal}
-        footer={
-          <>
-            {goalData?.data?.data.length > 0 ? (
-              <>
-                <Button
-                  icon={<MdDeleteForever size={20} />}
-                  type="none"
-                  onClick={() => {
-                    deleteSavingGoal.mutate(goalData?.data?.data[0].id, {
-                      onSuccess: () => {
-                        message.success("Saving goal deleted successfully!");
-                        setIsModalOpen(false);
-                        refetch();
-                      },
-                      onError: () => {
-                        message.error("Failed to delete saving goal.");
-                        setIsModalOpen(false);
-                      },
-                    });
-                  }}
-                  className="bg-red-600 text-white hover:bg-red-800"
-                >
-                  Delete Goal
-                </Button>
-              </>
-            ) : (
-              <Form.Item>
-                <Button onClick={saveGoalData} type="primary">
-                  Add Goal
-                </Button>
-              </Form.Item>
-            )}
-          </>
-        }
+        footer={false}
       >
-        <Form
-          form={form}
-          disabled={goalData?.data?.data.length > 0}
-          layout="vertical"
-          onFinish={saveGoalData}
-        >
+        <Form form={form} layout="vertical" onFinish={saveGoalData}>
           <Divider />
           <Row gutter={24}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
                 name="target_amount"
                 label="Target"
@@ -258,8 +244,35 @@ const SavingTransaction = () => {
                   { required: true, message: "This field is required  " },
                 ]}
               >
-                <Input style={{ color: "black" }} />
+                <Input
+                  disabled={buttonMode === "View"}
+                  style={{ color: "black" }}
+                />
               </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={24}>
+            <Col span={12}>
+              {buttonMode === "View" ? (
+                <>
+                  <Form.Item>
+                    <Button
+                      icon={<MdDeleteForever size={20} />}
+                      type="none"
+                      onClick={deleteGoalData}
+                      className="bg-red-600 text-white hover:bg-red-800 cursor-pointer"
+                    >
+                      Delete Goal
+                    </Button>
+                  </Form.Item>
+                </>
+              ) : (
+                <Form.Item>
+                  <Button onClick={saveGoalData} type="primary">
+                    Add Goal
+                  </Button>
+                </Form.Item>
+              )}
             </Col>
           </Row>
         </Form>
@@ -269,10 +282,8 @@ const SavingTransaction = () => {
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "saving",
-            plural_method: "transactions",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
         <Table
           loading={isLoading}

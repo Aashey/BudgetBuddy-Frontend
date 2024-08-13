@@ -1,12 +1,16 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
 
-const getIncomeCategory = async () => {
-  return await apiClient.get(`/setup/income-category`);
+const getIncomeCategory = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+
+  return await apiClient.get(
+    `/setup/income-category${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useIncomeCategory = () => {
-  return useQuery("getIncomeCategory", getIncomeCategory, {
+export const useIncomeCategory = (queryParams = "") => {
+  return useQuery(["getIncomeCategory", queryParams], getIncomeCategory, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

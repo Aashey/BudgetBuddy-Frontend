@@ -1,13 +1,15 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
-import { message, notification } from "antd";
 
-const getIncomeTransaction = async () => {
-  return await apiClient.get(`/transaction/income`);
+const getIncomeTransaction = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+  return await apiClient.get(
+    `/transaction/income${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useIncomeTransaction = () => {
-  return useQuery("getIncomeTransaction", getIncomeTransaction, {
+export const useIncomeTransaction = (queryParams = "") => {
+  return useQuery(["getIncomeTransaction", queryParams], getIncomeTransaction, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

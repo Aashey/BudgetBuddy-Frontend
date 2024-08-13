@@ -1,12 +1,15 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
 
-const getExpenseCategory = async () => {
-  return await apiClient.get(`/setup/expense-category`);
+const getExpenseCategory = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+  return await apiClient.get(
+    `/setup/expense-category${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useExpenseCategory = () => {
-  return useQuery("getExpenseCategory", getExpenseCategory, {
+export const useExpenseCategory = (queryParams = "") => {
+  return useQuery(["getExpenseCategory", queryParams], getExpenseCategory, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

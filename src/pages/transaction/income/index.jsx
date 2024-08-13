@@ -2,7 +2,7 @@ import { message, Switch, Table } from "antd";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteIncomeTransaction,
@@ -11,13 +11,16 @@ import {
 import { formatDate } from "../../../helper/formatDate";
 
 const IncomeTransaction = () => {
-  const { data, error, isLoading, refetch } = useIncomeTransaction();
+  const [queryParam, setQueryParam] = useState("");
+  const { data, error, isLoading, refetch } = useIncomeTransaction(queryParam);
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
   const deleteIncomeTransaction = useDeleteIncomeTransaction();
-
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -142,24 +145,18 @@ const IncomeTransaction = () => {
 
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "income",
-          method: "transaction",
-          plural_method: "transactions",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        INCOME TRANSACTION
+      </TitleHeader>
 
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "income",
-            plural_method: "transactions",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
+
         <Table
           loading={isLoading}
           className="custom-table ant-table-cell mt-5"

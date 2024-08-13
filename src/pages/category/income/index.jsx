@@ -1,18 +1,21 @@
-import { Button, Divider, Switch, Table, message } from "antd";
+import { Button, DatePicker, Input, Switch, Table, message } from "antd";
 
 import CategorySetupForm from "../../../components/category/categorySetupForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
-import TitleHeader from "../../../components/common/header";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteIncomeCategory,
   useIncomeCategory,
 } from "../services/income/useIncomeCategory";
-import Test from "../../../components/common/header/test";
+import TitleHeader from "../../../components/common/header/test";
+import { CiSearch } from "react-icons/ci";
+import DateFilter from "../../../components/common/filter";
+import dayjs from "dayjs";
 
 const IncomeCategory = () => {
-  const { data, error, isLoading, refetch } = useIncomeCategory();
+  const [queryParam, setQueryParam] = useState("");
+  const { data, error, isLoading, refetch } = useIncomeCategory(queryParam);
   const deleteIncomeCategory = useDeleteIncomeCategory();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -26,12 +29,17 @@ const IncomeCategory = () => {
     setIsDrawerOpen(false);
   };
 
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
+
   const handleSearch = (e) => {
     const searchValue = e.target.value?.toLowerCase();
     if (!searchValue) {
       setFilteredData(null);
       return;
     }
+
     const filterData = data?.data?.data.filter((item) =>
       item.title.toLowerCase().includes(searchValue)
     );
@@ -128,28 +136,18 @@ const IncomeCategory = () => {
 
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "income",
-          method: "category",
-          plural_method: "categories",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
-      {/* <Test handleCreateComponent={handleCreateComponent}>
-        <Button>Hello</Button>
-        </Test> */}
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        INCOME CATEGORY
+      </TitleHeader>
 
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "income",
-            method: "category",
-            plural_method: "categories",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
+
         <Table
           loading={isLoading}
           className="custom-table ant-table-cell rounded-md "

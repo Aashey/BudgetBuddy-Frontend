@@ -3,7 +3,7 @@ import { Switch, Table, message } from "antd";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteExpenseCategory,
@@ -11,7 +11,8 @@ import {
 } from "../services/expense/useExpenseCategory";
 
 const ExpenseCategory = () => {
-  const { data, error, isLoading, refetch } = useExpenseCategory();
+  const [queryParam, setQueryParam] = useState("");
+  const { data, error, isLoading, refetch } = useExpenseCategory(queryParam);
   const deleteExpenseCategory = useDeleteExpenseCategory();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -127,26 +128,24 @@ const ExpenseCategory = () => {
     });
   };
 
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
+
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "expense",
-          method: "category",
-          plural_method: "categories",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        EXPENSE CATEGORY
+      </TitleHeader>
+
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "expense",
-            method: "category",
-            plural_method: "categories",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
+
         <Table
           loading={isLoading}
           className="custom-table ant-table-cell mt-5"

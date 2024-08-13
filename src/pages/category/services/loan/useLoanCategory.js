@@ -1,12 +1,15 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
 
-const getLoanCategory = async () => {
-  return await apiClient.get(`/setup/loan-category`);
+const getLoanCategory = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+  return await apiClient.get(
+    `/setup/loan-category${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useGetLoanCategory = () => {
-  return useQuery("getLoanCategory", getLoanCategory, {
+export const useGetLoanCategory = (queryParams = "") => {
+  return useQuery(["getLoanCategory", queryParams], getLoanCategory, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

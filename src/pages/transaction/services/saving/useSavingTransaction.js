@@ -1,12 +1,15 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
 
-const getSavingTransaction = async () => {
-  return await apiClient.get(`/transaction/saving`);
+const getSavingTransaction = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+  return await apiClient.get(
+    `/transaction/saving${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useSavingTransaction = () => {
-  return useQuery("getSavingTransaction", getSavingTransaction, {
+export const useSavingTransaction = (queryParams = "") => {
+  return useQuery(["getSavingTransaction", queryParams], getSavingTransaction, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

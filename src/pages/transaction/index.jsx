@@ -1,11 +1,25 @@
-import { Input, Table, Tag, Typography } from "antd";
+import {
+  Button,
+  DatePicker,
+  Input,
+  Space,
+  Table,
+  Tag,
+  Tooltip,
+  Typography,
+} from "antd";
 import { useState } from "react";
 import { formatDate } from "../../helper/formatDate";
 import { useGetTransaction } from "./services/useTransactionHistory";
 import { CiSearch } from "react-icons/ci";
+import { FaRegFileExcel } from "react-icons/fa";
+import DateFilter from "../../components/common/filter";
+import dayjs from "dayjs";
+import { MdPreview } from "react-icons/md";
 
 const TransactionHistory = () => {
-  const { data, error, isLoading } = useGetTransaction();
+  const [queryParam, setQueryParam] = useState("");
+  const { data, error, isLoading, refetch } = useGetTransaction(queryParam);
   console.log(data?.data);
   const [filteredData, setFilteredData] = useState(null);
 
@@ -88,13 +102,33 @@ const TransactionHistory = () => {
     });
   };
 
+  const { RangePicker } = DatePicker;
+
+  const [filterType, setFilterType] = useState();
+  const [dateRange, setDateRange] = useState();
+
+  const filterState = (data) => {
+    setFilterType(data);
+  };
+
+  const handleFilter = () => {
+    if (filterType === "period") {
+      setQueryParam(`from_date=${dateRange[0]}&to_date=${dateRange[1]}`);
+    } else if (filterType === "this_week") {
+      setQueryParam(`filter=${filterType}`);
+    } else {
+      setQueryParam(`filter=${filterType}`);
+    }
+    refetch();
+  };
+
   return (
     <>
       <div className="bg-[#EDEDFA] p-4">
         <div className="flex justify-between align-center ">
           <span>
             <Typography.Title className="text-white" level={3}>
-              Transaction History
+              TRANSACTION HISTORY
             </Typography.Title>
             <Typography.Text className="custom-font">
               View all your transactions here
@@ -104,13 +138,46 @@ const TransactionHistory = () => {
       </div>
 
       <div className="p-4">
-        <div className="flex justify-start w-[15vw] mt-2 mb-5">
-          <Input
-            prefix={<CiSearch size={14} />}
-            onChange={handleSearch}
-            placeholder="Search"
-          />
-        </div>
+        <Space className="mb-4 flex justify-between">
+          <span className="flex justify-start gap-2">
+            <Input
+              className="min-w-[200] max-w-[200]"
+              prefix={<CiSearch size={14} />}
+              onChange={handleSearch}
+              placeholder="Search"
+            />
+            <DateFilter filterState={filterState} />
+            {filterType === "period" && (
+              <RangePicker
+                onChange={(value) => {
+                  const formattedDates = value.map((date) =>
+                    dayjs(date).format("YYYY-MM-DD")
+                  );
+                  setDateRange(formattedDates);
+                }}
+                className="w-full"
+              />
+            )}
+            <Button
+              type="none"
+              icon={<MdPreview size={22} />}
+              onClick={handleFilter}
+              className="bg-emerald-600 text-white hover:bg-emerald-800"
+            >
+              Preview
+            </Button>
+          </span>
+
+          <Tooltip title="Export to excel">
+            <Button
+              className="custom-font bg-white"
+              icon={<FaRegFileExcel size={16} />}
+            >
+              Excel
+            </Button>
+          </Tooltip>
+        </Space>
+
         <Table
           loading={isLoading}
           className="custom-table ant-table-cell"

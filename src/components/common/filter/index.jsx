@@ -1,43 +1,23 @@
-import { Button, Dropdown, Menu } from "antd";
-import React, { useState } from "react";
-import { TiFilter } from "react-icons/ti";
+import { Select } from "antd";
 
-const DateFilter = () => {
-  const [filterState, setFilterState] = useState("");
+const DateFilter = ({ filterState }) => {
   return (
     <div>
-      <Dropdown
-        trigger={["click"]}
-        placement="bottom"
-        overlay={
-          <Menu>
-            <Menu.Item
-              onClick={() => {
-                setFilterState("This Week");
-              }}
-            >
-              This Week
-            </Menu.Item>
-            <Menu.Item
-              onClick={() => {
-                setFilterState("This Month");
-              }}
-            >
-              This Month
-            </Menu.Item>
-            <Menu.Item
-              onClick={() => {
-                setFilterState("Period");
-              }}
-            >
-              Custom Range
-            </Menu.Item>
-          </Menu>
-        }
-        className=""
-      >
-        <Button icon={<TiFilter size={22} />}>Filter</Button>
-      </Dropdown>
+      <Select
+        className="w-[150px]"
+        placeholder="Filter"
+        defaultValue="today"
+        allowClear
+        onChange={(value) => {
+          filterState(value);
+        }}
+        options={[
+          { value: "today", label: "Today" },
+          { value: "this_week", label: "This Week" },
+          { value: "this_month", label: "This Month" },
+          { value: "period", label: "Custom Range" },
+        ]}
+      />
     </div>
   );
 };

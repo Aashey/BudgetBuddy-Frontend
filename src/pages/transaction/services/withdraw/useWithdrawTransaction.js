@@ -1,15 +1,22 @@
 import { useQuery, useMutation } from "react-query";
 import apiClient from "../../../../services/apiClient";
 
-const getWithdrawTransaction = async () => {
-  return await apiClient.get(`/transaction/withdraw`);
+const getWithdrawTransaction = async ({ queryKey }) => {
+  const [, queryParams] = queryKey;
+  return await apiClient.get(
+    `/transaction/withdraw${queryParams ? `?${queryParams}` : ""}`
+  );
 };
 
-export const useWithdrawTransaction = () => {
-  return useQuery("getWithdrawTransaction", getWithdrawTransaction, {
-    refetchOnWindowFocus: false,
-    retry: 1,
-  });
+export const useWithdrawTransaction = (queryParams = "") => {
+  return useQuery(
+    ["getWithdrawTransaction", queryParams],
+    getWithdrawTransaction,
+    {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    }
+  );
 };
 const createWithdrawTransaction = async ({ amount, notes }) => {
   return await apiClient.post(`/transaction/withdraw`, {

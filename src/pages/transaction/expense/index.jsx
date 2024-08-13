@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteExpenseTransaction,
@@ -12,13 +12,18 @@ import {
 import { formatDate } from "../../../helper/formatDate";
 
 const ExpenseTransaction = () => {
-  const { data, error, isLoading, refetch } = useExpenseTransaction();
+  const [queryParam, setQueryParam] = useState("");
+
+  const { data, error, isLoading, refetch } = useExpenseTransaction(queryParam);
   const deleteExpenseTransaction = useDeleteExpenseTransaction();
   const [mode, setMode] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState();
 
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -144,22 +149,16 @@ const ExpenseTransaction = () => {
 
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "expense",
-          method: "transaction",
-          plural_method: "transactions",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        EXPENSE TRANSACTION
+      </TitleHeader>
+
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "expense",
-            plural_method: "transactions",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
         <Table
           loading={isLoading}

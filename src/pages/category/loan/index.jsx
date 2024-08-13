@@ -3,7 +3,7 @@ import { Switch, Table, message } from "antd";
 import CategorySetupForm from "../../../components/category/categorySetupForm";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteLoanCategory,
@@ -11,13 +11,18 @@ import {
 } from "../services/loan/useLoanCategory";
 
 const LoanCategory = () => {
-  const { data, error, isLoading, refetch } = useGetLoanCategory();
+  const [queryParam, setQueryParam] = useState("");
+
+  const { data, error, isLoading, refetch } = useGetLoanCategory(queryParam);
   const deleteLoanCategory = useDeleteLoanCategory();
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
 
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -129,23 +134,16 @@ const LoanCategory = () => {
 
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "loan",
-          method: "category",
-          plural_method: "categories",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        LOAN CATEGORY
+      </TitleHeader>
+
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "loan",
-            method: "category",
-            plural_method: "categories",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
         <Table
           loading={isLoading}
