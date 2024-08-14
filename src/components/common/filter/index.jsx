@@ -6,12 +6,13 @@ const DateFilter = ({ filterState }) => {
       <Select
         className="w-[150px]"
         placeholder="Filter"
-        defaultValue="today"
+        defaultValue="all"
         allowClear
         onChange={(value) => {
           filterState(value);
         }}
         options={[
+          { value: "all", label: "All" },
           { value: "today", label: "Today" },
           { value: "this_week", label: "This Week" },
           { value: "this_month", label: "This Month" },

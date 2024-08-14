@@ -240,9 +240,7 @@ const SavingTransaction = () => {
               <Form.Item
                 name="target_amount"
                 label="Target"
-                rules={[
-                  { required: true, message: "This field is required  " },
-                ]}
+                rules={[{ required: true, message: "This field is required!" }]}
               >
                 <Input
                   disabled={buttonMode === "View"}
