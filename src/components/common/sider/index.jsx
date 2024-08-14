@@ -12,16 +12,8 @@ const CustomSider = () => {
   const { Sider } = Layout;
   const { Title } = Typography;
   const navigate = useNavigate();
-  const logout = useLogout();
   const location = useLocation();
-  const onLogout = () => {
-    logout.mutate();
-    setTimeout(() => {
-      localStorage.removeItem("authToken");
-      message.success("Logged out successfully!");
-      navigate("/login");
-    }, 500);
-  };
+
   const items = [
     {
       key: "/dashboard",
@@ -91,11 +83,6 @@ const CustomSider = () => {
         },
       ],
     },
-    {
-      key: "/logout",
-      label: <Typography.Link onClick={onLogout}>Logout</Typography.Link>,
-      icon: <CiLogout size={22} />,
-    },
   ];
   const [collapsed, setCollapsed] = useState(true);
   return (
@@ -107,6 +94,7 @@ const CustomSider = () => {
           position: "sticky",
           top: 0,
           left: 0,
+          zIndex: 101,
         }}
         theme="light"
         collapsible
@@ -114,13 +102,13 @@ const CustomSider = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="demo-logo-vertical" />
-        {/* <Title
+        <Title
           style={{ color: "#2d5bbd" }}
           level={3}
           className="flex justify-center mt-2 mb-4"
         >
-          Budget Buddy
-        </Title> */}
+          {collapsed ? "BB" : "BUDGET BUDDY"}
+        </Title>
         <Menu
           theme="light"
           selectedKeys={[location.pathname]}

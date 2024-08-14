@@ -2,7 +2,7 @@ import { message, Table } from "antd";
 import { useState } from "react";
 import ActionGroup from "../../../components/common/actiongroup";
 import TransactionSetupForm from "../../../components/transaction/TransactionSetupForm";
-import TitleHeader from "../../../components/common/header";
+import TitleHeader from "../../../components/common/header/test";
 import LowerHeader from "../../../components/common/header/LowerHeader";
 import {
   useDeleteWithdrawTransaction,
@@ -11,13 +11,18 @@ import {
 import { formatDate } from "../../../helper/formatDate";
 
 const WithdrawTransaction = () => {
-  const { data, error, isLoading, refetch } = useWithdrawTransaction();
+  const [queryParam, setQueryParam] = useState("");
+  const { data, error, isLoading, refetch } =
+    useWithdrawTransaction(queryParam);
   const [filteredData, setFilteredData] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [selectedRecord, setSelectedRecord] = useState();
   const deleteWithdrawTransaction = useDeleteWithdrawTransaction();
 
+  const getQueryParam = (data) => {
+    setQueryParam(data);
+  };
   const openDrawer = () => {
     setIsDrawerOpen(true);
   };
@@ -129,23 +134,16 @@ const WithdrawTransaction = () => {
 
   return (
     <>
-      <TitleHeader
-        textProp={{
-          type: "withdraw",
-          method: "transaction",
-          plural_method: "transactions",
-        }}
-        handleCreateComponent={handleCreateComponent}
-      />
+      <TitleHeader handleCreateComponent={handleCreateComponent}>
+        WITHDRAW TRANSACTION
+      </TitleHeader>
 
       <div className="p-4">
         <LowerHeader
           handleSearch={handleSearch}
           handleCreateComponent={handleCreateComponent}
-          textProp={{
-            type: "withdraw",
-            plural_method: "transactions",
-          }}
+          refetch={refetch}
+          getQueryParam={getQueryParam}
         />
         <Table
           loading={isLoading}

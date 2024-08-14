@@ -3,6 +3,7 @@ import CustomSider from "../sider";
 import { Card, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import CustomHeader from "../header";
+import NavBar from "../nav";
 
 const CustomLayout = () => {
   const { Content } = Layout;
@@ -15,11 +16,16 @@ const CustomLayout = () => {
         }}
       >
         <CustomSider />
-        <Content>
-          <div className=" bg-white m-auto w-[100%] min-h-[100vh] h-auto">
-            <Outlet />
-          </div>
-        </Content>
+        <Layout>
+          <NavBar />
+          <Layout>
+            <Content>
+              <div className=" bg-white m-auto w-[100%] min-h-[100vh] h-auto">
+                <Outlet />
+              </div>
+            </Content>
+          </Layout>
+        </Layout>
       </Layout>
     </>
   );
