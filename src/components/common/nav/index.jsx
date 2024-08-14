@@ -6,6 +6,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { useLogout } from "../../../services/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGetTotalData } from "../../../pages/dashboard/services/useTotalData";
+import Title from "antd/es/typography/Title";
 
 const NavBar = () => {
   const { data: totalData } = useGetTotalData();
@@ -30,7 +31,7 @@ const NavBar = () => {
           backgroundColor: "white",
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           height: "50px",
           zIndex: 100,
           position: "sticky",
@@ -39,33 +40,40 @@ const NavBar = () => {
           boxShadow: "0 0 2px 1px rgba(0,0,0,0.2)",
         }}
       >
-        <span className="mr-2">{totalData?.data?.data?.username}</span>
+        <span>
+          <Title style={{ color: "#2d5bbd" }} level={3}>
+            BUDGET BUDDY
+          </Title>
+        </span>
+        <span>
+          {totalData?.data?.data?.username}
+          <Dropdown
+            className="ml-2"
+            overlay={
+              <>
+                <Menu theme="light" style={{ width: "170px" }}>
+                  <Menu.Item key="view" icon={<IoEyeSharp size={18} />}>
+                    <NavLink to="/profile">View Profile</NavLink>
+                  </Menu.Item>
 
-        <Dropdown
-          overlay={
-            <>
-              <Menu theme="light" style={{ width: "170px" }}>
-                <Menu.Item key="view" icon={<IoEyeSharp size={18} />}>
-                  <NavLink to="/profile">View Profile</NavLink>
-                </Menu.Item>
+                  <Menu.Item key={"password"} icon={<FaEdit size={18} />}>
+                    Change Password
+                  </Menu.Item>
 
-                <Menu.Item key={"password"} icon={<FaEdit size={18} />}>
-                  Change Password
-                </Menu.Item>
-
-                <Menu.Item key={"/logout"} icon={<CiLogout size={18} />}>
-                  <Typography.Link onClick={onLogout}>Logout</Typography.Link>
-                </Menu.Item>
-              </Menu>
-            </>
-          }
-          trigger={["click"]}
-        >
-          <Avatar
-            className=" bg-black size-8 cursor-pointer"
-            icon={<FaUser size={18} />}
-          />
-        </Dropdown>
+                  <Menu.Item key={"/logout"} icon={<CiLogout size={18} />}>
+                    <Typography.Link onClick={onLogout}>Logout</Typography.Link>
+                  </Menu.Item>
+                </Menu>
+              </>
+            }
+            trigger={["click"]}
+          >
+            <Avatar
+              className=" bg-black size-8 cursor-pointer"
+              icon={<FaUser size={18} />}
+            />
+          </Dropdown>
+        </span>
       </Header>
     </>
   );

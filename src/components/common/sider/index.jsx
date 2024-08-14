@@ -102,13 +102,7 @@ const CustomSider = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className="demo-logo-vertical" />
-        <Title
-          style={{ color: "#2d5bbd" }}
-          level={3}
-          className="flex justify-center mt-2 mb-4"
-        >
-          {collapsed ? "BB" : "BUDGET BUDDY"}
-        </Title>
+
         <Menu
           theme="light"
           selectedKeys={[location.pathname]}

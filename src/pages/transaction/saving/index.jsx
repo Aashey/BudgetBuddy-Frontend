@@ -24,7 +24,6 @@ import {
 } from "../services/saving/useSavingTransaction";
 import { formatDate } from "../../../helper/formatDate";
 import { Typography } from "antd";
-import Inputs from "../../../components/common/ui/input/CustomInput";
 
 import { MdDeleteForever } from "react-icons/md";
 
