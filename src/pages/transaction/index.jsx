@@ -20,9 +20,8 @@ import { MdPreview } from "react-icons/md";
 const TransactionHistory = () => {
   const [queryParam, setQueryParam] = useState("");
   const { data, error, isLoading, refetch } = useGetTransaction(queryParam);
-  console.log(data?.data);
   const [filteredData, setFilteredData] = useState(null);
-
+  console.log("assd", data);
   const handleSearch = (e) => {
     const searchValue = e.target.value?.toLowerCase();
     if (!searchValue) {
@@ -78,7 +77,7 @@ const TransactionHistory = () => {
             className="w-[80px] text-center"
             style={{
               backgroundColor: `${transactionColor[transaction]}`,
-              color: "White",
+              color: "white",
               border: "none",
             }}
           >
@@ -115,11 +114,10 @@ const TransactionHistory = () => {
     if (filterType === "period") {
       setQueryParam(`from_date=${dateRange[0]}&to_date=${dateRange[1]}`);
     } else if (filterType === "this_week") {
-      setQueryParam(`filter=${filterType}`);
+      setQueryParam(`from_date=${dateRange[0]}&to_date=${dateRange[1]}`);
     } else {
-      setQueryParam(`filter=${filterType}`);
+      setQueryParam(`from_date=${dateRange[0]}&to_date=${dateRange[1]}`);
     }
-    refetch();
   };
 
   return (

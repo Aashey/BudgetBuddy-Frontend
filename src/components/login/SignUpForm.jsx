@@ -35,7 +35,7 @@ const SignupForm = () => {
       {
         onSuccess: () => {
           message.success("User Registered successfully.");
-          navigate("/dashboard");
+          navigate("/login");
         },
         onError: (error) => {
           message.error(

@@ -133,6 +133,7 @@ const ExpenseTransaction = () => {
           handleEditComponent={handleEditComponent}
           handleDelete={handleDelete}
           handleViewComponent={handleViewComponent}
+          method="transaction"
         />
       ),
       width: 150,

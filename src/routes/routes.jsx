@@ -7,6 +7,7 @@ import CustomLayout from "../components/common/layout";
 import PageNotFound from "../components/common/404";
 import { TransactionRoutes } from "../pages/transaction/utils/routes";
 import { UserProfileRoutes } from "../pages/profile/utils/routes";
+import { AnalyticsRoutes } from "../pages/analytics/utils/routes";
 
 export const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ export const routes = createBrowserRouter(
         {CategoryRoutes}
         {TransactionRoutes}
         {UserProfileRoutes}
+        {AnalyticsRoutes}
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </>

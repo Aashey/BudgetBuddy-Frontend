@@ -145,8 +145,7 @@ const DashboardCharts = ({
           <Chart
             options={incomeExpenseChartOptions}
             series={incomeExpenseSeries}
-            // type={incomeExpenseRadioOption}
-            type={"area"}
+            type={incomeExpenseRadioOption}
             height={300}
           />
         </Card>

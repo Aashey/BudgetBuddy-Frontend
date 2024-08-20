@@ -20,7 +20,7 @@ const CustomLayout = () => {
           <NavBar />
           <Layout>
             <Content>
-              <div className=" bg-white m-auto w-[100%] min-h-[100vh] h-auto">
+              <div className=" bg-white m-auto w-[100%] min-h-full h-auto">
                 <Outlet />
               </div>
             </Content>

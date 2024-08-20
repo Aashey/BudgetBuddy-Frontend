@@ -1,5 +1,5 @@
 import { Table, Tag } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGetTransaction } from "../../pages/transaction/services/useTransactionHistory";
 import { formatDate } from "../../helper/formatDate";
 
@@ -81,7 +81,7 @@ const DashboardTransaction = () => {
         // scroll={{ y: "45vh" }}
         pagination={false}
         onChange={handleTableChange}
-        dataSource={error ? [] : data?.data.slice(0, 5)}
+        dataSource={error ? [] : data?.data?.data?.slice(0, 5)}
         columns={TransactionHistoryColumn}
       />
     </div>

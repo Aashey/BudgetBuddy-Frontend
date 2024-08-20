@@ -3,9 +3,11 @@ import apiClient from "../../../services/apiClient";
 
 const getTransaction = async ({ queryKey }) => {
   const [, queryParams] = queryKey;
-  return await apiClient.get(
-    `/transaction/get-transactions${queryParams ? `?${queryParams}` : ""}`
-  );
+  const url = `/transaction/get-transactions${
+    queryParams ? `?${queryParams}` : ""
+  }`;
+  const response = await apiClient.get(url);
+  return response?.data;
 };
 
 export const useGetTransaction = (queryParams = "") => {

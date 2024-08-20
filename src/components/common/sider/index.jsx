@@ -69,13 +69,13 @@ const CustomSider = () => {
       ],
     },
     {
-      key: "/reports",
-      label: "Reports",
+      key: "/analytics",
+      label: "Analytics",
       icon: <TbReportMoney size={22} />,
       children: [
         {
-          key: "/report/income-report",
-          label: <NavLink to="/report/income-report">Income Report</NavLink>,
+          key: "/analytics/balance",
+          label: <NavLink to="/analytics/balance">Balance</NavLink>,
         },
         {
           key: "/report/expense-report",

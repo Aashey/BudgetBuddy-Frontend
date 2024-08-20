@@ -6,10 +6,10 @@ import { IoEyeSharp } from "react-icons/io5";
 import { useLogout } from "../../../services/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGetTotalData } from "../../../pages/dashboard/services/useTotalData";
-import Title from "antd/es/typography/Title";
 
 const NavBar = () => {
   const { data: totalData } = useGetTotalData();
+  const { Title, Text } = Typography;
 
   const navigate = useNavigate();
 
@@ -29,22 +29,15 @@ const NavBar = () => {
         theme="light"
         style={{
           backgroundColor: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           height: "50px",
           zIndex: 100,
           position: "sticky",
           top: 0,
           left: 0,
-          boxShadow: "0 0 2px 1px rgba(0,0,0,0.2)",
         }}
+        className="flex justify-between items-center px-4"
       >
-        <span>
-          <Title style={{ color: "#2d5bbd" }} level={3}>
-            BUDGET BUDDY
-          </Title>
-        </span>
+        <Text className="text-[#2563EB] text-2xl font-bold">BudgetBuddy</Text>
         <span>
           {totalData?.data?.data?.username}
           <Dropdown
