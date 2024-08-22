@@ -16,7 +16,7 @@ const BalanceCards = ({ cardData, isLoading, refetch }) => {
   console.table(month, opening_balance);
   return (
     <>
-      <div className="flex justify-start items-center gap-6 flex-wrap p-4">
+      <div className="flex justify-start items-center gap-12 flex-wrap p-4">
         <Card className="shadow-md" title={"Opening Balance"}>
           Rs.{" "}
           <Text className="text-xl font-bold" strong>
@@ -41,16 +41,10 @@ const BalanceCards = ({ cardData, isLoading, refetch }) => {
             {total_expense}
           </Text>{" "}
         </Card>
-        <Card className="shadow-md" title={"Saving Balance"}>
-          Rs.{" "}
-          <Text className="text-xl font-bold" strong>
-            {saving_balance ?? "0.00"}
-          </Text>{" "}
-        </Card>
         <Card className="shadow-md" title={"Total Saving"}>
           Rs.{" "}
           <Text className="text-xl font-bold" strong>
-            {total_saving}
+            {saving_balance ?? "0.00"}
           </Text>{" "}
         </Card>
         <Card className="shadow-md" title={"Total Withdraw"}>

@@ -26,6 +26,8 @@ const ActionGroup = ({
                 View
               </Menu.Item>
               {(formatDate_WithMonth(record.date_received) ===
+                formatDate_WithMonth(Date()) || formatDate_WithMonth(record.date_spent) ===
+                formatDate_WithMonth(Date()) || formatDate_WithMonth(record.date) ===
                 formatDate_WithMonth(Date()) ||
                 method === "category") && (
                 <>

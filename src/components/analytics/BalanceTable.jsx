@@ -38,20 +38,20 @@ const BalanceTable = ({ tableData, error, isLoading }) => {
       key: "total_expense",
     },
     {
-      title: "Saving Balance",
+      title: "Total Saving",
       dataIndex: "saving_balance",
       key: "saving_balance",
       render: (text) => (text === null ? "N/A" : text), // Render null values as 'N/A'
     },
     {
-      title: "Total Saving",
-      dataIndex: "total_saving",
-      key: "total_saving",
-    },
-    {
       title: "Total Withdraw",
       dataIndex: "total_withdraw",
       key: "total_withdraw",
+    },
+    {
+      title: "Savings Balance",
+      dataIndex: "total_saving",
+      key: "total_saving",
     },
   ];
   const [tablePagination, setTablePagination] = useState({
